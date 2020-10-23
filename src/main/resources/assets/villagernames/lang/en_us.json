@@ -1,0 +1,14 @@
+{
+  "text.autoconfig.VillagerNames.category.villagerGeneral": "Villager Name Rules",
+  "text.autoconfig.VillagerNames.category.villagerNames": "Villager Names",
+  "text.autoconfig.VillagerNames.category.golemName": "Golem Names",
+  "text.autoconfig.VillagerNames.option.villagerGeneralConfig": "Villager Rules",
+  "text.autoconfig.VillagerNames.option.villagerGeneralConfig.professionNames": "Villager Profession Names",
+  "text.autoconfig.VillagerNames.option.villagerGeneralConfig.golemNames": "Golem Names",
+  "text.autoconfig.VillagerNames.option.villagerNamesConfig": "Villager Names List",
+  "text.autoconfig.VillagerNames.option.villagerNamesConfig.villagerNames": "Names",
+  "text.autoconfig.VillagerNames.option.golemNamesConfig": "Golem Names List",
+  "text.autoconfig.VillagerNames.option.golemNamesConfig.golemNames": "Names",
+  "text.autoconfig.VillagerNames.title": "Villager Names Config",
+  "text.autoconfig.VillagerNames.option.villagerGeneralConfig.needsOP": "Needs OP"
+}
