@@ -6,10 +6,12 @@ import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.village.VillagerProfession;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
 public class VillagerUtil {
+    private static ArrayList<String> usedUpNames = new ArrayList<>();
     private static String upperFirstLetter(String string){
         StringBuilder builder = new StringBuilder(string);
         builder.setCharAt(0, Character.toUpperCase(string.charAt(0)));
@@ -32,11 +34,25 @@ public class VillagerUtil {
     public static String generateRandomVillagerName(){
         Random random = new Random();
        int index = random.nextInt(VillagerNames.CONFIG.villagerNamesConfig.villagerNames.size());
+       if (usedUpNames.size() > VillagerNames.CONFIG.villagerNamesConfig.villagerNames.size()/2){
+           usedUpNames.clear();
+       }
+       if (usedUpNames.contains(VillagerNames.CONFIG.villagerNamesConfig.villagerNames.get(index))) {
+           index = random.nextInt(VillagerNames.CONFIG.villagerNamesConfig.villagerNames.size());
+       }
+           usedUpNames.add(VillagerNames.CONFIG.villagerNamesConfig.villagerNames.get(index));
         return VillagerNames.CONFIG.villagerNamesConfig.villagerNames.get(index);
     }
     public static String generateRandomGolemName(){
         Random random = new Random();
         int index = random.nextInt(VillagerNames.CONFIG.golemNamesConfig.golemNames.size());
+        if (usedUpNames.size() > VillagerNames.CONFIG.golemNamesConfig.golemNames.size()/2){
+            usedUpNames.clear();
+        }
+        if (usedUpNames.contains(VillagerNames.CONFIG.golemNamesConfig.golemNames.get(index))) {
+            index = random.nextInt(VillagerNames.CONFIG.golemNamesConfig.golemNames.size());
+        }
+        usedUpNames.add(VillagerNames.CONFIG.golemNamesConfig.golemNames.get(index));
         return VillagerNames.CONFIG.golemNamesConfig.golemNames.get(index);
     }
     public static void loadGolemNames(IronGolemEntity entity){

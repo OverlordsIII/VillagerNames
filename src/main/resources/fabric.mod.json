@@ -14,8 +14,8 @@
     ],
     "modmenu": [ "io.github.overlordsiii.villagernames.integration.ModMenuIntegration" ]
   },
-  "license": "CC0-1.0",
-  "icon": "assets/villagernames-1.16.3/icon.png",
+  "license": "MIT",
+  "icon": "assets/villagernames/icon.png",
   "environment": "*",
   "mixins": [
     "villagernames.mixins.json"
