@@ -19,6 +19,7 @@ public class NamesLoader {
         ArrayList<String> strings = new ArrayList<>();
         BufferedReader reader =  new BufferedReader(new InputStreamReader(NamesLoader.class.getResourceAsStream("/assets/villagernames/names/" + string)));
         reader.lines().forEach(strings::add);
+
         return strings;
     }
 
