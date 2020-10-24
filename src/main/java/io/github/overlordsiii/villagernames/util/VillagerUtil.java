@@ -20,7 +20,7 @@ public class VillagerUtil {
     public static void createVillagerNames(VillagerEntity entity){
         if (!entity.hasCustomName()){
             String randomName = generateRandomVillagerName();
-            if (entity.getVillagerData().getProfession() != VillagerProfession.NONE){
+            if (entity.getVillagerData().getProfession() != VillagerProfession.NONE && VillagerNames.CONFIG.villagerGeneralConfig.professionNames){
                 entity.setCustomName(new LiteralText(randomName + " the " + upperFirstLetter(entity.getVillagerData().getProfession().toString())));
                 entity.setCustomNameVisible(true);
             }
@@ -31,7 +31,7 @@ public class VillagerUtil {
         }
         entity.setCustomNameVisible(true);
     }
-    public static String generateRandomVillagerName(){
+    private static String generateRandomVillagerName(){
         Random random = new Random();
        int index = random.nextInt(VillagerNames.CONFIG.villagerNamesConfig.villagerNames.size());
        if (usedUpNames.size() > VillagerNames.CONFIG.villagerNamesConfig.villagerNames.size()/2){
@@ -43,7 +43,7 @@ public class VillagerUtil {
            usedUpNames.add(VillagerNames.CONFIG.villagerNamesConfig.villagerNames.get(index));
         return VillagerNames.CONFIG.villagerNamesConfig.villagerNames.get(index);
     }
-    public static String generateRandomGolemName(){
+    private static String generateRandomGolemName(){
         Random random = new Random();
         int index = random.nextInt(VillagerNames.CONFIG.golemNamesConfig.golemNames.size());
         if (usedUpNames.size() > VillagerNames.CONFIG.golemNamesConfig.golemNames.size()/2){
@@ -56,7 +56,7 @@ public class VillagerUtil {
         return VillagerNames.CONFIG.golemNamesConfig.golemNames.get(index);
     }
     public static void loadGolemNames(IronGolemEntity entity){
-        if (!entity.hasCustomName()) {
+        if (!entity.hasCustomName() && VillagerNames.CONFIG.villagerGeneralConfig.golemNames) {
             String name = generateRandomGolemName();
             entity.setCustomName(new LiteralText(name));
             entity.setCustomNameVisible(true);
@@ -68,7 +68,7 @@ public class VillagerUtil {
             entity.setCustomName(entity.isBaby() ? new LiteralText(random + " the Child") : new LiteralText(random));
         }
         else {
-            if (!Objects.requireNonNull(entity.getCustomName()).asString().contains("the")) {
+            if (!Objects.requireNonNull(entity.getCustomName()).asString().contains("the") && VillagerNames.CONFIG.villagerGeneralConfig.professionNames) {
                 //System.out.println(entity.getCustomName().asString());
                 entity.setCustomName(new LiteralText(Objects.requireNonNull(entity.getCustomName()).asString() + " the " + upperFirstLetter(entity.getVillagerData().getProfession().toString())));
                 //  System.out.println(entity.getCustomName().asString());
@@ -80,7 +80,7 @@ public class VillagerUtil {
         if (entity.hasCustomName() && Objects.requireNonNull(entity.getCustomName()).asString().contains(" ")) {
             String string = Objects.requireNonNull(entity.getCustomName()).asString();
             //    System.out.println("Custom name inside lost Villager Name = " + string);
-            String realString = string.substring(0, string.indexOf(" "));
+            String realString = VillagerNames.CONFIG.villagerGeneralConfig.professionNames ? string.substring(0, string.indexOf(" ")) : string;
             //     System.out.println("Next string = " + realString);
             entity.setCustomName(new LiteralText(realString));
         }
