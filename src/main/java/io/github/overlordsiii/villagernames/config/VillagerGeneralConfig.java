@@ -1,10 +1,8 @@
 package io.github.overlordsiii.villagernames.config;
 
-import io.github.overlordsiii.villagernames.util.FormattingDummy;
 import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry;
-import net.minecraft.util.Formatting;
 
 @Config(name = "villagerRules")
 public class VillagerGeneralConfig implements ConfigData {

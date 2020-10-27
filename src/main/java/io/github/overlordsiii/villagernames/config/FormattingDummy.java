@@ -1,4 +1,4 @@
-package io.github.overlordsiii.villagernames.util;
+package io.github.overlordsiii.villagernames.config;
 
 import net.minecraft.util.Formatting;
 

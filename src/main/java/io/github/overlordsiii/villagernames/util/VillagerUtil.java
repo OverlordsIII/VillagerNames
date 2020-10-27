@@ -1,6 +1,7 @@
 package io.github.overlordsiii.villagernames.util;
 
 import io.github.overlordsiii.villagernames.VillagerNames;
+import net.minecraft.entity.mob.ZombieVillagerEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.text.LiteralText;
@@ -11,7 +12,6 @@ import java.util.Objects;
 import java.util.Random;
 
 public class VillagerUtil {
-    private static boolean isModMenuOpen = false;
     private static ArrayList<String> usedUpNames = new ArrayList<>();
     private static String upperFirstLetter(String string){
         StringBuilder builder = new StringBuilder(string);
@@ -99,9 +99,19 @@ public class VillagerUtil {
         }
     }
     public static void updateGrownUpVillagerName(VillagerEntity entity){
-        if (entity.hasCustomName()){
-            System.out.println(entity.getCustomName());
-          entity.setCustomName(new LiteralText(entity.getCustomName().asString().substring(0, entity.getCustomName().asString().indexOf(" "))).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+        if (entity.hasCustomName()) {
+            if (entity.getCustomName().asString().contains(" the")) {
+                System.out.println(entity.getCustomName().asString());
+                entity.setCustomName(new LiteralText(entity.getCustomName().asString().substring(0, entity.getCustomName().asString().indexOf(" "))).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+            }
+        }
+    }
+    public static void addZombieVillagerName(VillagerEntity villagerEntity, ZombieVillagerEntity zombieVillagerEntity){
+        if (villagerEntity.hasCustomName()){
+            if (villagerEntity.getCustomName().asString().contains(" the")) {
+                String string = villagerEntity.getCustomName().asString().substring(0, villagerEntity.getCustomName().asString().indexOf(" "));
+                zombieVillagerEntity.setCustomName(new LiteralText(string + " the Zombie").formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+            }
         }
     }
     public static void generalVillagerUpdate(VillagerEntity entity){
@@ -112,10 +122,9 @@ public class VillagerUtil {
             }
         }
     }
-    public static boolean isIsModMenuOpen(){
-        return isModMenuOpen;
-    }
-    public static void setIsModMenuOpen(boolean bool){
-        isModMenuOpen = bool;
+    public static void updateGolemNames(IronGolemEntity entity){
+        if (entity.hasCustomName()){
+            entity.setCustomName(new LiteralText(entity.getCustomName().asString()).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+        }
     }
 }
