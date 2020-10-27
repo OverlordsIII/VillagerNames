@@ -33,6 +33,11 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Inte
             VillagerUtil.updateLostVillagerProfessionName((VillagerEntity)(Object)this);
         }
     }
+    @SuppressWarnings("ALL")
+    @Inject(method = "onGrowUp", at = @At("TAIL"))
+    private void updateBabyText(CallbackInfo ci){
+        VillagerUtil.updateGrownUpVillagerName((VillagerEntity)(Object)(this));
+    }
 }
 
 

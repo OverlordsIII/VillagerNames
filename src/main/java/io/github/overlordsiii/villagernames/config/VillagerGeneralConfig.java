@@ -1,8 +1,10 @@
 package io.github.overlordsiii.villagernames.config;
 
+import io.github.overlordsiii.villagernames.util.FormattingDummy;
 import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry;
+import net.minecraft.util.Formatting;
 
 @Config(name = "villagerRules")
 public class VillagerGeneralConfig implements ConfigData {
@@ -14,4 +16,11 @@ public class VillagerGeneralConfig implements ConfigData {
     public boolean needsOP = false;
     @ConfigEntry.Gui.Excluded
     public boolean hasRead = false;
+    @ConfigEntry.Gui.Tooltip
+    public String nitwitText = "Nitwit";
+    @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+    @ConfigEntry.Gui.Tooltip
+    public FormattingDummy villagerTextFormatting = FormattingDummy.WHITE;
+    @ConfigEntry.Gui.Tooltip
+    public boolean childNames = false;
 }

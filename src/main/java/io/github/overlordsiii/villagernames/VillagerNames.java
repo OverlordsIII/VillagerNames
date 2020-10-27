@@ -15,6 +15,7 @@ import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.minecraft.block.Block;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.server.command.ServerCommandSource;
@@ -34,6 +35,7 @@ public class VillagerNames implements ModInitializer {
     }
     @Override
     public void onInitialize() {
+        System.out.println("Client = " + MinecraftClient.getInstance());
         NamesLoader.load();
         CommandRegistrationCallback.EVENT.register((commandDispatcher, dedicated) -> {
             VillagerNameCommand.register(commandDispatcher);
@@ -41,6 +43,7 @@ public class VillagerNames implements ModInitializer {
         ServerEntityEvents.ENTITY_LOAD.register((entity, serverWorld) -> {
             if (entity instanceof VillagerEntity){
                VillagerUtil.createVillagerNames((VillagerEntity)entity);
+               VillagerUtil.generalVillagerUpdate((VillagerEntity)entity);
             }
             if (entity instanceof IronGolemEntity){
                     VillagerUtil.loadGolemNames((IronGolemEntity)entity);

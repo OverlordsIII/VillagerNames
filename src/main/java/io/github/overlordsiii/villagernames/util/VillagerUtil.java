@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.Random;
 
 public class VillagerUtil {
+    private static boolean isModMenuOpen = false;
     private static ArrayList<String> usedUpNames = new ArrayList<>();
     private static String upperFirstLetter(String string){
         StringBuilder builder = new StringBuilder(string);
@@ -21,12 +22,19 @@ public class VillagerUtil {
         if (!entity.hasCustomName()){
             String randomName = generateRandomVillagerName();
             if (entity.getVillagerData().getProfession() != VillagerProfession.NONE && VillagerNames.CONFIG.villagerGeneralConfig.professionNames){
-                entity.setCustomName(new LiteralText(randomName + " the " + upperFirstLetter(entity.getVillagerData().getProfession().toString())));
-                entity.setCustomNameVisible(true);
+                String text =  VillagerProfession.NITWIT == entity.getVillagerData().getProfession() ? VillagerNames.CONFIG.villagerGeneralConfig.nitwitText : upperFirstLetter(entity.getVillagerData().getProfession().toString());
+                    entity.setCustomName(new LiteralText(randomName + " the " + text).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+                    entity.setCustomNameVisible(true);
+
             }
-            else{
+            else {
                 entity.setCustomNameVisible(true);
-                entity.setCustomName(entity.isBaby() ?new LiteralText(randomName + " the Child") : new LiteralText(randomName));
+                if (VillagerNames.CONFIG.villagerGeneralConfig.childNames) {
+                    entity.setCustomName(entity.isBaby() ? new LiteralText(randomName + " the Child").formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()) : new LiteralText(randomName).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+                }
+                else{
+                    entity.setCustomName(new LiteralText(randomName).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+                }
             }
         }
         entity.setCustomNameVisible(true);
@@ -58,19 +66,24 @@ public class VillagerUtil {
     public static void loadGolemNames(IronGolemEntity entity){
         if (!entity.hasCustomName() && VillagerNames.CONFIG.villagerGeneralConfig.golemNames) {
             String name = generateRandomGolemName();
-            entity.setCustomName(new LiteralText(name));
+            entity.setCustomName(new LiteralText(name).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
             entity.setCustomNameVisible(true);
         }
     }
     public static void updateVillagerNames(VillagerEntity entity){
-        if (entity.getVillagerData().getProfession() == VillagerProfession.NONE){
+        if (entity.getVillagerData().getProfession() == VillagerProfession.NONE) {
             String random = generateRandomVillagerName();
-            entity.setCustomName(entity.isBaby() ? new LiteralText(random + " the Child") : new LiteralText(random));
+            if (VillagerNames.CONFIG.villagerGeneralConfig.childNames) {
+                entity.setCustomName(entity.isBaby() ? new LiteralText(random + " the Child").formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()) : new LiteralText(random).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+            }
+            else{
+                entity.setCustomName(new LiteralText(random).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+            }
         }
         else {
             if (!Objects.requireNonNull(entity.getCustomName()).asString().contains("the") && VillagerNames.CONFIG.villagerGeneralConfig.professionNames) {
                 //System.out.println(entity.getCustomName().asString());
-                entity.setCustomName(new LiteralText(Objects.requireNonNull(entity.getCustomName()).asString() + " the " + upperFirstLetter(entity.getVillagerData().getProfession().toString())));
+                entity.setCustomName(new LiteralText(Objects.requireNonNull(entity.getCustomName()).asString() + " the " + upperFirstLetter(entity.getVillagerData().getProfession().toString())).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
                 //  System.out.println(entity.getCustomName().asString());
             }
         }
@@ -82,7 +95,27 @@ public class VillagerUtil {
             //    System.out.println("Custom name inside lost Villager Name = " + string);
             String realString = VillagerNames.CONFIG.villagerGeneralConfig.professionNames ? string.substring(0, string.indexOf(" ")) : string;
             //     System.out.println("Next string = " + realString);
-            entity.setCustomName(new LiteralText(realString));
+            entity.setCustomName(new LiteralText(realString).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
         }
+    }
+    public static void updateGrownUpVillagerName(VillagerEntity entity){
+        if (entity.hasCustomName()){
+            System.out.println(entity.getCustomName());
+          entity.setCustomName(new LiteralText(entity.getCustomName().asString().substring(0, entity.getCustomName().asString().indexOf(" "))).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+        }
+    }
+    public static void generalVillagerUpdate(VillagerEntity entity){
+        if (entity.hasCustomName()){
+            entity.setCustomName(new LiteralText(Objects.requireNonNull(entity.getCustomName()).asString()).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+            if (entity.isBaby() && VillagerNames.CONFIG.villagerGeneralConfig.childNames && !entity.getCustomName().asString().contains(" the Child")){
+                entity.setCustomName(new LiteralText(entity.getCustomName().asString() + " the Child").formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+            }
+        }
+    }
+    public static boolean isIsModMenuOpen(){
+        return isModMenuOpen;
+    }
+    public static void setIsModMenuOpen(boolean bool){
+        isModMenuOpen = bool;
     }
 }
