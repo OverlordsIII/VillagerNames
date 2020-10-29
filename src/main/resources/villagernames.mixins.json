@@ -4,7 +4,8 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "VillagerEntityMixin",
-    "ZombieEntityMixin"
+    "ZombieEntityMixin",
+    "ZombieVillagerEntityMixin"
   ],
   "client": [
     "SelectionListEntryMixin"

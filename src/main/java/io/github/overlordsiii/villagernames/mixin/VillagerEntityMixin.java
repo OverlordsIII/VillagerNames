@@ -9,10 +9,12 @@ import net.minecraft.village.VillagerData;
 import net.minecraft.village.VillagerDataContainer;
 import net.minecraft.village.VillagerProfession;
 import net.minecraft.world.World;
+import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
@@ -32,6 +34,10 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Inte
         if (this.hasCustomName() && villagerData.getProfession() == VillagerProfession.NONE){
             VillagerUtil.updateLostVillagerProfessionName((VillagerEntity)(Object)this);
         }
+    }
+    @Redirect(method = "onDeath", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;info(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V"))
+    private void redirect(Logger logger, String message, Object p0, Object p1){
+        String lol = "ha lol gottem";
     }
     @SuppressWarnings("ALL")
     @Inject(method = "onGrowUp", at = @At("TAIL"))

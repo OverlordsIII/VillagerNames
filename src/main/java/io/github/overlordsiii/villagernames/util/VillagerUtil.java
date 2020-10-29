@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
+import static io.github.overlordsiii.villagernames.VillagerNames.LOGGER;
+
 public class VillagerUtil {
     private static ArrayList<String> usedUpNames = new ArrayList<>();
     private static String upperFirstLetter(String string){
@@ -82,9 +84,9 @@ public class VillagerUtil {
         }
         else {
             if (!Objects.requireNonNull(entity.getCustomName()).asString().contains("the") && VillagerNames.CONFIG.villagerGeneralConfig.professionNames) {
-                //System.out.println(entity.getCustomName().asString());
+                //LOGGER.info(entity.getCustomName().asString());
                 entity.setCustomName(new LiteralText(Objects.requireNonNull(entity.getCustomName()).asString() + " the " + upperFirstLetter(entity.getVillagerData().getProfession().toString())).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
-                //  System.out.println(entity.getCustomName().asString());
+                //  LOGGER.info(entity.getCustomName().asString());
             }
         }
         entity.setCustomNameVisible(true);
@@ -92,25 +94,44 @@ public class VillagerUtil {
     public static void updateLostVillagerProfessionName(VillagerEntity entity){
         if (entity.hasCustomName() && Objects.requireNonNull(entity.getCustomName()).asString().contains(" ")) {
             String string = Objects.requireNonNull(entity.getCustomName()).asString();
-            //    System.out.println("Custom name inside lost Villager Name = " + string);
+            //    LOGGER.info("Custom name inside lost Villager Name = " + string);
             String realString = VillagerNames.CONFIG.villagerGeneralConfig.professionNames ? string.substring(0, string.indexOf(" ")) : string;
-            //     System.out.println("Next string = " + realString);
+            //     LOGGER.info("Next string = " + realString);
             entity.setCustomName(new LiteralText(realString).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
         }
     }
     public static void updateGrownUpVillagerName(VillagerEntity entity){
         if (entity.hasCustomName()) {
             if (entity.getCustomName().asString().contains(" the")) {
-                System.out.println(entity.getCustomName().asString());
                 entity.setCustomName(new LiteralText(entity.getCustomName().asString().substring(0, entity.getCustomName().asString().indexOf(" "))).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
             }
         }
     }
     public static void addZombieVillagerName(VillagerEntity villagerEntity, ZombieVillagerEntity zombieVillagerEntity){
+        LOGGER.info(villagerEntity.hasCustomName());
         if (villagerEntity.hasCustomName()){
+            LOGGER.info("before name = " + villagerEntity.getCustomName().asString());
             if (villagerEntity.getCustomName().asString().contains(" the")) {
                 String string = villagerEntity.getCustomName().asString().substring(0, villagerEntity.getCustomName().asString().indexOf(" "));
+                LOGGER.info("string = " + string);
                 zombieVillagerEntity.setCustomName(new LiteralText(string + " the Zombie").formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+                LOGGER.info("zombie name = " + zombieVillagerEntity.getCustomName().asString());
+            }
+            else{
+                String string = " the Zombie";
+                zombieVillagerEntity.setCustomName(new LiteralText(villagerEntity.getCustomName().asString() + string).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+            }
+        }
+    }
+    public static void removeZombieVillagerName(VillagerEntity villagerEntity, ZombieVillagerEntity zombieVillagerEntity){
+        if (zombieVillagerEntity.hasCustomName()){
+            if (Objects.requireNonNull(zombieVillagerEntity.getCustomName()).asString().contains(" the")){
+                String name = zombieVillagerEntity.getCustomName().asString().substring(0, zombieVillagerEntity.getCustomName().asString().indexOf(" the"));
+                villagerEntity.setCustomName(new LiteralText(name).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+            }
+            else{
+                String string = " the Zombie";
+                zombieVillagerEntity.setCustomName(new LiteralText(villagerEntity.getCustomName().asString() + string).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
             }
         }
     }

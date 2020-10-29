@@ -14,5 +14,9 @@
   "text.autoconfig.VillagerNames.option.villagerGeneralConfig.villagerTextFormatting": "Villager Text Formatting",
   "text.autoconfig.VillagerNames.option.villagerGeneralConfig.nitwitText": "Text for Nitwits",
   "text.autoconfig.VillagerNames.option.villagerGeneralConfig.professionNames.@Tooltip": "Gives villagers with their profession added to it",
-  "text.autoconfig.VillagerNames.option.villagerGeneralConfig.childNames": "Names for children"
+  "text.autoconfig.VillagerNames.option.villagerGeneralConfig.childNames": "Names for children",
+  "text.autoconfig.VillagerNames.option.villagerGeneralConfig.villagerTextFormatting.@Tooltip": "Formats villager text to the following formatting: %s",
+  "text.autoconfig.VillagerNames.option.villagerGeneralConfig.childNames.@Tooltip": "Gives child villagers the extra title /'the Child/'",
+  "text.autoconfig.VillagerNames.option.villagerGeneralConfig.nitwitText.@Tooltip": "Allows you to customize the text that comes for a nitwit villager",
+  "text.autoconfig.VillagerNames.option.villagerGeneralConfig.needsOP.@Tooltip": "Allows you to choose if the villager commands need op"
 }

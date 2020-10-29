@@ -4,6 +4,7 @@ import net.minecraft.util.Formatting;
 
 import java.util.Locale;
 
+@SuppressWarnings("unused")
 public enum FormattingDummy {
     BLACK(Formatting.BLACK),
     DARK_BLUE(Formatting.DARK_BLUE),
@@ -30,7 +31,7 @@ public enum FormattingDummy {
 
     private Formatting formatting;
 
-    private FormattingDummy(Formatting formatting){
+    FormattingDummy(Formatting formatting){
         this.formatting = formatting;
     }
 
