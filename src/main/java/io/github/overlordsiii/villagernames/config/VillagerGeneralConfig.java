@@ -21,4 +21,10 @@ public class VillagerGeneralConfig implements ConfigData {
     public FormattingDummy villagerTextFormatting = FormattingDummy.WHITE;
     @ConfigEntry.Gui.Tooltip
     public boolean childNames = false;
+    @ConfigEntry.Gui.Tooltip
+    public boolean turnOffVillagerConsoleSpam = true;
+    @ConfigEntry.Gui.Tooltip
+    public boolean wanderingTraderNames = true;
+    @ConfigEntry.Gui.Tooltip
+    public String wanderingTraderText = "Wandering Trader";
 }

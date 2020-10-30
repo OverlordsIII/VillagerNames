@@ -22,14 +22,12 @@ dependencies {
     modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 
     modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    /*
-    modApi("me.sargunvohra.mcmods:autoconfig1u:3.2.2") {
+
+    modApi("me.sargunvohra.mcmods:autoconfig1u:3.3.1") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-    include "me.sargunvohra.mcmods:autoconfig1u:3.2.2"
-     */
-    modImplementation 'com.github.OverlordsIII:AutoConfig:0.0.2'
-    include 'com.github.OverlordsIII:AutoConfig:0.0.2'
+    include "me.sargunvohra.mcmods:autoconfig1u:3.3.1"
+
     modApi("me.shedaniel.cloth:config-2:4.8.2") {
         exclude(group: "net.fabricmc.fabric-api")
     }

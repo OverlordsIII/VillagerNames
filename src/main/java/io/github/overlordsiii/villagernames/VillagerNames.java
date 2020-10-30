@@ -5,9 +5,7 @@ import io.github.overlordsiii.villagernames.config.VillagerConfig;
 import io.github.overlordsiii.villagernames.util.NamesLoader;
 import io.github.overlordsiii.villagernames.util.VillagerUtil;
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
-import me.sargunvohra.mcmods.autoconfig1u.ConfigHolder;
 import me.sargunvohra.mcmods.autoconfig1u.ConfigManager;
-import me.sargunvohra.mcmods.autoconfig1u.event.ConfigSerializeEvent;
 import me.sargunvohra.mcmods.autoconfig1u.serializer.GsonConfigSerializer;
 import me.sargunvohra.mcmods.autoconfig1u.serializer.PartitioningSerializer;
 import net.fabricmc.api.ModInitializer;
@@ -15,7 +13,7 @@ import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
-import net.minecraft.util.ActionResult;
+import net.minecraft.entity.passive.WanderingTraderEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -39,11 +37,15 @@ public class VillagerNames implements ModInitializer {
                VillagerUtil.createVillagerNames((VillagerEntity)entity);
                VillagerUtil.generalVillagerUpdate((VillagerEntity)entity);
             }
-            if (entity instanceof IronGolemEntity){
-                    VillagerUtil.loadGolemNames((IronGolemEntity)entity);
-                    VillagerUtil.updateGolemNames((IronGolemEntity)entity);
+            else if (entity instanceof IronGolemEntity){
+                VillagerUtil.loadGolemNames((IronGolemEntity)entity);
+                VillagerUtil.updateGolemNames((IronGolemEntity)entity);
+            } else if (entity instanceof WanderingTraderEntity){
+                VillagerUtil.createWanderingTraderNames((WanderingTraderEntity)entity);
+                VillagerUtil.updateWanderingTraderNames((WanderingTraderEntity)entity);
             }
         });
+
     }
 
 }

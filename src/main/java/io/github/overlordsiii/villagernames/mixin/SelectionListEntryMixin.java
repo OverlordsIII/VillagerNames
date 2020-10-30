@@ -4,8 +4,6 @@ import io.github.overlordsiii.villagernames.config.FormattingDummy;
 import me.shedaniel.clothconfig2.gui.entries.SelectionListEntry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.text.HoverEvent;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,7 +30,9 @@ public abstract class SelectionListEntryMixin<T> {
                     : t.toString()).formatted(FormattingDummy.valueOf(
                     t.toString()).getFormatting())) : nameProvider;
         } catch (IllegalArgumentException | NullPointerException ex){
-            this.nameProvider = nameProvider == null ? (t -> new TranslatableText(t instanceof SelectionListEntry.Translatable ? ((SelectionListEntry.Translatable) t).getKey() : t.toString())) : nameProvider;
+            this.nameProvider = nameProvider == null ? (t -> new TranslatableText(t instanceof SelectionListEntry.Translatable ?
+                    ((SelectionListEntry.Translatable) t).getKey()
+                    : t.toString())) : nameProvider;
         }
     }
 }

@@ -1,5 +1,6 @@
 package io.github.overlordsiii.villagernames.mixin;
 
+import io.github.overlordsiii.villagernames.VillagerNames;
 import io.github.overlordsiii.villagernames.util.VillagerUtil;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.InteractionObserver;
@@ -37,7 +38,12 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Inte
     }
     @Redirect(method = "onDeath", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;info(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V"))
     private void redirect(Logger logger, String message, Object p0, Object p1){
-        String lol = "ha lol gottem";
+        if (VillagerNames.CONFIG.villagerGeneralConfig.turnOffVillagerConsoleSpam) {
+            String lol = "ha lol gottem";
+        }
+        else{
+            logger.info(message, p0, p1);
+        }
     }
     @SuppressWarnings("ALL")
     @Inject(method = "onGrowUp", at = @At("TAIL"))

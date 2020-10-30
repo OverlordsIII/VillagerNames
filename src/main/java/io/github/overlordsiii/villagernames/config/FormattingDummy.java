@@ -1,6 +1,8 @@
 package io.github.overlordsiii.villagernames.config;
 
+import me.shedaniel.clothconfig2.gui.entries.SelectionListEntry;
 import net.minecraft.util.Formatting;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
@@ -43,4 +45,12 @@ public enum FormattingDummy {
         return this.formatting;
     }
 
+    public static FormattingDummy fromFormatting(Formatting formatting){
+        for (FormattingDummy dummy : FormattingDummy.values()){
+            if (dummy.getFormatting().equals(formatting)){
+                return dummy;
+            }
+        }
+        return FormattingDummy.WHITE;
+    }
 }
