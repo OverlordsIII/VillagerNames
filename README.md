@@ -10,6 +10,10 @@ This way, every one of those big noses will be a person, not a thing. And you wi
 
 This eventually will be part of a bigger groups of Mods, designed to work both together and individually. So, if you like this mod, keep your eyes open for more stuff coming in the future.
 
+**Please note that the config requires a restart on the server to apply changes in it.**
+
+**SHOWCASE VIDEO :** [![Villager Names Showcase Video](https://res.cloudinary.com/marcomontalbano/image/upload/v1604353086/video_to_markdown/images/youtube--wcvzFe5mqag-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=wcvzFe5mqag&feature=youtu.be "Villager Names Showcase Video")
+
  Features:
 
  * Adds names to villagers when your server boots up for the first time
