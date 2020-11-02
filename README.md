@@ -41,7 +41,7 @@ the root command is `/villagername`
  * set
     * nitwitText (text) - Sets the added text for a nitwit villager. Defaults to 'the Nitwit'. Will always be prefixed by 'the'
     * wanderingTraderText (text) - Sets the added text for a Wandering Trader. Defaults to 'the Wandering Trader'. Will always be prefixed by 'the'
-    * villagerTextFormatting (formatting) - Sets the villager text to the following formatting. Defaults to WHITE. Specific formattings can be found [here](https://github.com/OverlordsIII/VillagerNames/blob/master/src/main/java/io/github/overlordsiii/villagernames/config/FormattingDummy.java) or can be found by the suggestions.
+    * villagerTextFormatting (formatting) - Sets the villager text to the following formatting. Defaults to WHITE. Specific formattings can be found [here](https://github.com/OverlordsIII/VillagerNames/blob/master/src/main/java/io/github/overlordsiii/villagernames/config/FormattingDummy.java) or can be found by the suggestions in the commands.
  * info
-    - give you all the current config values
+    - sends the player all the current config values
     
