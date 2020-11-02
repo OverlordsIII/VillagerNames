@@ -1,4 +1,5 @@
 # VillagerNames
+## Overview
 When we are playing Minecraft, we are presented to a very large amount of Mobs. Most of them are either passive or aggressive. But only two can be considered your allies. The tamed wolves and the Villagers (No, cats doesn't count. They really don't care about you).
 
 Villagers are very useful, if not a bit dumb sometimes. We rely on them for their trades, for our automated crops and Iron Farms. But they don't have the recognition they deserve. Of course, you can name them with nametags, but is it REALISTIC? Is it IMMERSIVE?? NO!
@@ -12,10 +13,9 @@ This eventually will be part of a bigger groups of Mods, designed to work both t
 
 **Please note that the config requires a restart on the server to apply changes in it.**
 
-**SHOWCASE VIDEO:**
+## Showcase Video:
 [![VillagerNames](https://res.cloudinary.com/marcomontalbano/image/upload/v1604353086/video_to_markdown/images/youtube--wcvzFe5mqag-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=wcvzFe5mqag&feature=youtu.be "VillagerNames")
- Features:
-
+## Features:
  * Adds names to villagers when your server boots up for the first time
  * Adds the villager's profession to the villager's names when they get a profession (config enabled)
  * Adds a " the Child" tag to children (config enabled)
@@ -27,6 +27,7 @@ This eventually will be part of a bigger groups of Mods, designed to work both t
  * When converting back from a zombie it will change back to a normal villager + normal villager text
  * Shuts the console up when a villager dies so you can do whatever you want to them without mc screaming at you (config enabled)
  * Allows you to customize the text for a wandering trader (config enabled)
+## Command Tree
 This mod also allows you to use commands to customize it
 the root command is `/villagername`
  * toggle
@@ -49,3 +50,5 @@ the root command is `/villagername`
  * info
     - sends the player all the current config values
     
+**Please note that some of these commands require a server restart to apply**
+
