@@ -18,8 +18,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Objects;
-
 @Mixin(VillagerEntity.class)
 public abstract class VillagerEntityMixin extends MerchantEntity implements InteractionObserver, VillagerDataContainer {
     @Shadow public abstract VillagerData getVillagerData();
@@ -36,6 +34,7 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Inte
             VillagerUtil.updateLostVillagerProfessionName((VillagerEntity)(Object)this);
         }
     }
+    @SuppressWarnings("ALL")
     @Redirect(method = "onDeath", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;info(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V"))
     private void redirect(Logger logger, String message, Object p0, Object p1){
         if (VillagerNames.CONFIG.villagerGeneralConfig.turnOffVillagerConsoleSpam) {

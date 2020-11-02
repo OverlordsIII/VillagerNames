@@ -1,6 +1,5 @@
 package io.github.overlordsiii.villagernames.mixin;
 
-import io.github.overlordsiii.villagernames.VillagerNames;
 import io.github.overlordsiii.villagernames.util.VillagerUtil;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
@@ -8,7 +7,6 @@ import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.mob.ZombieVillagerEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.LiteralText;
 import net.minecraft.village.VillagerDataContainer;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;

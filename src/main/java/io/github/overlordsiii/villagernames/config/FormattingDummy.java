@@ -1,12 +1,9 @@
 package io.github.overlordsiii.villagernames.config;
 
-import me.shedaniel.clothconfig2.gui.entries.SelectionListEntry;
 import net.minecraft.util.Formatting;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
-@SuppressWarnings("unused")
 public enum FormattingDummy {
     BLACK(Formatting.BLACK),
     DARK_BLUE(Formatting.DARK_BLUE),

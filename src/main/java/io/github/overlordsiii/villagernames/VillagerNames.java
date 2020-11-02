@@ -17,7 +17,7 @@ import net.minecraft.entity.passive.WanderingTraderEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
+@SuppressWarnings("ALL")
 public class VillagerNames implements ModInitializer {
     public static final ConfigManager CONFIG_MANAGER;
     public static final VillagerConfig CONFIG;
@@ -29,9 +29,7 @@ public class VillagerNames implements ModInitializer {
     @Override
     public void onInitialize() {
         NamesLoader.load();
-        CommandRegistrationCallback.EVENT.register((commandDispatcher, dedicated) -> {
-            VillagerNameCommand.register(commandDispatcher);
-        });
+        CommandRegistrationCallback.EVENT.register((commandDispatcher, dedicated) -> VillagerNameCommand.register(commandDispatcher));
         ServerEntityEvents.ENTITY_LOAD.register((entity, serverWorld) -> {
             if (entity instanceof VillagerEntity){
                VillagerUtil.createVillagerNames((VillagerEntity)entity);

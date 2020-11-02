@@ -12,5 +12,5 @@ import java.util.Map;
 @Mixin(ConfigBuilderImpl.class)
 public interface ConfigBuilderImplAccessor {
     @Accessor("categoryMap")
-    public Map<Text, ConfigCategory> getCategoryMap();
+    Map<Text, ConfigCategory> getCategoryMap();
 }

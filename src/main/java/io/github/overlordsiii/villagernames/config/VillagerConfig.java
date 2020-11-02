@@ -1,13 +1,8 @@
 package io.github.overlordsiii.villagernames.config;
 
-import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry;
 import me.sargunvohra.mcmods.autoconfig1u.serializer.PartitioningSerializer;
-import me.sargunvohra.mcmods.autoconfig1u.shadowed.blue.endless.jankson.Comment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Config(name = "VillagerNames")
 @Config.Gui.Background("minecraft:textures/block/barrel_side.png")

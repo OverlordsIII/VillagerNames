@@ -2,17 +2,17 @@ package io.github.overlordsiii.villagernames.util;
 
 
 import com.google.gson.*;
-import com.google.gson.stream.JsonWriter;
 import io.github.overlordsiii.villagernames.VillagerNames;
-import me.sargunvohra.mcmods.autoconfig1u.serializer.ConfigSerializer;
 import net.fabricmc.loader.api.FabricLoader;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -31,14 +31,14 @@ public class NamesLoader {
         JsonParser parser = new JsonParser();
         JsonObject object = (JsonObject) parser.parse(reader);
         JsonArray value = (JsonArray) object.get(string.substring(0, string.indexOf(".")));
-        Iterator<JsonElement> stringIterator = value.iterator();
-        while (stringIterator.hasNext()){
-            strings.add(stringIterator.next().getAsString());
+        for (JsonElement jsonElement : value) {
+            strings.add(jsonElement.getAsString());
         }
         return strings;
     }
     //the json file copy will be placed in the config dir
     //shuold be used to jsonify a names txt file
+    @SuppressWarnings("ALL")
     private static void jsonifyTxtFile(String file) throws IOException {
         ArrayList<String> strings = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(NamesLoader.class.getResourceAsStream("/assets/villagernames/names/" + file)));

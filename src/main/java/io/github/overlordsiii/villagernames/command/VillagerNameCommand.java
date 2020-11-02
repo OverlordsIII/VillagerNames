@@ -74,6 +74,7 @@ public class VillagerNameCommand {
             .then(literal("info")
                 .executes(VillagerNameCommand::executeInfo)));
     }
+    @SuppressWarnings("ALL")
     private static int executeSetFormatting(CommandContext<ServerCommandSource> ctx, String displayText, Formatting newFormatting){
         VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting = FormattingDummy.fromFormatting(newFormatting);
         ctx.getSource().sendFeedback(new LiteralText(String.format(displayText

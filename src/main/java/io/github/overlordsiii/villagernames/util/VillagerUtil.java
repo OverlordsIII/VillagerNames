@@ -103,7 +103,7 @@ public class VillagerUtil {
     }
     public static void updateGrownUpVillagerName(VillagerEntity entity){
         if (entity.hasCustomName()) {
-            if (entity.getCustomName().asString().contains(" the")) {
+            if (Objects.requireNonNull(entity.getCustomName()).asString().contains(" the")) {
                 entity.setCustomName(new LiteralText(entity.getCustomName().asString().substring(0, entity.getCustomName().asString().indexOf(" "))).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
             }
         }
@@ -112,7 +112,7 @@ public class VillagerUtil {
    //     LOGGER.info(villagerEntity.hasCustomName());
         if (villagerEntity.hasCustomName()){
         //    LOGGER.info("before name = " + villagerEntity.getCustomName().asString());
-            if (villagerEntity.getCustomName().asString().contains(" the")) {
+            if (Objects.requireNonNull(villagerEntity.getCustomName()).asString().contains(" the")) {
                 String string = villagerEntity.getCustomName().asString().substring(0, villagerEntity.getCustomName().asString().indexOf(" "));
            //     LOGGER.info("string = " + string);
                 zombieVillagerEntity.setCustomName(new LiteralText(string + " the Zombie").formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
@@ -132,7 +132,7 @@ public class VillagerUtil {
             }
             else{
                 String string = " the Zombie";
-                zombieVillagerEntity.setCustomName(new LiteralText(villagerEntity.getCustomName().asString() + string).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+                zombieVillagerEntity.setCustomName(new LiteralText(Objects.requireNonNull(villagerEntity.getCustomName()).asString() + string).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
             }
         }
     }
@@ -156,7 +156,7 @@ public class VillagerUtil {
     }
     public static void updateWanderingTraderNames(WanderingTraderEntity entity){
         if (entity.hasCustomName()){
-            String fullName = entity.getCustomName().asString();
+            String fullName = Objects.requireNonNull(entity.getCustomName()).asString();
             String firstName = fullName.substring(0, fullName.indexOf(" the"));
             entity.setCustomName(new LiteralText(firstName + " the " + VillagerNames.CONFIG.villagerGeneralConfig.wanderingTraderText).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
             entity.setCustomNameVisible(true);
@@ -164,7 +164,7 @@ public class VillagerUtil {
     }
     public static void updateGolemNames(IronGolemEntity entity){
         if (entity.hasCustomName()){
-            entity.setCustomName(new LiteralText(entity.getCustomName().asString()).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+            entity.setCustomName(new LiteralText(Objects.requireNonNull(entity.getCustomName()).asString()).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
             entity.setCustomNameVisible(true);
         }
     }

@@ -1,7 +1,6 @@
 package io.github.overlordsiii.villagernames.command.suggestion;
 
 import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
@@ -13,7 +12,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class GolemNameSuggestionProvider implements SuggestionProvider<ServerCommandSource> {
     @Override
-    public CompletableFuture<Suggestions> getSuggestions(CommandContext<ServerCommandSource> context, SuggestionsBuilder builder) throws CommandSyntaxException {
+    public CompletableFuture<Suggestions> getSuggestions(CommandContext<ServerCommandSource> context, SuggestionsBuilder builder) {
         String string = builder.getRemaining();
         sortGolemNamesByString(string).forEach(builder::suggest);
         return builder.buildFuture();

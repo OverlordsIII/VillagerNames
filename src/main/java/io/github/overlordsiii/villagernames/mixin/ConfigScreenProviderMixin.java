@@ -1,7 +1,6 @@
 package io.github.overlordsiii.villagernames.mixin;
 
 import io.github.overlordsiii.villagernames.client.cloth.RestartStringVisitable;
-import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
 import me.sargunvohra.mcmods.autoconfig1u.gui.ConfigScreenProvider;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
@@ -20,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Environment(EnvType.CLIENT)
 @Mixin(value = ConfigScreenProvider.class)
-public abstract class ConfigScreenProviderMixin<T extends ConfigData> {
+public abstract class ConfigScreenProviderMixin {
 
    @ModifyVariable(method = "get",at = @At(value = "INVOKE", target = "Ljava/util/function/Function;apply(Ljava/lang/Object;)Ljava/lang/Object;", shift = At.Shift.BEFORE, ordinal = 1), remap = false)
     private ConfigBuilder aClass(ConfigBuilder builder){
