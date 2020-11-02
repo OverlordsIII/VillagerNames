@@ -23,3 +23,25 @@ This eventually will be part of a bigger groups of Mods, designed to work both t
  * When converting back from a zombie it will change back to a normal villager + normal villager text
  * Shuts the console up when a villager dies so you can do whatever you want to them without mc screaming at you (config enabled)
  * Allows you to customize the text for a wandering trader (config enabled)
+This mod also allows you to use commands to customize it
+the root command is `/villagername`
+ * toggle
+    * professionNames - Toggles villagers having added professions in their names. Default true
+    * golemNames - Toggles names for golems. Default true
+    * needsOP - Enables commands only for OP's. Default false
+    * childNames - Toggles children villagers having the added  "the Child" tag in their name. Default false
+    * turnOffConsoleSpam - Toggles console spam off when you kill a villager. Default true
+    * wanderingTraderNames - Toggles names added for the wanderingTrader
+ * add
+    * villagerNames (name) - Adds a name to the villagerNames list
+    * golemNames (name) - Adds a name to the golemNames list
+ * remove
+    * villagerNames (name) - Removes a name from the villagerNames list
+    * golemNames (name) - Removes a name from the golemNames list
+ * set
+    * nitwitText (text) - Sets the added text for a nitwit villager. Defaults to 'the Nitwit'. Will always be prefixed by 'the'
+    * wanderingTraderText (text) - Sets the added text for a Wandering Trader. Defaults to 'the Wandering Trader'. Will always be prefixed by 'the'
+    * villagerTextFormatting (formatting) - Sets the villager text to the following formatting. Defaults to WHITE. Specific formattings can be found [here](https://github.com/OverlordsIII/VillagerNames/blob/master/src/main/java/io/github/overlordsiii/villagernames/config/FormattingDummy.java) or can be found by the suggestions in the commands.
+ * info
+    - sends the player all the current config values
+    
