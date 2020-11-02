@@ -14,9 +14,6 @@ This eventually will be part of a bigger groups of Mods, designed to work both t
 
 **SHOWCASE VIDEO:**
 [![VillagerNames](https://res.cloudinary.com/marcomontalbano/image/upload/v1604353086/video_to_markdown/images/youtube--wcvzFe5mqag-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=wcvzFe5mqag&feature=youtu.be "VillagerNames")
-<div class="someclass" id="someid" markdown="1">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/wcvzFe5mqag" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
  Features:
 
  * Adds names to villagers when your server boots up for the first time
