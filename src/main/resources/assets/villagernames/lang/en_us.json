@@ -26,5 +26,4 @@
   "text.autoconfig.VillagerNames.option.villagerGeneralConfig.wanderingTraderNames.@Tooltip": "Gives names for wandering traders",
   "text.autoconfig.VillagerNames.option.villagerGeneralConfig.wanderingTraderText": "Wandering Trader Text",
   "text.autoconfig.VillagerNames.option.villagerGeneralConfig.wanderingTraderText.@Tooltip": "Allows you to customize the text for the Wandering Traders"
-
 }

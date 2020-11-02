@@ -8,6 +8,9 @@
     "ZombieVillagerEntityMixin"
   ],
   "client": [
+    "TextListEntryMixin",
+    "ConfigBuilderImplAccessor",
+    "ConfigScreenProviderMixin",
     "SelectionListEntryMixin"
   ],
   "injectors": {
