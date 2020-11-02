@@ -1,16 +1,27 @@
 package io.github.overlordsiii.villagernames.command.argument;
 
+
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import io.github.overlordsiii.villagernames.config.FormattingDummy;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.LiteralText;
-import net.minecraft.text.Style;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Util;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Locale;
 
 public class FormattingArgumentType implements ArgumentType<Formatting> {
+    private static final Collection<String> EXAMPLES = Util.make(new ArrayList<>(), list -> {
+        for (FormattingDummy formatting : FormattingDummy.values()){
+            list.add(formatting.toString().toUpperCase(Locale.ROOT));
+        }
+    });
     public static FormattingArgumentType format(){
         return new FormattingArgumentType();
     }
@@ -19,26 +30,23 @@ public class FormattingArgumentType implements ArgumentType<Formatting> {
     }
     @Override
     public Formatting parse(StringReader reader) throws CommandSyntaxException {
-        int argBeginning = reader.getCursor(); // The starting position of the cursor is at the beginning of the argument.
+        int argBeginning = reader.getCursor();
         if (!reader.canRead()) {
             reader.skip();
         }
-
-        // Now we check the contents of the argument till either we hit the end of the command line (When canRead becomes false)
-        // Otherwise we go till reach reach a space, which signifies the next argument
-        while (reader.canRead() && reader.peek() != ' ') { // peek provides the character at the current cursor position.
-            reader.skip(); // Tells the StringReader to move it's cursor to the next position.
+        while (reader.canRead() && reader.peek() != ' ') {
+            reader.skip();
         }
-
-        // Now we substring the specific part we want to see using the starting cursor position and the ends where the next argument starts.
-        String substring = reader.getString().substring(argBeginning, reader.getCursor());
+       String substring = reader.getString().substring(argBeginning, reader.getCursor());
         try {
             return Formatting.valueOf(substring);
         } catch (Exception ex) {
-            // UUIDs can throw an exception when made by a string, so we catch the exception and repackage it into a CommandSyntaxException type.
-            // Create with context tells Brigadier to supply some context to tell the user where the command failed at.
-            // Though normal create method could be used.
             throw new SimpleCommandExceptionType(new LiteralText(ex.getMessage())).createWithContext(reader);
         }
+    }
+
+    @Override
+    public Collection<String> getExamples() {
+        return EXAMPLES;
     }
 }
