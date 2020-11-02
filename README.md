@@ -12,7 +12,9 @@ This eventually will be part of a bigger groups of Mods, designed to work both t
 
 **Please note that the config requires a restart on the server to apply changes in it.**
 
-**SHOWCASE VIDEO :** [![Villager Names Showcase Video](https://res.cloudinary.com/marcomontalbano/image/upload/v1604353086/video_to_markdown/images/youtube--wcvzFe5mqag-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=wcvzFe5mqag&feature=youtu.be "Villager Names Showcase Video")
+**SHOWCASE VIDEO:**
+[![VillagerNames](https://res.cloudinary.com/marcomontalbano/image/upload/v1604353086/video_to_markdown/images/youtube--wcvzFe5mqag-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=wcvzFe5mqag&feature=youtu.be "VillagerNames")
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wcvzFe5mqag" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
  Features:
 
