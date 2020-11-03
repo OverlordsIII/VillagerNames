@@ -1,4 +1,5 @@
 # VillagerNames
+You can find the latest releases of this mod [here]https://www.curseforge.com/minecraft/mc-mods/villager-names-for-fabric/
 ## Overview
 When we are playing Minecraft, we are presented to a very large amount of Mobs. Most of them are either passive or aggressive. But only two can be considered your allies. The tamed wolves and the Villagers (No, cats doesn't count. They really don't care about you).
 
