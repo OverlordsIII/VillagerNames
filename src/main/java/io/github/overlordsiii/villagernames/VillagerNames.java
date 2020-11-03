@@ -14,6 +14,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.passive.WanderingTraderEntity;
+import net.minecraft.server.dedicated.command.StopCommand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,7 +30,12 @@ public class VillagerNames implements ModInitializer {
     @Override
     public void onInitialize() {
         NamesLoader.load();
-        CommandRegistrationCallback.EVENT.register((commandDispatcher, dedicated) -> VillagerNameCommand.register(commandDispatcher));
+        CommandRegistrationCallback.EVENT.register((commandDispatcher, dedicated) -> {
+            VillagerNameCommand.register(commandDispatcher);
+            if (!dedicated){
+                StopCommand.register(commandDispatcher);
+            }
+        });
         ServerEntityEvents.ENTITY_LOAD.register((entity, serverWorld) -> {
             if (entity instanceof VillagerEntity){
                VillagerUtil.createVillagerNames((VillagerEntity)entity);

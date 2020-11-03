@@ -12,14 +12,19 @@ import io.github.overlordsiii.villagernames.command.suggestion.FormattingSuggest
 import io.github.overlordsiii.villagernames.command.suggestion.GolemNameSuggestionProvider;
 import io.github.overlordsiii.villagernames.command.suggestion.VillagerNameSuggestionProvider;
 import io.github.overlordsiii.villagernames.config.FormattingDummy;
+import io.github.overlordsiii.villagernames.config.GolemNamesConfig;
 import io.github.overlordsiii.villagernames.config.VillagerGeneralConfig;
+import io.github.overlordsiii.villagernames.config.VillagerNamesConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -41,25 +46,25 @@ public class VillagerNameCommand {
                 .then(literal("childNames")
                     .executes(context -> executeToggle(context, "childNames", "Children Having names is now toggled %s")))
                 .then(literal("turnOffConsoleSpam")
-                    .executes(context -> executeToggle(context, "consoleSpam", "Villagers dying spamming the console is now toggled %s")))
+                    .executes(context -> executeToggle(context, "turnOffVillagerConsoleSpam", "Villagers dying spamming the console is now toggled %s")))
                 .then(literal("wanderingTraderNames")
                     .executes(context -> executeToggle(context, "wanderingTraderNames", "Wandering Traders having names is now toggled %s"))))
             .then(literal("add")
                 .then(literal("villagerNames")
                     .then(argument("villagerName", StringArgumentType.greedyString())
-                        .executes(context -> executeAdd(context, VillagerNames.CONFIG.villagerNamesConfig.villagerNames, StringArgumentType.getString(context, "villagerName"), "Added %s to the villager names list"))))
+                        .executes(context -> executeAdd(context, VillagerNames.CONFIG.villagerNamesConfig.villagerNames, StringArgumentType.getString(context, "villagerName"), "Added %s to the villager names list", "villagerNames"))))
                 .then(literal("golemNames")
                     .then(argument("golemName", StringArgumentType.greedyString())
-                        .executes(context -> executeAdd(context, VillagerNames.CONFIG.golemNamesConfig.golemNames, StringArgumentType.getString(context, "golemName"), "Added %s to the golem names list")))))
+                        .executes(context -> executeAdd(context, VillagerNames.CONFIG.golemNamesConfig.golemNames, StringArgumentType.getString(context, "golemName"), "Added %s to the golem names list", "golemNames")))))
             .then(literal("remove")
                 .then(literal("villagerNames")
                     .then(argument("villagerNam", VillagerNameArgumentType.villagerName())
                         .suggests(new VillagerNameSuggestionProvider())
-                            .executes(context -> executeRemove(context, VillagerNames.CONFIG.villagerNamesConfig.villagerNames, VillagerNameArgumentType.getVillagerName(context, "villagerNam"), "Removed %s from the villager names list"))))
+                            .executes(context -> executeRemove(context, VillagerNames.CONFIG.villagerNamesConfig.villagerNames, VillagerNameArgumentType.getVillagerName(context, "villagerNam"), "Removed %s from the villager names list", "villagerNames"))))
                 .then(literal("golemNames")
                     .then(argument("golemNam", GolemNameArgumentType.golemName())
                         .suggests(new GolemNameSuggestionProvider())
-                            .executes(context -> executeRemove(context, VillagerNames.CONFIG.golemNamesConfig.golemNames, GolemNameArgumentType.getGolemName(context, "golemNam"), "Removed %s from the golem names list")))))
+                            .executes(context -> executeRemove(context, VillagerNames.CONFIG.golemNamesConfig.golemNames, GolemNameArgumentType.getGolemName(context, "golemNam"), "Removed %s from the golem names list", "golemNames")))))
             .then(literal("set")
                 .then(literal("nitwitText")
                     .then(argument("nitwit", StringArgumentType.greedyString())
@@ -75,7 +80,7 @@ public class VillagerNameCommand {
                 .executes(VillagerNameCommand::executeInfo)));
     }
     @SuppressWarnings("ALL")
-    private static int executeSetFormatting(CommandContext<ServerCommandSource> ctx, String displayText, Formatting newFormatting){
+    private static int executeSetFormatting(CommandContext<ServerCommandSource> ctx, String displayText, Formatting newFormatting) throws CommandSyntaxException {
         VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting = FormattingDummy.fromFormatting(newFormatting);
         ctx.getSource().sendFeedback(new LiteralText(String.format(displayText
                 , FormattingDummy.fromFormatting(newFormatting)))
@@ -88,6 +93,11 @@ public class VillagerNameCommand {
                                                 .toString()).formatted(newFormatting))))
                 , true);
         VillagerNames.CONFIG_MANAGER.save();
+        try {
+            broadCastConfigChangeToOps(ctx, ConfigChange.SET, VillagerGeneralConfig.class.getDeclaredField("villagerTextFormatting"), ctx.getSource().getPlayer(), null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return 1;
     }
     private static int executeSetString(CommandContext<ServerCommandSource> ctx, String literal, String newvalue, String displayedText){
@@ -103,9 +113,14 @@ public class VillagerNameCommand {
                         .withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND
                                 , "/villagername set " + literal))), true);
         VillagerNames.CONFIG_MANAGER.save();
+        try {
+            broadCastConfigChangeToOps(ctx, ConfigChange.SET, VillagerGeneralConfig.class.getDeclaredField(literal), ctx.getSource().getPlayer(), null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return 1;
     }
-    private static int executeToggle(CommandContext<ServerCommandSource> ctx, String literal, String displayText) {
+    private static int executeToggle(CommandContext<ServerCommandSource> ctx, String literal, String displayText) throws CommandSyntaxException {
         String onOrOff;
         switch (literal){
             case "professionNames":
@@ -135,7 +150,7 @@ public class VillagerNameCommand {
                     onOrOff = "off";
                 }
                 break;
-            case "consoleSpam":
+            case "turnOffVillagerConsoleSpam":
                 VillagerNames.CONFIG.villagerGeneralConfig.turnOffVillagerConsoleSpam = !VillagerNames.CONFIG.villagerGeneralConfig.turnOffVillagerConsoleSpam;
                 if (VillagerNames.CONFIG.villagerGeneralConfig.turnOffVillagerConsoleSpam){
                     onOrOff = "on";
@@ -176,9 +191,14 @@ public class VillagerNameCommand {
                                   .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT
                                           , new LiteralText("Toggle the " + literal + " rule")))), true);
         VillagerNames.CONFIG_MANAGER.save();
+        try {
+            broadCastConfigChangeToOps(ctx, ConfigChange.TOGGLE, VillagerGeneralConfig.class.getDeclaredField(literal), ctx.getSource().getPlayer(), null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return 1;
     }
-    private static int executeAdd(CommandContext<ServerCommandSource> ctx, List<String> listToAddTo, String toAdd, String displayText) throws CommandSyntaxException {
+    private static int executeAdd(CommandContext<ServerCommandSource> ctx, List<String> listToAddTo, String toAdd, String displayText, String literal) throws CommandSyntaxException {
         if (!listToAddTo.contains(toAdd)){
             listToAddTo.add(toAdd);
             String text = String.format(displayText, toAdd);
@@ -195,10 +215,19 @@ public class VillagerNameCommand {
                     new LiteralText("The villager or golem list you tried to add too already had that name in it")
                             .formatted(Formatting.RED), false);
         }
+        try {
+            if (literal.contains("villagerNames")) {
+                broadCastConfigChangeToOps(ctx, ConfigChange.ADD, VillagerNamesConfig.class.getDeclaredField(literal), ctx.getSource().getPlayer(), toAdd);
+            } else {
+                broadCastConfigChangeToOps(ctx, ConfigChange.ADD, GolemNamesConfig.class.getDeclaredField(literal), ctx.getSource().getPlayer(), toAdd);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         VillagerNames.CONFIG_MANAGER.save();
         return 1;
     }
-    private static int executeRemove(CommandContext<ServerCommandSource> ctx, List<String> listToRemoveFrom, String toRemove, String displayText) throws CommandSyntaxException {
+    private static int executeRemove(CommandContext<ServerCommandSource> ctx, List<String> listToRemoveFrom, String toRemove, String displayText, String name) throws CommandSyntaxException {
         if (listToRemoveFrom.contains(toRemove)){
             listToRemoveFrom.remove(toRemove);
             String text = String.format(displayText, toRemove);
@@ -211,6 +240,16 @@ public class VillagerNameCommand {
         }
         else{
             ctx.getSource().getPlayer().sendMessage(new LiteralText("The villager or golem list you tried to remove from does not have that name").formatted(Formatting.RED), false);
+        }
+
+        try {
+            if (name.contains("villagerNames")) {
+                broadCastConfigChangeToOps(ctx, ConfigChange.REMOVE, VillagerNamesConfig.class.getDeclaredField(name), ctx.getSource().getPlayer(), toRemove);
+            } else {
+                broadCastConfigChangeToOps(ctx, ConfigChange.REMOVE, GolemNamesConfig.class.getDeclaredField(name), ctx.getSource().getPlayer(), toRemove);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         VillagerNames.CONFIG_MANAGER.save();
         return 1;
@@ -241,5 +280,56 @@ public class VillagerNameCommand {
             ex.printStackTrace();
         }
         return 1;
+    }
+    private static void broadCastConfigChangeToOps(CommandContext<ServerCommandSource> ctx, ConfigChange change, Field field, ServerPlayerEntity executor, @Nullable String addedItem) throws IllegalAccessException {
+        LiteralText text;
+        switch (change){
+            case SET:{
+                text = (LiteralText) new LiteralText("The " + field.getName() + " has been set to \""
+                        + field.get(VillagerNames.CONFIG.villagerGeneralConfig).toString() + "\" by "
+                        + executor.getName().asString() + ".").formatted(field.getName().equals("villagerTextFormatting")
+                        ? FormattingDummy.valueOf(field.get(VillagerNames.CONFIG.villagerGeneralConfig).toString()).getFormatting()
+                        : Formatting.LIGHT_PURPLE);
+                break;
+            }
+            case ADD: {
+                text = (LiteralText) new LiteralText("The " + field.getName() + " has had the name \"" + addedItem + "\" added to the " + field.getName() + " by " + executor.getName().asString() + ".").formatted(Formatting.AQUA);
+                break;
+            }
+            case TOGGLE: {
+                text = (LiteralText) new LiteralText("The " + field.getName() + " has been toggled to " + field.get(VillagerNames.CONFIG.villagerGeneralConfig).toString() + " by " + executor.getName().asString() + ".").formatted(Formatting.GRAY);
+                break;
+            }
+            case REMOVE: {
+                text = (LiteralText) new LiteralText("The " + field.getName() + " has had the name \"" + addedItem + "\" removed from it by " + executor.getName().asString() + ".").formatted(Formatting.YELLOW);
+                break;
+            }
+            default:
+                throw new IllegalStateException("Unexpected value: " + change);
+        }
+        addConfigText(text);
+        sendToOps(ctx, text);
+    }
+    private static void addConfigText(LiteralText text){
+        text.append(new LiteralText(" Any changes to the config require a server restart.")
+                .formatted(Formatting.ITALIC, Formatting.GRAY))
+                .append(new LiteralText(" Would you like to restart the server?")
+                        .formatted(Formatting.BOLD, Formatting.GOLD).styled(style ->
+                                style.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/stop"))
+                                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                                new LiteralText("⚠WARNING! YOU HAVE TO RESTART THE SERVER BY YOURSELF!⚠").formatted(Formatting.RED)))));
+    }
+    private static void sendToOps(CommandContext<ServerCommandSource> ctx, Text text){
+        ctx.getSource().getMinecraftServer().getPlayerManager().getPlayerList().forEach((serverPlayerEntity -> {
+            if (ctx.getSource().getMinecraftServer().getPlayerManager().isOperator(serverPlayerEntity.getGameProfile())){
+                serverPlayerEntity.sendMessage(text, false);
+            }
+        }));
+    }
+    private enum ConfigChange {
+        SET,
+        TOGGLE,
+        ADD,
+        REMOVE,
     }
 }
