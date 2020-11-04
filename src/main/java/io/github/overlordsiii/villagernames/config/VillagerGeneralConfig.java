@@ -11,7 +11,7 @@ public class VillagerGeneralConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip
     public boolean golemNames = true;
     @ConfigEntry.Gui.Tooltip
-    public boolean needsOP = false;
+    public boolean needsOP = true;
     @ConfigEntry.Gui.Excluded
     public boolean hasRead = false;
     @ConfigEntry.Gui.Tooltip

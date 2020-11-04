@@ -266,16 +266,6 @@ public class VillagerNameCommand {
 
 
             }
-            ctx.getSource().getPlayer().sendMessage(new LiteralText("villager names = " + VillagerNames.CONFIG.villagerNamesConfig.villagerNames.toString())
-                    .styled(style -> style.withClickEvent(
-                    FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT ?
-                            new ClickEvent(ClickEvent.Action.OPEN_FILE, FabricLoader.getInstance().getConfigDir() + "\\VillagerNames\\" + "villagerNames.json")
-                            : new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/villagername info"))), false);
-            ctx.getSource().getPlayer().sendMessage(new LiteralText("golem names = " + VillagerNames.CONFIG.golemNamesConfig.golemNames.toString())
-                    .styled(style -> style.withClickEvent(
-                            FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT ?
-                                    new ClickEvent(ClickEvent.Action.OPEN_FILE, FabricLoader.getInstance().getConfigDir() + "\\VillagerNames\\" + "golemNames.json")
-                                    : new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/villagername info"))), false);
         } catch (IllegalAccessException | CommandSyntaxException ex){
             ex.printStackTrace();
         }
