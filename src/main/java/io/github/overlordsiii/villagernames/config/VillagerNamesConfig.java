@@ -7,6 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Config(name = "villagerNames")
-public class VillagerNamesConfig implements ConfigData {
+public class VillagerNamesConfig implements ConfigData, NamesConfig {
     public List<String> villagerNames = new ArrayList<>();
+
+    @Override
+    public String getConfigName() {
+        return "villagerNames";
+    }
+
+    @Override
+    public List<String> getNameList() {
+        return villagerNames;
+    }
 }

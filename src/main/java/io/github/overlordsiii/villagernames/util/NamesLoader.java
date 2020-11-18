@@ -37,7 +37,7 @@ public class NamesLoader {
         return strings;
     }
     //the json file copy will be placed in the config dir
-    //shuold be used to jsonify a names txt file
+    //should be used to jsonify a names txt file
     @SuppressWarnings("ALL")
     private static void jsonifyTxtFile(String file) throws IOException {
         ArrayList<String> strings = new ArrayList<>();

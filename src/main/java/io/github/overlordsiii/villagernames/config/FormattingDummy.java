@@ -28,7 +28,7 @@ public enum FormattingDummy {
     ITALIC(Formatting.ITALIC),
     RESET(Formatting.RESET);
 
-    private Formatting formatting;
+    private final Formatting formatting;
 
     FormattingDummy(Formatting formatting){
         this.formatting = formatting;

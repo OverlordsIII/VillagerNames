@@ -6,11 +6,9 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import io.github.overlordsiii.villagernames.VillagerNames;
 import io.github.overlordsiii.villagernames.command.argument.FormattingArgumentType;
-import io.github.overlordsiii.villagernames.command.argument.GolemNameArgumentType;
-import io.github.overlordsiii.villagernames.command.argument.VillagerNameArgumentType;
+import io.github.overlordsiii.villagernames.command.argument.NameArgumentType;
 import io.github.overlordsiii.villagernames.command.suggestion.FormattingSuggestionProvider;
-import io.github.overlordsiii.villagernames.command.suggestion.GolemNameSuggestionProvider;
-import io.github.overlordsiii.villagernames.command.suggestion.VillagerNameSuggestionProvider;
+import io.github.overlordsiii.villagernames.command.suggestion.NameSuggestionProvider;
 import io.github.overlordsiii.villagernames.config.FormattingDummy;
 import io.github.overlordsiii.villagernames.config.GolemNamesConfig;
 import io.github.overlordsiii.villagernames.config.VillagerGeneralConfig;
@@ -58,13 +56,13 @@ public class VillagerNameCommand {
                         .executes(context -> executeAdd(context, VillagerNames.CONFIG.golemNamesConfig.golemNames, StringArgumentType.getString(context, "golemName"), "Added %s to the golem names list", "golemNames")))))
             .then(literal("remove")
                 .then(literal("villagerNames")
-                    .then(argument("villagerNam", VillagerNameArgumentType.villagerName())
-                        .suggests(new VillagerNameSuggestionProvider())
-                            .executes(context -> executeRemove(context, VillagerNames.CONFIG.villagerNamesConfig.villagerNames, VillagerNameArgumentType.getVillagerName(context, "villagerNam"), "Removed %s from the villager names list", "villagerNames"))))
+                    .then(argument("villagerNam", NameArgumentType.villagerName())
+                        .suggests(new NameSuggestionProvider.Villager())
+                            .executes(context -> executeRemove(context, VillagerNames.CONFIG.villagerNamesConfig.villagerNames, NameArgumentType.getName(context, "villagerNam"), "Removed %s from the villager names list", "villagerNames"))))
                 .then(literal("golemNames")
-                    .then(argument("golemNam", GolemNameArgumentType.golemName())
-                        .suggests(new GolemNameSuggestionProvider())
-                            .executes(context -> executeRemove(context, VillagerNames.CONFIG.golemNamesConfig.golemNames, GolemNameArgumentType.getGolemName(context, "golemNam"), "Removed %s from the golem names list", "golemNames")))))
+                    .then(argument("golemNam", NameArgumentType.golemName())
+                        .suggests(new NameSuggestionProvider.Golem())
+                            .executes(context -> executeRemove(context, VillagerNames.CONFIG.golemNamesConfig.golemNames, NameArgumentType.getName(context, "golemNam"), "Removed %s from the golem names list", "golemNames")))))
             .then(literal("set")
                 .then(literal("nitwitText")
                     .then(argument("nitwit", StringArgumentType.greedyString())

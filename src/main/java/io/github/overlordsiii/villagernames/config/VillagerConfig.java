@@ -11,15 +11,15 @@ import me.sargunvohra.mcmods.autoconfig1u.serializer.PartitioningSerializer;
 public class VillagerConfig extends PartitioningSerializer.GlobalData {
     @ConfigEntry.Category(value = "villagerGeneral")
     @ConfigEntry.Gui.CollapsibleObject
-   public VillagerGeneralConfig villagerGeneralConfig = new VillagerGeneralConfig();
+    public final VillagerGeneralConfig villagerGeneralConfig = new VillagerGeneralConfig();
 
     @ConfigEntry.Category(value = "villagerNames")
     @ConfigEntry.Gui.CollapsibleObject
-   public VillagerNamesConfig villagerNamesConfig = new VillagerNamesConfig();
+    public final VillagerNamesConfig villagerNamesConfig = new VillagerNamesConfig();
 
     @ConfigEntry.Category(value = "golemName")
     @ConfigEntry.Gui.CollapsibleObject
-   public GolemNamesConfig golemNamesConfig = new GolemNamesConfig();
+    public final GolemNamesConfig golemNamesConfig = new GolemNamesConfig();
 
 }
 
