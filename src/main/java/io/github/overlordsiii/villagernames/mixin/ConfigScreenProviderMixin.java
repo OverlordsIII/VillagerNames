@@ -21,50 +21,33 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(value = ConfigScreenProvider.class)
 public abstract class ConfigScreenProviderMixin {
 
-   @ModifyVariable(method = "get",at = @At(value = "INVOKE", target = "Ljava/util/function/Function;apply(Ljava/lang/Object;)Ljava/lang/Object;", shift = At.Shift.BEFORE, ordinal = 1), remap = false)
+    @ModifyVariable(method = "get",at = @At(value = "INVOKE", target = "Ljava/util/function/Function;apply(Ljava/lang/Object;)Ljava/lang/Object;", shift = At.Shift.BEFORE, ordinal = 1), remap = false)
     private ConfigBuilder aClass(ConfigBuilder builder){
 
        boolean bl = false;
-       TranslatableText texter = null;
-       TranslatableText texterer = null;
-       TranslatableText texterererer = null;
-       for (Text text : ((ConfigBuilderImplAccessor)builder).getCategoryMap().keySet()){
-           if (text instanceof TranslatableText){
-               TranslatableText translatableText = (TranslatableText)text;
-               if (translatableText.getKey().contains("villagerGeneral")){
-                   bl = true;
-                   texter = (TranslatableText) text;
-               } else if (translatableText.getKey().contains("villagerNames")){
-                   bl = true;
-                   texterer = (TranslatableText) text;
-               } else if (translatableText.getKey().contains("golem")){
-                   bl = true;
-                   texterererer = (TranslatableText) text;
+       String[] category = new String[]{"villagerGeneral", "villagerNames", "golem"};
+       TranslatableText[] text = new TranslatableText[category.length];
+       for (Text t : ((ConfigBuilderImplAccessor)builder).getCategoryMap().keySet()){
+           if (t instanceof TranslatableText){
+               TranslatableText translatableText = (TranslatableText)t;
+               for (int i = 0; i < category.length; i++){
+                   if (translatableText.getKey().contains(category[i])){
+                       text[i] = translatableText;
+                       bl = true;
+                   }
                }
            }
        }
        if (bl){
-           if (texter != null) {
-               ConfigCategory configCategory = builder.getOrCreateCategory(texter);
-               configCategory.setDescription(new StringVisitable[]{
+           for (int i = 0; i < category.length; i++){
+               if (text[i] != null){
+                   ConfigCategory configCategory = builder.getOrCreateCategory(text[i]);
+                   configCategory.setDescription(new StringVisitable[]{
                        new RestartStringVisitable()
-               });
-               ConfigEntryBuilder builder1 = builder.entryBuilder();
-               configCategory.addEntry(builder1.startTextDescription(new LiteralText("⚠ ANY CHANGES TO THIS CONFIG REQUIRE A SERVER RESTART ⚠").formatted(Formatting.RED)).setColor(16733525).build());
-           } if (texterer != null){
-               ConfigCategory configCategory = builder.getOrCreateCategory(texterer);
-               configCategory.setDescription(new StringVisitable[]{
-                       new RestartStringVisitable()
-               });
-               ConfigEntryBuilder builder1 = builder.entryBuilder();
-               configCategory.addEntry(builder1.startTextDescription(new LiteralText("⚠ ANY CHANGES TO THIS CONFIG REQUIRE A SERVER RESTART ⚠").formatted(Formatting.RED)).setColor(16733525).build());
-           } if (texterererer != null){
-               ConfigCategory configCategory = builder.getOrCreateCategory(texterererer);
-               configCategory.setDescription(new StringVisitable[]{
-                       new RestartStringVisitable()
-               });
-               ConfigEntryBuilder builder1 = builder.entryBuilder();
-              configCategory.addEntry(builder1.startTextDescription(new LiteralText("⚠ ANY CHANGES TO THIS CONFIG REQUIRE A SERVER RESTART ⚠").formatted(Formatting.RED)).setColor(16733525).build());
+                   });
+                   ConfigEntryBuilder builder1 = builder.entryBuilder();
+                   configCategory.addEntry(builder1.startTextDescription(new LiteralText("⚠ ANY CHANGES TO THIS CONFIG REQUIRE A SERVER RESTART ⚠").formatted(Formatting.RED)).setColor(16733525).build());
+               }
            }
        }
        return builder;

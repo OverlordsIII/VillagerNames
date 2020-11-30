@@ -34,7 +34,7 @@ the root command is `/villagername`
  * toggle
     * professionNames - Toggles villagers having added professions in their names. Default true
     * golemNames - Toggles names for golems. Default true
-    * needsOP - Enables commands only for OP's. Default false
+    * needsOP - Enables commands only for OP's. Default true
     * childNames - Toggles children villagers having the added  "the Child" tag in their name. Default false
     * turnOffConsoleSpam - Toggles console spam off when you kill a villager. Default true
     * wanderingTraderNames - Toggles names added for the wanderingTrader
