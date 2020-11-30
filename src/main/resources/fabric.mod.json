@@ -6,7 +6,8 @@
   "description": "A mod that adds names to villagers",
   "authors": [
     "Victor (Yumatan)",
-    "OverlordsIII"
+    "OverlordsIII",
+    "Fourmisain"
   ],
   "entrypoints": {
     "main": [
