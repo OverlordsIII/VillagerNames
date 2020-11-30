@@ -18,10 +18,11 @@ import net.minecraft.server.dedicated.command.StopCommand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@SuppressWarnings("ALL")
+@SuppressWarnings({"UnstableApiUsage", "unused"})
 public class VillagerNames implements ModInitializer {
     public static final ConfigManager CONFIG_MANAGER;
     public static final VillagerConfig CONFIG;
+
     public static final Logger LOGGER = LogManager.getLogger(VillagerNames.class);
     static {
       CONFIG_MANAGER = (ConfigManager) AutoConfig.register(VillagerConfig.class, PartitioningSerializer.wrap(GsonConfigSerializer::new));

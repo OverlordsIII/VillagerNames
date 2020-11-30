@@ -17,6 +17,9 @@ import java.util.Random;
 public class VillagerUtil {
     private static ArrayList<String> usedUpNames = new ArrayList<>();
     private static String upperFirstLetter(String string){
+        if (string.contains(":")){
+            string = string.substring(string.indexOf(":") + 1);
+        }
         StringBuilder builder = new StringBuilder(string);
         builder.setCharAt(0, Character.toUpperCase(string.charAt(0)));
         return builder.toString();
@@ -141,9 +144,11 @@ public class VillagerUtil {
             entity.setCustomName(new LiteralText(Objects.requireNonNull(entity.getCustomName()).asString()).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
             if (entity.isBaby() && VillagerNames.CONFIG.villagerGeneralConfig.childNames && !entity.getCustomName().asString().contains(" the Child")){
                 entity.setCustomName(new LiteralText(entity.getCustomName().asString() + " the Child").formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
-            } else if (entity.getVillagerData().getProfession() == VillagerProfession.NITWIT && !entity.getCustomName().asString().contains(VillagerNames.CONFIG.villagerGeneralConfig.nitwitText)){
-              String name =  entity.getCustomName().asString().substring(0, entity.getCustomName().asString().indexOf(" the"));
-              entity.setCustomName(new LiteralText(name + " the " + VillagerNames.CONFIG.villagerGeneralConfig.nitwitText));
+            } else if (entity.getVillagerData().getProfession() == VillagerProfession.NITWIT && !entity.getCustomName().asString().contains(VillagerNames.CONFIG.villagerGeneralConfig.nitwitText)) {
+                if (entity.getCustomName().asString().contains(" the")) {
+                    String name = entity.getCustomName().asString().substring(0, entity.getCustomName().asString().indexOf(" the"));
+                    entity.setCustomName(new LiteralText(name + " the " + VillagerNames.CONFIG.villagerGeneralConfig.nitwitText));
+                }
             }
             entity.setCustomNameVisible(true);
         }
@@ -157,9 +162,11 @@ public class VillagerUtil {
     public static void updateWanderingTraderNames(WanderingTraderEntity entity){
         if (entity.hasCustomName()){
             String fullName = Objects.requireNonNull(entity.getCustomName()).asString();
-            String firstName = fullName.substring(0, fullName.indexOf(" the"));
-            entity.setCustomName(new LiteralText(firstName + " the " + VillagerNames.CONFIG.villagerGeneralConfig.wanderingTraderText).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
-            entity.setCustomNameVisible(true);
+            if (fullName.contains(" the")) {
+                String firstName = fullName.substring(0, fullName.indexOf(" the"));
+                entity.setCustomName(new LiteralText(firstName + " the " + VillagerNames.CONFIG.villagerGeneralConfig.wanderingTraderText).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+                entity.setCustomNameVisible(true);
+            }
         }
     }
     public static void updateGolemNames(IronGolemEntity entity){

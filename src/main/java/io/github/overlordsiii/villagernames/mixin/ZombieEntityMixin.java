@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-@Mixin(ZombieEntity.class)
+@Mixin(value = ZombieEntity.class, priority = 9999)
 public abstract class ZombieEntityMixin extends HostileEntity {
 
     protected ZombieEntityMixin(EntityType<? extends HostileEntity> entityType, World world) {
