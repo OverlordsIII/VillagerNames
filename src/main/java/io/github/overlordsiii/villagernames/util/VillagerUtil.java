@@ -20,6 +20,9 @@ public class VillagerUtil {
     private static final ArrayList<String> usedUpNames = new ArrayList<>();
     private static final Random random = new Random();
     private static String upperFirstLetter(String string){
+        if (string.contains(":")){
+            string = string.substring(string.indexOf(":") + 1);
+        }
         StringBuilder builder = new StringBuilder(string);
         builder.setCharAt(0, Character.toUpperCase(string.charAt(0)));
         return builder.toString();
