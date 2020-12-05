@@ -22,9 +22,9 @@ public abstract class ArgumentTypesMixin {
 
     @Inject(method = "register()V", at = @At("HEAD"))
     private static void registerOurArgumentTypes(CallbackInfo ci){
-        register("formattingarg", FormattingArgumentType.class, new ConstantArgumentSerializer<>(FormattingArgumentType::format));
-        register("villagername", NameArgumentType.Villager.class, new ConstantArgumentSerializer<>(NameArgumentType::villagerName));
-        register("golemname", NameArgumentType.Golem.class, new ConstantArgumentSerializer<>(NameArgumentType::golemName));
+        register("villagernames:formattingarg", FormattingArgumentType.class, new ConstantArgumentSerializer<>(FormattingArgumentType::format));
+        register("villagernames:villagername", NameArgumentType.Villager.class, new ConstantArgumentSerializer<>(NameArgumentType::villagerName));
+        register("villagernames:golemname", NameArgumentType.Golem.class, new ConstantArgumentSerializer<>(NameArgumentType::golemName));
     }
 
 }
