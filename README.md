@@ -38,12 +38,15 @@ the root command is `/villagername`
     * childNames - Toggles children villagers having the added  "the Child" tag in their name. Default false
     * turnOffConsoleSpam - Toggles console spam off when you kill a villager. Default true
     * wanderingTraderNames - Toggles names added for the wanderingTrader
+    * sureNames - Toggles villagers having lastnames
  * add
     * villagerNames (name) - Adds a name to the villagerNames list
     * golemNames (name) - Adds a name to the golemNames list
+    * sureNames (name) - Adds a a name to the last names list
  * remove
     * villagerNames (name) - Removes a name from the villagerNames list
     * golemNames (name) - Removes a name from the golemNames list
+    * sureNames (name) - Removes a name from the lastnames list
  * set
     * nitwitText (text) - Sets the added text for a nitwit villager. Defaults to 'the Nitwit'. Will always be prefixed by 'the'
     * wanderingTraderText (text) - Sets the added text for a Wandering Trader. Defaults to 'the Wandering Trader'. Will always be prefixed by 'the'

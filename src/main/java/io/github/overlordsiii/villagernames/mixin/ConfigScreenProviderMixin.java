@@ -25,7 +25,7 @@ public abstract class ConfigScreenProviderMixin {
     private ConfigBuilder aClass(ConfigBuilder builder){
 
        boolean bl = false;
-       String[] category = new String[]{"villagerGeneral", "villagerNames", "golem"};
+       String[] category = new String[]{"villagerGeneral", "villagerNames", "golem", "sureName"};
        TranslatableText[] text = new TranslatableText[category.length];
        for (Text t : ((ConfigBuilderImplAccessor)builder).getCategoryMap().keySet()){
            if (t instanceof TranslatableText){

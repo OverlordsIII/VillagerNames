@@ -18,12 +18,22 @@ import java.util.List;
 
 public class NamesLoader {
     public static void load() {
-       if (!VillagerNames.CONFIG.villagerGeneralConfig.hasRead){
+        if (!VillagerNames.CONFIG.villagerGeneralConfig.hasRead){
            VillagerNames.CONFIG.villagerNamesConfig.villagerNames = loadJson("villagerNames.json");
            VillagerNames.CONFIG.golemNamesConfig.golemNames = loadJson("golemNames.json");
+           VillagerNames.CONFIG.sureNamesConfig.sureNames = loadJson("surnameNames.json");
            VillagerNames.CONFIG.villagerGeneralConfig.hasRead = true;
-           VillagerNames.CONFIG_MANAGER.save();
-       }
+            //noinspection UnstableApiUsage
+            VillagerNames.CONFIG_MANAGER.save();
+       } if (VillagerNames.CONFIG.sureNamesConfig.sureNames.isEmpty()) {
+            VillagerNames.CONFIG.sureNamesConfig.sureNames = loadJson("surnameNames.json");
+        } if (!VillagerNames.CONFIG.golemNamesConfig.golemNames.contains("Oracle")) {
+            loadJson("golemNames.json").forEach(s -> {
+                if (!VillagerNames.CONFIG.golemNamesConfig.golemNames.contains(s)) {
+                    VillagerNames.CONFIG.golemNamesConfig.golemNames.add(s);
+                }
+            });
+        }
     }
     private static List<String> loadJson(String string){
         ArrayList<String> strings = new ArrayList<>();
@@ -38,7 +48,7 @@ public class NamesLoader {
     }
     //the json file copy will be placed in the config dir
     //should be used to jsonify a names txt file
-    @SuppressWarnings("ALL")
+    @SuppressWarnings("unused")
     private static void jsonifyTxtFile(String file) throws IOException {
         ArrayList<String> strings = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(NamesLoader.class.getResourceAsStream("/assets/villagernames/names/" + file)));

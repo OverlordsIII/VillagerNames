@@ -49,6 +49,15 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Inte
     private void updateBabyText(CallbackInfo ci){
         VillagerUtil.updateGrownUpVillagerName((VillagerEntity)(Object)(this));
     }
+    /*
+    @Inject(method = "createChild",
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/entity/passive/VillagerEntity;initialize(Lnet/minecraft/world/ServerWorldAccess;Lnet/minecraft/world/LocalDifficulty;Lnet/minecraft/entity/SpawnReason;Lnet/minecraft/entity/EntityData;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/entity/EntityData;")
+            , locals = LocalCapture.CAPTURE_FAILHARD)
+    private void onCreateChild(ServerWorld serverWorld, PassiveEntity passiveEntity, CallbackInfoReturnable<VillagerEntity> cir, VillagerType villagerType3, VillagerEntity villagerEntity) {
+        VillagerUtil.addLastNameFromBreeding(villagerEntity, (VillagerEntity)(Object)this);
+    }
+     */
 }
 
 

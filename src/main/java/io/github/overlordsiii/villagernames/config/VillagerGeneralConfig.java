@@ -22,9 +22,11 @@ public class VillagerGeneralConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip
     public boolean childNames = false;
     @ConfigEntry.Gui.Tooltip
-    public boolean turnOffVillagerConsoleSpam = true;
+    public boolean turnOffVillagerConsoleSpam = false;
     @ConfigEntry.Gui.Tooltip
     public boolean wanderingTraderNames = true;
     @ConfigEntry.Gui.Tooltip
     public String wanderingTraderText = "Wandering Trader";
+    @ConfigEntry.Gui.Tooltip
+    public boolean useSurnames = false;
 }

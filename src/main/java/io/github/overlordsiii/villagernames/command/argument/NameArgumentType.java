@@ -23,12 +23,22 @@ public abstract class NameArgumentType implements ArgumentType<String> {
         }
     }
 
-    public static NameArgumentType.Villager villagerName() {
-        return new NameArgumentType.Villager();
+    public static class Surename extends NameArgumentType {
+        public Surename() {
+            this.namesConfig = VillagerNames.CONFIG.sureNamesConfig;
+        }
     }
 
-    public static NameArgumentType.Golem golemName() {
-        return new NameArgumentType.Golem();
+    public static Villager villagerName() {
+        return new Villager();
+    }
+
+    public static Surename sureName() {
+        return new Surename();
+    }
+
+    public static Golem golemName() {
+        return new Golem();
     }
 
     public static String getName(CommandContext<ServerCommandSource> ctx, String name) {

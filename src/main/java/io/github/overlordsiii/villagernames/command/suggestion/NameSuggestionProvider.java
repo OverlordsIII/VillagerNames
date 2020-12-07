@@ -24,6 +24,12 @@ public abstract class NameSuggestionProvider implements SuggestionProvider<Serve
         }
     }
 
+    public static class Surename extends NameSuggestionProvider {
+        public Surename() {
+            this.namesConfig = VillagerNames.CONFIG.sureNamesConfig;
+        }
+    }
+
     protected NamesConfig namesConfig;
 
     @Override
