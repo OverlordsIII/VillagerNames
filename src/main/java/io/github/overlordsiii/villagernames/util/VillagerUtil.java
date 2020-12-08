@@ -38,7 +38,7 @@ public class VillagerUtil {
             usedUpNames.clear();
         }
         if (usedUpNames.contains(names.get(index))) {
-            index = random.nextInt(names.size());
+            index = random.nextInt(names.size());//Partial random, but you could possibly choose a name in the list again
         }
         usedUpNames.add(names.get(index));
         return names.get(index);
@@ -46,6 +46,9 @@ public class VillagerUtil {
 
     private static String generateRandomVillagerName(){
         if (CONFIG.villagerGeneralConfig.sureNames) {
+            if (CONFIG.villagerGeneralConfig.reverseLastNames) {
+                return generateRandomSurname() + " " + pickRandomName(CONFIG.villagerNamesConfig);
+            }
             return pickRandomName(CONFIG.villagerNamesConfig) + " " + generateRandomSurname();
         }
         return pickRandomName(CONFIG.villagerNamesConfig);
@@ -162,7 +165,7 @@ public class VillagerUtil {
             if (CONFIG.villagerGeneralConfig.sureNames) {
                 if (entity.getVillagerData().getProfession() == VillagerProfession.NONE && !namer.contains(" ")) {//indicates that the villager does not have a profession and does not have last name
                     namer = namer + " " + generateRandomSurname();
-                } else if (entity.getVillagerData().getProfession() != VillagerProfession.NONE && namer.charAt(namer.indexOf(" ") + 1) == 't') {
+                } else if (entity.getVillagerData().getProfession() != VillagerProfession.NONE && namer.charAt(namer.indexOf(" ") + 1) == 't') {//indicates they have a profession but no last name
                     StringBuilder builder = new StringBuilder(namer);
                     builder.insert(namer.indexOf(" "), " " + generateRandomSurname());
                     namer = builder.toString();

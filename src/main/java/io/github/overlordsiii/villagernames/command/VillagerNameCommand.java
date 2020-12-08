@@ -28,7 +28,7 @@ import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class VillagerNameCommand {
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher){
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
     dispatcher.register(literal("villagername")
         .requires(source -> VillagerNames.CONFIG.villagerGeneralConfig.needsOP ? source.hasPermissionLevel(2) : source.hasPermissionLevel(4))
             .then(literal("toggle")
@@ -45,7 +45,9 @@ public class VillagerNameCommand {
                 .then(literal("wanderingTraderNames")
                     .executes(context -> executeToggle(context, "wanderingTraderNames", "Wandering Traders having names is now toggled %s")))
                 .then(literal("sureNames")
-                    .executes(context -> executeToggle(context, "sureNames", "Villager Last Names is now toggled %s"))))
+                    .executes(context -> executeToggle(context, "sureNames", "Villager Last Names is now toggled %s")))
+                .then(literal("reverseLastNames")
+                    .executes(context -> executeToggle(context, "reverseLastNames", "Reverse Villager Last Names is now toggled %s"))))
             .then(literal("add")
                 .then(literal("villagerNames")
                     .then(argument("villagerName", StringArgumentType.greedyString())
@@ -83,6 +85,7 @@ public class VillagerNameCommand {
             .then(literal("info")
                 .executes(VillagerNameCommand::executeInfo)));
     }
+
     @SuppressWarnings("ALL")
     private static int executeSetFormatting(CommandContext<ServerCommandSource> ctx, String displayText, Formatting newFormatting) throws CommandSyntaxException {
         VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting = FormattingDummy.fromFormatting(newFormatting);
@@ -100,11 +103,12 @@ public class VillagerNameCommand {
         try {
             broadCastConfigChangeToOps(ctx, ConfigChange.SET, VillagerGeneralConfig.class.getDeclaredField("villagerTextFormatting"), ctx.getSource().getPlayer(), null);
         } catch (Exception e) {
-            e.printStackTrace();
+            logError(ctx, e);
         }
         return 1;
     }
-    private static int executeSetString(CommandContext<ServerCommandSource> ctx, String literal, String newvalue, String displayedText){
+
+    private static int executeSetString(CommandContext<ServerCommandSource> ctx, String literal, String newvalue, String displayedText) throws CommandSyntaxException {
         switch (literal){
             case "nitwitText": VillagerNames.CONFIG.villagerGeneralConfig.nitwitText = newvalue;
             case "wanderingTraderText": VillagerNames.CONFIG.villagerGeneralConfig.wanderingTraderText = newvalue;
@@ -120,80 +124,23 @@ public class VillagerNameCommand {
         try {
             broadCastConfigChangeToOps(ctx, ConfigChange.SET, VillagerGeneralConfig.class.getDeclaredField(literal), ctx.getSource().getPlayer(), null);
         } catch (Exception e) {
-            e.printStackTrace();
+            logError(ctx, e);
         }
         return 1;
     }
-    private static int executeToggle(CommandContext<ServerCommandSource> ctx, String literal, String displayText) {
-        String onOrOff;
-        switch (literal){
-            case "professionNames"://This is really bad, but for some reason using a ternary doesn't seem to work
-                VillagerNames.CONFIG.villagerGeneralConfig.professionNames = !VillagerNames.CONFIG.villagerGeneralConfig.professionNames;
-                if (VillagerNames.CONFIG.villagerGeneralConfig.professionNames){
-                    onOrOff = "on";
-                }
-                else{
-                    onOrOff = "off";
-                }
-                break;
-            case "needsOP":
-                VillagerNames.CONFIG.villagerGeneralConfig.needsOP = !VillagerNames.CONFIG.villagerGeneralConfig.needsOP;
-                if (VillagerNames.CONFIG.villagerGeneralConfig.needsOP){
-                    onOrOff = "on";
-                }
-                else{
-                    onOrOff = "off";
-                }
-                break;
-            case "childNames":
-                VillagerNames.CONFIG.villagerGeneralConfig.childNames = !VillagerNames.CONFIG.villagerGeneralConfig.childNames;
-                if (VillagerNames.CONFIG.villagerGeneralConfig.childNames){
-                    onOrOff = "on";
-                }
-                else{
-                    onOrOff = "off";
-                }
-                break;
-            case "turnOffVillagerConsoleSpam":
-                VillagerNames.CONFIG.villagerGeneralConfig.turnOffVillagerConsoleSpam = !VillagerNames.CONFIG.villagerGeneralConfig.turnOffVillagerConsoleSpam;
-                if (VillagerNames.CONFIG.villagerGeneralConfig.turnOffVillagerConsoleSpam){
-                    onOrOff = "on";
-                }
-                else{
-                    onOrOff = "off";
-                }
-                break;
-            case "golemNames":
-                VillagerNames.CONFIG.villagerGeneralConfig.golemNames = !VillagerNames.CONFIG.villagerGeneralConfig.golemNames;
-                if (VillagerNames.CONFIG.villagerGeneralConfig.golemNames){
-                    onOrOff = "on";
-                }
-                else{
-                    onOrOff = "off";
-                }
-                break;
-            case "wanderingTraderNames":
-                VillagerNames.CONFIG.villagerGeneralConfig.wanderingTraderNames = !VillagerNames.CONFIG.villagerGeneralConfig.wanderingTraderNames;
-                if (VillagerNames.CONFIG.villagerGeneralConfig.wanderingTraderNames){
-                    onOrOff = "on";
-                }
-                else{
-                    onOrOff = "off";
-                }
-                break;
-            case "sureNames":
-                VillagerNames.CONFIG.villagerGeneralConfig.sureNames = !VillagerNames.CONFIG.villagerGeneralConfig.sureNames;
-                if (VillagerNames.CONFIG.villagerGeneralConfig.sureNames) {
-                    onOrOff = "on";
-                } else {
-                    onOrOff = "off";
-                }
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + literal);
-        }
 
-      //      System.out.println("onOrOff = " + onOrOff);
+    private static int executeToggle(CommandContext<ServerCommandSource> ctx, String literal, String displayText) throws CommandSyntaxException {
+        String onOrOff;
+        try {
+            Field field = VillagerGeneralConfig.class.getField(literal);
+            boolean newValue = !field.getBoolean(VillagerNames.CONFIG.villagerGeneralConfig);
+            field.setBoolean(VillagerNames.CONFIG.villagerGeneralConfig, newValue);
+            onOrOff = parseBoolean(newValue);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            logError(ctx, e);
+            return -1;
+        }
+        //      System.out.println("onOrOff = " + onOrOff);
           String text = String.format(displayText, onOrOff);
           ctx.getSource().sendFeedback(
                   new LiteralText(text).formatted(Formatting.YELLOW)
@@ -206,10 +153,11 @@ public class VillagerNameCommand {
         try {
             broadCastConfigChangeToOps(ctx, ConfigChange.TOGGLE, VillagerGeneralConfig.class.getDeclaredField(literal), ctx.getSource().getPlayer(), null);
         } catch (Exception e) {
-            e.printStackTrace();
+            logError(ctx, e);
         }
         return 1;
     }
+
     private static int executeAdd(CommandContext<ServerCommandSource> ctx, List<String> listToAddTo, String toAdd, String displayText, String literal) throws CommandSyntaxException {
         if (!listToAddTo.contains(toAdd)){
             listToAddTo.add(toAdd);
@@ -236,11 +184,12 @@ public class VillagerNameCommand {
                 broadCastConfigChangeToOps(ctx, ConfigChange.ADD, SureNamesConfig.class.getDeclaredField(literal), ctx.getSource().getPlayer(), toAdd);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logError(ctx, e);
         }
         VillagerNames.CONFIG_MANAGER.save();
         return 1;
     }
+
     private static int executeRemove(CommandContext<ServerCommandSource> ctx, List<String> listToRemoveFrom, String toRemove, String displayText, String name) throws CommandSyntaxException {
         if (listToRemoveFrom.contains(toRemove)){
             listToRemoveFrom.remove(toRemove);
@@ -265,12 +214,13 @@ public class VillagerNameCommand {
                 broadCastConfigChangeToOps(ctx, ConfigChange.REMOVE, SureNamesConfig.class.getDeclaredField(name), ctx.getSource().getPlayer(), toRemove);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logError(ctx, e);
         }
         VillagerNames.CONFIG_MANAGER.save();
         return 1;
     }
-    private static int executeInfo(CommandContext<ServerCommandSource> ctx){
+
+    private static int executeInfo(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {
         try {
             for (Field field : VillagerGeneralConfig.class.getDeclaredFields()) {
                 ctx.getSource().getPlayer().sendMessage(
@@ -283,10 +233,11 @@ public class VillagerNameCommand {
 
             }
         } catch (IllegalAccessException | CommandSyntaxException ex){
-            ex.printStackTrace();
+            logError(ctx, ex);
         }
         return 1;
     }
+
     private static void broadCastConfigChangeToOps(CommandContext<ServerCommandSource> ctx, ConfigChange change, Field field, ServerPlayerEntity executor, @Nullable String addedItem) throws IllegalAccessException {
         LiteralText text;
         switch (change){
@@ -316,6 +267,7 @@ public class VillagerNameCommand {
         addConfigText(text);
         sendToOps(ctx, text);
     }
+
     private static void addConfigText(LiteralText text){
         text.append(new LiteralText(" Any changes to the config require a server restart.")
                 .formatted(Formatting.ITALIC, Formatting.GRAY))
@@ -323,8 +275,9 @@ public class VillagerNameCommand {
                         .formatted(Formatting.BOLD, Formatting.GOLD).styled(style ->
                                 style.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/stop"))
                                         .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                                new LiteralText("⚠WARNING! YOU HAVE TO RESTART THE SERVER BY YOURSELF!⚠").formatted(Formatting.RED)))));
+                                                new LiteralText("⚠ WARNING! YOU HAVE TO RESTART THE SERVER BY YOURSELF! ⚠").formatted(Formatting.RED)))));
     }
+
     private static void sendToOps(CommandContext<ServerCommandSource> ctx, Text text){
         ctx.getSource().getMinecraftServer().getPlayerManager().getPlayerList().forEach((serverPlayerEntity -> {
             if (ctx.getSource().getMinecraftServer().getPlayerManager().isOperator(serverPlayerEntity.getGameProfile())){
@@ -332,7 +285,29 @@ public class VillagerNameCommand {
             }
         }));
     }
-    private enum ConfigChange {
+
+    private static String parseBoolean(boolean rule) {
+        if (rule) {
+            return "on";
+        }
+        return "off";
+    }
+
+    private static void logError(CommandContext<ServerCommandSource> ctx, Exception e) throws CommandSyntaxException {
+        ctx.getSource().getPlayer().sendMessage(new LiteralText("Exception Thrown! Exception: " + getRootCause(e)), false);
+        e.printStackTrace();
+    }
+
+    private static Throwable getRootCause(Throwable throwable) {
+        Throwable copy = throwable;
+        while (copy != null && copy.getCause() != throwable) {
+            copy = copy.getCause();
+        }
+        return copy;
+    }
+
+
+    public enum ConfigChange {
         SET,
         TOGGLE,
         ADD,
