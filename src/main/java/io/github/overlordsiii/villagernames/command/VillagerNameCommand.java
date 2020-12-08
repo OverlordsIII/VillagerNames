@@ -182,8 +182,8 @@ public class VillagerNameCommand {
                 }
                 break;
             case "sureNames":
-                VillagerNames.CONFIG.villagerGeneralConfig.useSurnames = !VillagerNames.CONFIG.villagerGeneralConfig.useSurnames;
-                if (VillagerNames.CONFIG.villagerGeneralConfig.useSurnames) {
+                VillagerNames.CONFIG.villagerGeneralConfig.sureNames = !VillagerNames.CONFIG.villagerGeneralConfig.sureNames;
+                if (VillagerNames.CONFIG.villagerGeneralConfig.sureNames) {
                     onOrOff = "on";
                 } else {
                     onOrOff = "off";
