@@ -28,7 +28,7 @@ public class VillagerGeneralConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip
     public String wanderingTraderText = "Wandering Trader";
     @ConfigEntry.Gui.Tooltip
-    public boolean sureNames = false;
+    public boolean surNames = false;
     @ConfigEntry.Gui.Tooltip
     public boolean reverseLastNames = false;
 }

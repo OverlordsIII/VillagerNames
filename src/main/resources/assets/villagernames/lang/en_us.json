@@ -29,8 +29,8 @@
   "text.autoconfig.VillagerNames.category.sureName": "Last Names",
   "text.autoconfig.VillagerNames.option.sureNamesConfig": "Last Names",
   "text.autoconfig.VillagerNames.option.sureNamesConfig.sureNames": "Last Names List",
-  "text.autoconfig.VillagerNames.option.villagerGeneralConfig.sureNames": "Use Lastnames",
+  "text.autoconfig.VillagerNames.option.villagerGeneralConfig.surNames": "Use Lastnames",
   "text.autoconfig.VillagerNames.option.villagerGeneralConfig.sureNames.@Tooltip": "Gives last names to villagers. Does not work with names with spaces",
   "text.autoconfig.VillagerNames.option.villagerGeneralConfig.reverseLastNames": "Reversed Last Names",
-  "text.autoconfig.VillagerNames.option.villagerGeneralConfig.reverseLastNames.@Tooltip": "Gives Villagers last names before their first names. Needs sureNames toggled on to be effective"
+  "text.autoconfig.VillagerNames.option.villagerGeneralConfig.reverseLastNames.@Tooltip": "Gives Villagers last names before their first names. Needs sureNames toggled on"
 }
