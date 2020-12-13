@@ -3,7 +3,6 @@
   "package": "io.github.overlordsiii.villagernames.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "ArgumentTypesMixin",
     "VillagerBreedTaskMixin",
     "VillagerEntityMixin",
     "ZombieEntityMixin",

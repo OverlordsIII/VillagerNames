@@ -5,8 +5,6 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import io.github.overlordsiii.villagernames.VillagerNames;
-import io.github.overlordsiii.villagernames.command.argument.FormattingArgumentType;
-import io.github.overlordsiii.villagernames.command.argument.NameArgumentType;
 import io.github.overlordsiii.villagernames.command.suggestion.FormattingSuggestionProvider;
 import io.github.overlordsiii.villagernames.command.suggestion.NameSuggestionProvider;
 import io.github.overlordsiii.villagernames.config.*;
@@ -60,25 +58,25 @@ public class VillagerNameCommand {
                         .executes(context -> executeAdd(context, VillagerNames.CONFIG.sureNamesConfig.sureNames, StringArgumentType.getString(context, "sureName"), "Added %s to the surename names list", "sureNames")))))
             .then(literal("remove")
                 .then(literal("villagerNames")
-                    .then(argument("villagerNam", NameArgumentType.villagerName())
+                    .then(argument("villagerNam", StringArgumentType.string())
                         .suggests(new NameSuggestionProvider.Villager())
-                            .executes(context -> executeRemove(context, VillagerNames.CONFIG.villagerNamesConfig.villagerNames, NameArgumentType.getName(context, "villagerNam"), "Removed %s from the villager names list", "villagerNames"))))
+                            .executes(context -> executeRemove(context, VillagerNames.CONFIG.villagerNamesConfig.villagerNames, StringArgumentType.getString(context, "villagerNam"), "Removed %s from the villager names list", "villagerNames"))))
                 .then(literal("golemNames")
-                    .then(argument("golemNam", NameArgumentType.golemName())
+                    .then(argument("golemNam", StringArgumentType.string())
                         .suggests(new NameSuggestionProvider.Golem())
-                            .executes(context -> executeRemove(context, VillagerNames.CONFIG.golemNamesConfig.golemNames, NameArgumentType.getName(context, "golemNam"), "Removed %s from the golem names list", "golemNames"))))
+                            .executes(context -> executeRemove(context, VillagerNames.CONFIG.golemNamesConfig.golemNames, StringArgumentType.getString(context, "golemNam"), "Removed %s from the golem names list", "golemNames"))))
                 .then(literal("sureNames")
-                    .then(argument("sureName", NameArgumentType.sureName())
+                    .then(argument("sureName", StringArgumentType.string())
                         .suggests(new NameSuggestionProvider.Surename())
-                            .executes(context -> executeRemove(context, VillagerNames.CONFIG.sureNamesConfig.sureNames, NameArgumentType.getName(context, "sureName"), "Removed %s from the sure names list", "sureNames")))))
+                            .executes(context -> executeRemove(context, VillagerNames.CONFIG.sureNamesConfig.sureNames, StringArgumentType.getString(context, "sureName"), "Removed %s from the sure names list", "sureNames")))))
             .then(literal("set")
                 .then(literal("nitwitText")
                     .then(argument("nitwit", StringArgumentType.greedyString())
                         .executes(context -> executeSetString(context, "nitwitText", StringArgumentType.getString(context, "nitwit"), "The nitwit Text is now set to '%s'"))))
                 .then(literal("villagerTextFormat")
-                    .then(argument("format", FormattingArgumentType.format())
+                    .then(argument("format", StringArgumentType.string())
                         .suggests(new FormattingSuggestionProvider())
-                            .executes(context -> executeSetFormatting(context, "The villager Text formatting is now set to %s", FormattingArgumentType.getFormat(context, "format")))))
+                            .executes(context -> executeSetFormatting(context, "The villager Text formatting is now set to %s", StringArgumentType.getString(context, "format")))))
                 .then(literal("wanderingTraderText")
                     .then(argument("wanderingText", StringArgumentType.greedyString())
                         .executes(context -> executeSetString(context, "wanderingTraderText", StringArgumentType.getString(context, "wanderingText"), "The Wandering Trader Text is now set to '%s'")))))
@@ -87,7 +85,14 @@ public class VillagerNameCommand {
     }
 
     @SuppressWarnings("ALL")
-    private static int executeSetFormatting(CommandContext<ServerCommandSource> ctx, String displayText, Formatting newFormatting) throws CommandSyntaxException {
+    private static int executeSetFormatting(CommandContext<ServerCommandSource> ctx, String displayText, String format) throws CommandSyntaxException {
+        Formatting newFormatting;
+        try {
+            newFormatting = Formatting.valueOf(format);
+        } catch (Exception e) {
+            ctx.getSource().getPlayer().sendMessage(new LiteralText("ha nice one, but you can't set the formatting to some random formatting. Stick with what the command suggests to you").formatted(Formatting.LIGHT_PURPLE), false);
+            return -1;
+        }
         VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting = FormattingDummy.fromFormatting(newFormatting);
         ctx.getSource().sendFeedback(new LiteralText(String.format(displayText
                 , FormattingDummy.fromFormatting(newFormatting)))
