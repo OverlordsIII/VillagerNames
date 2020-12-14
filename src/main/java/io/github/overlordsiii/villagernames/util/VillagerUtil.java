@@ -15,7 +15,21 @@ import java.util.Random;
 
 import static io.github.overlordsiii.villagernames.VillagerNames.CONFIG;
 
+/**
+ * Contains villager util methods for operating on a villagers names
+ *
+ * Currently is using String Utilities in {@link String}, eventually will switch to a more duck-style way
+ * where the names are internally stored on the {@link VillagerEntity}
+ * The hope is that VillagerUtil operates on that data instead of assuming the data based on the villager's name
+ * Until then, this whole class should be treated as @deprecated
+ *
+ * @deprecated For now, VillagerUtil should be not messed with or tweaked until a proper system is implemented inside {@link VillagerEntity}
+ *
+ * @see io.github.overlordsiii.villagernames.extension.VillagerNameTracker for an in-progress way of doing this
+ */
 
+@SuppressWarnings("DeprecatedIsStillUsed")
+@Deprecated
 public class VillagerUtil {
 
     private static final ArrayList<String> usedUpNames = new ArrayList<>();

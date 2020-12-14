@@ -34,6 +34,9 @@ public class VillagerNames implements ModInitializer {
         CommandRegistrationCallback.EVENT.register((commandDispatcher, dedicated) -> {
             VillagerNameCommand.register(commandDispatcher);
             if (!dedicated){
+                //this is needed to warn the server op to restart the server for config changes
+                //in case they are using an singleplayer world
+                //if needed this can be dev env only
                 StopCommand.register(commandDispatcher);
             }
         });

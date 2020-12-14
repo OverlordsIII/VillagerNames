@@ -1,6 +1,6 @@
 package io.github.overlordsiii.villagernames.mixin;
 
-import io.github.overlordsiii.villagernames.client.cloth.RestartStringVisitable;
+import io.github.overlordsiii.villagernames.client.RestartStringVisitable;
 import me.sargunvohra.mcmods.autoconfig1u.gui.ConfigScreenProvider;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;

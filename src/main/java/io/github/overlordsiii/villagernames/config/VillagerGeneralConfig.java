@@ -29,6 +29,11 @@ public class VillagerGeneralConfig implements ConfigData {
     public String wanderingTraderText = "Wandering Trader";
     @ConfigEntry.Gui.Tooltip
     public boolean surNames = false;
+    /**
+     * Will not work if {@link VillagerGeneralConfig#multipleLastNames} is enabled
+     */
     @ConfigEntry.Gui.Tooltip
     public boolean reverseLastNames = false;
+    @ConfigEntry.Gui.Tooltip
+    public boolean multipleLastNames = false;
 }
