@@ -1,5 +1,12 @@
 package io.github.overlordsiii.villagernames.command;
 
+import static net.minecraft.server.command.CommandManager.argument;
+import static net.minecraft.server.command.CommandManager.literal;
+
+import java.lang.reflect.Field;
+import java.util.List;
+
+import com.google.common.base.Throwables;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -7,9 +14,13 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import io.github.overlordsiii.villagernames.VillagerNames;
 import io.github.overlordsiii.villagernames.command.suggestion.FormattingSuggestionProvider;
 import io.github.overlordsiii.villagernames.command.suggestion.NameSuggestionProvider;
-import io.github.overlordsiii.villagernames.config.*;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.loader.api.FabricLoader;
+import io.github.overlordsiii.villagernames.config.FormattingDummy;
+import io.github.overlordsiii.villagernames.config.GolemNamesConfig;
+import io.github.overlordsiii.villagernames.config.SureNamesConfig;
+import io.github.overlordsiii.villagernames.config.VillagerGeneralConfig;
+import io.github.overlordsiii.villagernames.config.VillagerNamesConfig;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.ClickEvent;
@@ -17,13 +28,9 @@ import net.minecraft.text.HoverEvent;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import org.jetbrains.annotations.Nullable;
 
-import java.lang.reflect.Field;
-import java.util.List;
-
-import static net.minecraft.server.command.CommandManager.argument;
-import static net.minecraft.server.command.CommandManager.literal;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 
 public class VillagerNameCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
@@ -45,7 +52,9 @@ public class VillagerNameCommand {
                 .then(literal("surnames")
                     .executes(context -> executeToggle(context, "surNames", "Villager Last Names is now toggled %s")))
                 .then(literal("reverseLastNames")
-                    .executes(context -> executeToggle(context, "reverseLastNames", "Reverse Villager Last Names is now toggled %s"))))
+                    .executes(context -> executeToggle(context, "reverseLastNames", "Reverse Villager Last Names is now toggled %s")))
+                .then(literal("nameTagNames")
+                    .executes(context -> executeToggle(context, "nameTagNames", "Name Tag Names is now toggled to %s"))))
             .then(literal("add")
                 .then(literal("villagerNames")
                     .then(argument("villagerName", StringArgumentType.greedyString())
@@ -299,16 +308,8 @@ public class VillagerNameCommand {
     }
 
     private static void logError(CommandContext<ServerCommandSource> ctx, Exception e) throws CommandSyntaxException {
-        ctx.getSource().getPlayer().sendMessage(new LiteralText("Exception Thrown! Exception: " + getRootCause(e)), false);
+        ctx.getSource().getPlayer().sendMessage(new LiteralText("Exception Thrown! Exception: " + Throwables.getRootCause(e)), false);
         e.printStackTrace();
-    }
-
-    private static Throwable getRootCause(Throwable throwable) {
-        Throwable copy = throwable;
-        while (copy != null && copy.getCause() != throwable) {
-            copy = copy.getCause();
-        }
-        return copy;
     }
 
 

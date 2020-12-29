@@ -1,19 +1,20 @@
 package io.github.overlordsiii.villagernames.util;
 
-import io.github.overlordsiii.villagernames.config.NamesConfig;
-import net.minecraft.entity.mob.ZombieVillagerEntity;
-import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.passive.VillagerEntity;
-import net.minecraft.entity.passive.WanderingTraderEntity;
-import net.minecraft.text.LiteralText;
-import net.minecraft.village.VillagerProfession;
+import static io.github.overlordsiii.villagernames.VillagerNames.CONFIG;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-import static io.github.overlordsiii.villagernames.VillagerNames.CONFIG;
+import io.github.overlordsiii.villagernames.config.NamesConfig;
+
+import net.minecraft.entity.mob.ZombieVillagerEntity;
+import net.minecraft.entity.passive.IronGolemEntity;
+import net.minecraft.entity.passive.VillagerEntity;
+import net.minecraft.entity.passive.WanderingTraderEntity;
+import net.minecraft.text.LiteralText;
+import net.minecraft.village.VillagerProfession;
 
 
 public class VillagerUtil {
@@ -77,22 +78,22 @@ public class VillagerUtil {
             if (entity.getVillagerData().getProfession() != VillagerProfession.NONE && CONFIG.villagerGeneralConfig.professionNames){
                 String text =  VillagerProfession.NITWIT == entity.getVillagerData().getProfession() ? CONFIG.villagerGeneralConfig.nitwitText : upperFirstLetter(entity.getVillagerData().getProfession().toString());
                     entity.setCustomName(new LiteralText(randomName + " the " + text).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
-                    entity.setCustomNameVisible(true);
+                    entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
 
             }
             else {
-                entity.setCustomNameVisible(true);
+                entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
                 setGenericVillagerName(entity, randomName);
             }
         }
-        entity.setCustomNameVisible(true);
+        entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
     }
 
     public static void loadGolemNames(IronGolemEntity entity){
         if (!entity.hasCustomName() && CONFIG.villagerGeneralConfig.golemNames) {
             String name = generateRandomGolemName();
             entity.setCustomName(new LiteralText(name).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
-            entity.setCustomNameVisible(true);
+            entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
         }
     }
 
@@ -108,7 +109,7 @@ public class VillagerUtil {
                 //  LOGGER.info(entity.getCustomName().asString());
             }
         }
-        entity.setCustomNameVisible(true);
+        entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
     }
 
     public static void updateLostVillagerProfessionName(VillagerEntity entity){
@@ -175,33 +176,38 @@ public class VillagerUtil {
             if (entity.isBaby() && CONFIG.villagerGeneralConfig.childNames && !entity.getCustomName().asString().contains(" the Child")){
                 entity.setCustomName(new LiteralText(entity.getCustomName().asString() + " the Child").formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
             } else if (entity.getVillagerData().getProfession() == VillagerProfession.NITWIT && !entity.getCustomName().asString().contains(CONFIG.villagerGeneralConfig.nitwitText)){
+                if (!entity.getCustomName().asString().contains(" the ")) {
+                    entity.setCustomName(new LiteralText(entity.getCustomName().asString() + " the "));
+                }
               String name =  entity.getCustomName().asString().substring(0, entity.getCustomName().asString().indexOf(" the "));
               entity.setCustomName(new LiteralText(name + " the " + CONFIG.villagerGeneralConfig.nitwitText));
             }
-            entity.setCustomNameVisible(true);
+            entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
         }
     }
 
     public static void createWanderingTraderNames(WanderingTraderEntity entity){
         if (!entity.hasCustomName() && CONFIG.villagerGeneralConfig.wanderingTraderNames){
             entity.setCustomName(new LiteralText(generateRandomVillagerName() + " the " + CONFIG.villagerGeneralConfig.wanderingTraderText).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
-            entity.setCustomNameVisible(true);
+            entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
         }
     }
 
     public static void updateWanderingTraderNames(WanderingTraderEntity entity){
-        if (entity.hasCustomName()){
-            String fullName = Objects.requireNonNull(entity.getCustomName()).asString();
-            String firstName = fullName.substring(0, fullName.indexOf(" the "));
-            entity.setCustomName(new LiteralText(firstName + " the " + CONFIG.villagerGeneralConfig.wanderingTraderText).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
-            entity.setCustomNameVisible(true);
+        if (entity.hasCustomName()) {
+            if (entity.getCustomName().asString().contains(" the ")) {
+                String fullName = Objects.requireNonNull(entity.getCustomName()).asString();
+                String firstName = fullName.substring(0, fullName.indexOf(" the "));
+                entity.setCustomName(new LiteralText(firstName + " the " + CONFIG.villagerGeneralConfig.wanderingTraderText).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+                entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
+            }
         }
     }
 
     public static void updateGolemNames(IronGolemEntity entity){
         if (entity.hasCustomName()){
             entity.setCustomName(new LiteralText(Objects.requireNonNull(entity.getCustomName()).asString()).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
-            entity.setCustomNameVisible(true);
+            entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
         }
     }
 
