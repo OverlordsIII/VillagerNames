@@ -35,24 +35,19 @@ public class VillagerNames implements ModInitializer {
 
         CommandRegistrationCallback.EVENT.register((commandDispatcher, dedicated) -> {
             VillagerNameCommand.register(commandDispatcher);
-            if (!dedicated){
+            if (!dedicated) {
                 StopCommand.register(commandDispatcher);
             }
         });
 
         ServerEntityEvents.ENTITY_LOAD.register((entity, serverWorld) -> {
             if (entity instanceof VillagerEntity) {
-                VillagerUtil.createVillagerNames((VillagerEntity)entity);
-                VillagerUtil.generalVillagerUpdate((VillagerEntity)entity);
+                VillagerUtil.updateVillagerName((VillagerEntity)entity);
             } else if (entity instanceof IronGolemEntity) {
-                VillagerUtil.loadGolemNames((IronGolemEntity)entity);
-                VillagerUtil.updateGolemNames((IronGolemEntity)entity);
+                VillagerUtil.updateGolemName((IronGolemEntity)entity);
             } else if (entity instanceof WanderingTraderEntity) {
-                VillagerUtil.createWanderingTraderNames((WanderingTraderEntity)entity);
-                VillagerUtil.updateWanderingTraderNames((WanderingTraderEntity)entity);
+                VillagerUtil.updateWanderingTraderName((WanderingTraderEntity)entity);
             }
         });
-
     }
-
 }
