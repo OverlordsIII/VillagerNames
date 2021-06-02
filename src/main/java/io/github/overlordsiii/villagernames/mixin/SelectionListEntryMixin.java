@@ -19,7 +19,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 @Environment(EnvType.CLIENT)
-@Mixin(value = SelectionListEntry.class)
+@Mixin(value = SelectionListEntry.class, remap = false)
 public abstract class SelectionListEntryMixin<T> {
     @Shadow private Function<T, Text> nameProvider;
 

@@ -49,7 +49,7 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Inte
         VillagerUtil.updateVillagerName((VillagerEntity) (Object) this);
     }
 
-    @Redirect(method = "onDeath", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;info(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V"))
+    @Redirect(method = "onDeath", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;info(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V"), remap = false)
     private void redirect(Logger logger, String message, Object p0, Object p1) {
         // ha lol gottem
         if (!VillagerNames.CONFIG.villagerGeneralConfig.turnOffVillagerConsoleSpam) {
