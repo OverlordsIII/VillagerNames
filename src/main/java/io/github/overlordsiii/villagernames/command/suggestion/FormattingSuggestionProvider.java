@@ -6,7 +6,6 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import io.github.overlordsiii.villagernames.config.FormattingDummy;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.util.Formatting;
 
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
