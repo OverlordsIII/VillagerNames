@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "package": "io.github.overlordsiii.villagernames.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "VillagerBreedTaskMixin",
+    "VillagerEntityMixin",
+    "ZombieEntityMixin",
+    "ZombieVillagerEntityMixin"
+  ],
+  "client": [
+    "ConfigBuilderImplAccessor",
+    "ConfigScreenProviderMixin",
+    "SelectionListEntryMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
