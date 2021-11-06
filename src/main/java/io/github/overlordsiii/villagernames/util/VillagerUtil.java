@@ -24,14 +24,19 @@ public class VillagerUtil {
     private static final Random random = new Random();
 
     private static String upperFirstLetter(String string){
+        //System.out.println("original string: " + string);
         if (string.contains(":")){
             string = string.substring(string.indexOf(":") + 1);
+            //System.out.println("string modified once: " + string);
         }
         if (string.contains("_")) {
-            string = string.substring(string.indexOf(":") + 1);
+            string = string.substring(string.indexOf("_") + 1);
+           // System.out.println("string modified twice: " + string);
         }
+      //  System.out.println("final string: " + string);
         StringBuilder builder = new StringBuilder(string);
         builder.setCharAt(0, Character.toUpperCase(string.charAt(0)));
+      //  System.out.println("builder to string: " + builder);
         return builder.toString();
     }
 
