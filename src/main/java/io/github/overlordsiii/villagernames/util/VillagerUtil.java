@@ -27,6 +27,9 @@ public class VillagerUtil {
         if (string.contains(":")){
             string = string.substring(string.indexOf(":") + 1);
         }
+        if (string.contains("_")) {
+            string = string.substring(string.indexOf(":") + 1);
+        }
         StringBuilder builder = new StringBuilder(string);
         builder.setCharAt(0, Character.toUpperCase(string.charAt(0)));
         return builder.toString();
@@ -224,8 +227,6 @@ public class VillagerUtil {
                 name = parentEntity.getCustomName().asString().substring(secondIndexOf(parentEntity.getCustomName().asString(), " "));
             }
             String fullName = pickRandomName(CONFIG.villagerNamesConfig) + name;
-            System.out.println(parentEntity.getCustomName().asString());
-            System.out.println(fullName);
             childEntity.setCustomName(new LiteralText(CONFIG.villagerGeneralConfig.childNames ? fullName + " the Child" : fullName));
         }
     }
