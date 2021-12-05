@@ -294,8 +294,8 @@ public class VillagerNameCommand {
     }
 
     private static void sendToOps(CommandContext<ServerCommandSource> ctx, Text text){
-        ctx.getSource().getMinecraftServer().getPlayerManager().getPlayerList().forEach((serverPlayerEntity -> {
-            if (ctx.getSource().getMinecraftServer().getPlayerManager().isOperator(serverPlayerEntity.getGameProfile())){
+        ctx.getSource().getServer().getPlayerManager().getPlayerList().forEach((serverPlayerEntity -> {
+            if (ctx.getSource().getServer().getPlayerManager().isOperator(serverPlayerEntity.getGameProfile())){
                 serverPlayerEntity.sendMessage(text, false);
             }
         }));

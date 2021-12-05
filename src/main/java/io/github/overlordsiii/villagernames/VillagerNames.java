@@ -1,5 +1,7 @@
 package io.github.overlordsiii.villagernames;
 
+import java.io.IOException;
+
 import io.github.overlordsiii.villagernames.command.VillagerNameCommand;
 import io.github.overlordsiii.villagernames.config.VillagerConfig;
 import io.github.overlordsiii.villagernames.util.NamesLoader;
@@ -34,7 +36,9 @@ public class VillagerNames implements ModInitializer {
     }
     @Override
     public void onInitialize() {
+
         NamesLoader.load();
+
         CommandRegistrationCallback.EVENT.register((commandDispatcher, dedicated) -> {
             VillagerNameCommand.register(commandDispatcher);
             if (!dedicated){

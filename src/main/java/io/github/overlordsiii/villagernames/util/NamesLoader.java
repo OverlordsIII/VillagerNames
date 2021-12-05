@@ -23,7 +23,8 @@ import net.fabricmc.loader.api.FabricLoader;
 
 
 public class NamesLoader {
-    public static void load() {
+    public static void load()  {
+
         if (!VillagerNames.CONFIG.villagerGeneralConfig.hasRead){
            VillagerNames.CONFIG.villagerNamesConfig.villagerNames = loadJson("villagerNames.json");
            VillagerNames.CONFIG.golemNamesConfig.golemNames = loadJson("golemNames.json");
@@ -59,7 +60,8 @@ public class NamesLoader {
         ArrayList<String> strings = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(NamesLoader.class.getResourceAsStream("/assets/villagernames/names/" + file)));
         reader.lines().forEach(strings::add);
-        Path configPath = Paths.get(FabricLoader.getInstance().getConfigDir() + "/VillagerNames.json");
+        file = file.substring(0, file.indexOf("."));
+        Path configPath = Paths.get(FabricLoader.getInstance().getConfigDir() + "/"+ file + ".json");
         System.out.println(configPath);
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
             Files.createDirectories(configPath.getParent());
