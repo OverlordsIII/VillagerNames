@@ -25,7 +25,7 @@ import net.fabricmc.loader.api.FabricLoader;
 public class NamesLoader {
     public static void load()  {
 
-        if (!VillagerNames.CONFIG.villagerGeneralConfig.hasRead){
+        if (!VillagerNames.CONFIG.villagerGeneralConfig.hasRead) {
            VillagerNames.CONFIG.villagerNamesConfig.villagerNames = loadJson("villagerNames.json");
            VillagerNames.CONFIG.golemNamesConfig.golemNames = loadJson("golemNames.json");
            VillagerNames.CONFIG.sureNamesConfig.sureNames = loadJson("surnameNames.json");
@@ -34,13 +34,17 @@ public class NamesLoader {
             VillagerNames.CONFIG_MANAGER.save();
        } if (VillagerNames.CONFIG.sureNamesConfig.sureNames.isEmpty()) {
             VillagerNames.CONFIG.sureNamesConfig.sureNames = loadJson("surnameNames.json");
-        } if (!VillagerNames.CONFIG.golemNamesConfig.golemNames.contains("Oracle")) {
+        }
+        // no longer needed as it was only used for legacy code
+        /*
+        if (!VillagerNames.CONFIG.golemNamesConfig.golemNames.contains("Oracle")) {
             loadJson("golemNames.json").forEach(s -> {
                 if (!VillagerNames.CONFIG.golemNamesConfig.golemNames.contains(s)) {
                     VillagerNames.CONFIG.golemNamesConfig.golemNames.add(s);
                 }
             });
         }
+         */
     }
     private static List<String> loadJson(String string){
         ArrayList<String> strings = new ArrayList<>();
