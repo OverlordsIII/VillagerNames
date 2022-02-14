@@ -59,9 +59,9 @@ public class VillagerUtil {
     private static String generateWanderingTraderName(){
         if (CONFIG.villagerGeneralConfig.surNames) {
             if (CONFIG.villagerGeneralConfig.reverseLastNames) {
-                return generateRandomSurname() + " " + pickRandomName(CONFIG.villagerNamesConfig);
+                return generateRandomSurname() + " " + pickRandomName(CONFIG.villagerNamesConfig);
             }
-            return pickRandomName(CONFIG.villagerNamesConfig) + " " + generateRandomSurname();
+            return pickRandomName(CONFIG.villagerNamesConfig) + " " + generateRandomSurname();
         }
         return pickRandomName(CONFIG.villagerNamesConfig);
     }
@@ -76,7 +76,7 @@ public class VillagerUtil {
 
     private static void setGenericVillagerName(VillagerEntity entity, String name) {
         if (CONFIG.villagerGeneralConfig.childNames) {
-            entity.setCustomName(entity.isBaby() ? new LiteralText(name + " the Child").formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()) : new LiteralText(name).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+            entity.setCustomName(entity.isBaby() ? new LiteralText(name + " the Child").formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()) : new LiteralText(name).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
         }
         else {
             entity.setCustomName(new LiteralText(name).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
@@ -128,7 +128,7 @@ public class VillagerUtil {
             /*
             if (!Objects.requireNonNull(entity.getCustomName()).asString().contains(" the ") && CONFIG.villagerGeneralConfig.professionNames) {
                 //LOGGER.info(entity.getCustomName().asString());
-                entity.setCustomName(new LiteralText(Objects.requireNonNull(entity.getCustomName()).asString() + " the " + upperFirstLetter(entity.getVillagerData().getProfession().toString())).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+                entity.setCustomName(new LiteralText(Objects.requireNonNull(entity.getCustomName()).asString() + " the " + upperFirstLetter(entity.getVillagerData().getProfession().toString())).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
                 //  LOGGER.info(entity.getCustomName().asString());
             }
              */
@@ -244,10 +244,10 @@ public class VillagerUtil {
 
     public static void updateWanderingTraderNames(WanderingTraderEntity entity){
         if (entity.hasCustomName()) {
-            if (entity.getCustomName().asString().contains(" the ")) {
+            if (entity.getCustomName().asString().contains(" the ")) {
                 String fullName = Objects.requireNonNull(entity.getCustomName()).asString();
-                String firstName = fullName.substring(0, fullName.indexOf(" the "));
-                entity.setCustomName(new LiteralText(firstName + " the " + CONFIG.villagerGeneralConfig.wanderingTraderText).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+                String firstName = fullName.substring(0, fullName.indexOf(" the "));
+                entity.setCustomName(new LiteralText(firstName + " the " + CONFIG.villagerGeneralConfig.wanderingTraderText).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
                 entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
             }
         }
