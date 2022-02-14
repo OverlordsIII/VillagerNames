@@ -65,11 +65,11 @@ public abstract class ZombieEntityMixin extends HostileEntity implements ZombieV
         Objects.requireNonNull(this.firstName);
         if (CONFIG.villagerGeneralConfig.reverseLastNames && CONFIG.villagerGeneralConfig.surNames && this.lastName != null) {
             builder.append(this.lastName)
-                .append(" ")
+                .append(" ")
                 .append(this.firstName);
         } else if (CONFIG.villagerGeneralConfig.surNames && this.lastName != null) {
             builder.append(this.firstName)
-                .append(" ")
+                .append(" ")
                 .append(this.lastName);
         } else {
             builder.append(this.firstName);
