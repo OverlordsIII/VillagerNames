@@ -215,6 +215,15 @@ public class VillagerUtil {
             entity.setCustomName(new LiteralText(namer).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
              */
 
+            if (VillagerNameManager.getFirstName(entity) == null) {
+                // this indicates that the mod has found a villager that has been named according to the older version of mod
+                // so to update, we'll have to parse the name and put it in our predefined versions
+                //TODO this ^
+
+                String[] nameComponents = entity.getCustomName().asString().split("\\s+");
+                String firstName = nameComponents[0]; // guaranteed to be first one there
+            }
+
             if (CONFIG.villagerGeneralConfig.surNames) { // check if last name config rule was changed, and if so give them a last name
                 if (VillagerNameManager.getLastName(entity) == null) {
                     VillagerNameManager.setLastName(entity, generateRandomSurname());
