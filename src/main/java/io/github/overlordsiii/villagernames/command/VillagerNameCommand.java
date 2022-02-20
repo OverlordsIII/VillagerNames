@@ -16,6 +16,8 @@ import io.github.overlordsiii.villagernames.command.suggestion.FormattingSuggest
 import io.github.overlordsiii.villagernames.command.suggestion.NameSuggestionProvider;
 import io.github.overlordsiii.villagernames.config.FormattingDummy;
 import io.github.overlordsiii.villagernames.config.GolemNamesConfig;
+import io.github.overlordsiii.villagernames.config.PiglinNamesConfig;
+import io.github.overlordsiii.villagernames.config.PiglinSurnamesConfig;
 import io.github.overlordsiii.villagernames.config.SureNamesConfig;
 import io.github.overlordsiii.villagernames.config.VillagerGeneralConfig;
 import io.github.overlordsiii.villagernames.config.VillagerNamesConfig;
@@ -56,6 +58,10 @@ public class VillagerNameCommand {
                     .executes(context -> executeToggle(context, "reverseLastNames", "Reverse Villager Last Names is now toggled %s")))
                 .then(literal("nameTagNames")
                     .executes(context -> executeToggle(context, "nameTagNames", "Name Tag Names is now toggled to %s"))))
+                .then(literal("piglinNames")
+                    .executes(context -> executeToggle(context, "piglinNames", "Piglin Names is now toggled to %s")))
+                .then(literal("piglinSurnames")
+                    .executes(context -> executeToggle(context, "pillagerSurenames", "Piglin Surnames is now toggled to %s")))
             .then(literal("add")
                 .then(literal("villagerNames")
                     .then(argument("villagerName", StringArgumentType.greedyString())
@@ -65,7 +71,13 @@ public class VillagerNameCommand {
                         .executes(context -> executeAdd(context, VillagerNames.CONFIG.golemNamesConfig.golemNames, StringArgumentType.getString(context, "golemName"), "Added %s to the golem names list", "golemNames"))))
                 .then(literal("sureNames")
                     .then(argument("sureName", StringArgumentType.greedyString())
-                        .executes(context -> executeAdd(context, VillagerNames.CONFIG.sureNamesConfig.sureNames, StringArgumentType.getString(context, "sureName"), "Added %s to the surename names list", "sureNames")))))
+                        .executes(context -> executeAdd(context, VillagerNames.CONFIG.sureNamesConfig.sureNames, StringArgumentType.getString(context, "sureName"), "Added %s to the surename names list", "sureNames"))))
+                .then(literal("piglinNames")
+                    .then(argument("piglinName", StringArgumentType.greedyString())
+                        .executes(context -> executeAdd(context, VillagerNames.CONFIG.piglinNamesConfig.piglinNames, StringArgumentType.getString(context, "piglinName"), "Added %s to the piglin names list", "piglinNames"))))
+                .then(literal("piglinSurnames")
+                    .then(argument("piglinSurname", StringArgumentType.greedyString())
+                        .executes(context -> executeAdd(context, VillagerNames.CONFIG.piglinSurnamesConfig.piglinSurnames, StringArgumentType.getString(context, "pillagerSurname"), "Added %s to the piglin surnames list", "piglinSurnames")))))
             .then(literal("remove")
                 .then(literal("villagerNames")
                     .then(argument("villagerNam", StringArgumentType.string())
@@ -78,7 +90,15 @@ public class VillagerNameCommand {
                 .then(literal("sureNames")
                     .then(argument("sureName", StringArgumentType.string())
                         .suggests(new NameSuggestionProvider.Surename())
-                            .executes(context -> executeRemove(context, VillagerNames.CONFIG.sureNamesConfig.sureNames, StringArgumentType.getString(context, "sureName"), "Removed %s from the sure names list", "sureNames")))))
+                            .executes(context -> executeRemove(context, VillagerNames.CONFIG.sureNamesConfig.sureNames, StringArgumentType.getString(context, "sureName"), "Removed %s from the sure names list", "sureNames"))))
+                .then(literal("piglinNames")
+                    .then(argument("piglinName", StringArgumentType.string())
+                        .suggests(new NameSuggestionProvider.Piglin())
+                            .executes(context -> executeRemove(context, VillagerNames.CONFIG.piglinNamesConfig.piglinNames, StringArgumentType.getString(context, "piglinName"), "Removed %s from the piglin names list", "piglinNames"))))
+                .then(literal("piglinSurnames")
+                    .then(argument("piglinSurname", StringArgumentType.string())
+                        .suggests(new NameSuggestionProvider.PiglinSurname())
+                            .executes(context -> executeRemove(context, VillagerNames.CONFIG.piglinSurnamesConfig.piglinSurnames, StringArgumentType.getString(context, "piglinSurname"), "Removed %s from the piglin surnames list", "piginSurnames")))))
             .then(literal("set")
                 .then(literal("nitwitText")
                     .then(argument("nitwit", StringArgumentType.greedyString())
@@ -197,6 +217,10 @@ public class VillagerNameCommand {
                 broadCastConfigChangeToOps(ctx, ConfigChange.ADD, GolemNamesConfig.class.getDeclaredField(literal), ctx.getSource().getPlayer(), toAdd);
             } else if (literal.contains("sureNames")) {
                 broadCastConfigChangeToOps(ctx, ConfigChange.ADD, SureNamesConfig.class.getDeclaredField(literal), ctx.getSource().getPlayer(), toAdd);
+            } else if (literal.contains("piglinNames")) {
+                broadCastConfigChangeToOps(ctx, ConfigChange.ADD, PiglinNamesConfig.class.getDeclaredField(literal), ctx.getSource().getPlayer(), toAdd);
+            } else if (literal.contains("piglinSurnames")) {
+                broadCastConfigChangeToOps(ctx, ConfigChange.ADD, PiglinSurnamesConfig.class.getDeclaredField(literal), ctx.getSource().getPlayer(), toAdd);
             }
         } catch (Exception e) {
             logError(ctx, e);
@@ -227,6 +251,10 @@ public class VillagerNameCommand {
                 broadCastConfigChangeToOps(ctx, ConfigChange.REMOVE, GolemNamesConfig.class.getDeclaredField(name), ctx.getSource().getPlayer(), toRemove);
             } else if (name.contains("sureNames")) {
                 broadCastConfigChangeToOps(ctx, ConfigChange.REMOVE, SureNamesConfig.class.getDeclaredField(name), ctx.getSource().getPlayer(), toRemove);
+            } else if (name.contains("piglinNames")) {
+                broadCastConfigChangeToOps(ctx, ConfigChange.REMOVE, PiglinNamesConfig.class.getDeclaredField(name), ctx.getSource().getPlayer(), toRemove);
+            } else if (name.contains("piglinSurnames")) {
+                broadCastConfigChangeToOps(ctx, ConfigChange.REMOVE, PiglinSurnamesConfig.class.getDeclaredField(name), ctx.getSource().getPlayer(), toRemove);
             }
         } catch (Exception e) {
             logError(ctx, e);

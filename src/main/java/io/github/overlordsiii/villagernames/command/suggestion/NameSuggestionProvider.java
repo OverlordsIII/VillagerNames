@@ -30,6 +30,18 @@ public abstract class NameSuggestionProvider implements SuggestionProvider<Serve
         }
     }
 
+    public static class Piglin extends NameSuggestionProvider {
+        public Piglin() {
+            this.namesConfig = VillagerNames.CONFIG.piglinNamesConfig;
+        }
+    }
+
+    public static class PiglinSurname extends NameSuggestionProvider {
+        public PiglinSurname() {
+            this.namesConfig = VillagerNames.CONFIG.piglinSurnamesConfig;
+        }
+    }
+
     protected NamesConfig namesConfig;
 
     @Override

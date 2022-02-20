@@ -29,11 +29,17 @@ public class NamesLoader {
            VillagerNames.CONFIG.villagerNamesConfig.villagerNames = loadJson("villagerNames.json");
            VillagerNames.CONFIG.golemNamesConfig.golemNames = loadJson("golemNames.json");
            VillagerNames.CONFIG.sureNamesConfig.sureNames = loadJson("surnameNames.json");
+           VillagerNames.CONFIG.piglinNamesConfig.piglinNames = loadJson("Piglins_Names.json");
+           VillagerNames.CONFIG.piglinSurnamesConfig.piglinSurnames = loadJson("Piglins_Surnames.json");
            VillagerNames.CONFIG.villagerGeneralConfig.hasRead = true;
             //noinspection UnstableApiUsage
             VillagerNames.CONFIG_MANAGER.save();
        } if (VillagerNames.CONFIG.sureNamesConfig.sureNames.isEmpty()) {
             VillagerNames.CONFIG.sureNamesConfig.sureNames = loadJson("surnameNames.json");
+        } if (VillagerNames.CONFIG.piglinSurnamesConfig.piglinSurnames.isEmpty()) {
+            VillagerNames.CONFIG.piglinSurnamesConfig.piglinSurnames = loadJson("Piglins_Surnames.json");
+        } if (VillagerNames.CONFIG.piglinNamesConfig.piglinNames.isEmpty()) {
+            VillagerNames.CONFIG.piglinNamesConfig.piglinNames = loadJson("Piglins_Names.json");
         }
         // no longer needed as it was only used for legacy code
         /*

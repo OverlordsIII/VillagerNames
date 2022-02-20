@@ -13,6 +13,7 @@ import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.entity.mob.PiglinEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.passive.WanderingTraderEntity;
@@ -46,16 +47,18 @@ public class VillagerNames implements ModInitializer {
             }
         });
         ServerEntityEvents.ENTITY_LOAD.register((entity, serverWorld) -> {
-            if (entity instanceof VillagerEntity){
-               VillagerUtil.createVillagerNames((VillagerEntity)entity);
-               VillagerUtil.generalVillagerUpdate((VillagerEntity)entity);
-            }
-            else if (entity instanceof IronGolemEntity){
-                VillagerUtil.loadGolemNames((IronGolemEntity)entity);
-                VillagerUtil.updateGolemNames((IronGolemEntity)entity);
-            } else if (entity instanceof WanderingTraderEntity){
-                VillagerUtil.createWanderingTraderNames((WanderingTraderEntity)entity);
-                VillagerUtil.updateWanderingTraderNames((WanderingTraderEntity)entity);
+            if (entity instanceof VillagerEntity villagerEntity){
+               VillagerUtil.createVillagerNames(villagerEntity);
+               VillagerUtil.generalVillagerUpdate(villagerEntity);
+            } else if (entity instanceof IronGolemEntity ironGolemEntity){
+                VillagerUtil.loadGolemNames(ironGolemEntity);
+                VillagerUtil.updateGolemNames(ironGolemEntity);
+            } else if (entity instanceof WanderingTraderEntity wanderingTraderEntity){
+                VillagerUtil.createWanderingTraderNames(wanderingTraderEntity);
+                VillagerUtil.updateWanderingTraderNames(wanderingTraderEntity);
+            } else if (entity instanceof PiglinEntity piglinEntity) {
+                VillagerUtil.createPiglinNames(piglinEntity);
+                VillagerUtil.updatePiglinNames(piglinEntity);
             }
         });
 

@@ -2,6 +2,8 @@
   "text.autoconfig.VillagerNames.category.villagerGeneral": "Villager Name Rules",
   "text.autoconfig.VillagerNames.category.villagerNames": "Villager Names",
   "text.autoconfig.VillagerNames.category.golemName": "Golem Names",
+  "text.autoconfig.VillagerNames.category.piglinName": "Piglin Names",
+  "text.autoconfig.VillagerNames.category.piglinSurname": "Piglin Surnames",
   "text.autoconfig.VillagerNames.option.villagerGeneralConfig": "Villager Rules",
   "text.autoconfig.VillagerNames.option.villagerGeneralConfig.professionNames": "Villager Profession Names",
   "text.autoconfig.VillagerNames.option.villagerGeneralConfig.golemNames": "Golem Names",
@@ -34,5 +36,9 @@
   "text.autoconfig.VillagerNames.option.villagerGeneralConfig.reverseLastNames": "Reversed Last Names",
   "text.autoconfig.VillagerNames.option.villagerGeneralConfig.reverseLastNames.@Tooltip": "Gives Villagers last names before their first names. Needs sureNames toggled on",
   "text.autoconfig.VillagerNames.option.villagerGeneralConfig.nameTagNames": "Name Tag Names",
-  "text.autoconfig.VillagerNames.option.villagerGeneralConfig.nameTagNames.@Tooltip": "Only shows a villager's name if you hover over them"
+  "text.autoconfig.VillagerNames.option.villagerGeneralConfig.nameTagNames.@Tooltip": "Only shows a villager's name if you hover over them",
+  "text.autoconfig.VillagerNames.option.piglinNamesConfig": "Piglin Names",
+  "text.autoconfig.VillagerNames.option.piglinNamesConfig.piglinNames": "Piglin Names List",
+  "text.autoconfig.VillagerNames.option.piglinSurnamesConfig": "Piglin Surnames",
+  "text.autoconfig.VillagerNames.option.piglinSurnamesConfig.piglinSurnames": "Piglin Surnames List"
 }

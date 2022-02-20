@@ -4,14 +4,17 @@ import static io.github.overlordsiii.villagernames.VillagerNames.CONFIG;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Random;
 
 import io.github.overlordsiii.villagernames.VillagerNames;
+import io.github.overlordsiii.villagernames.api.PiglinNameManager;
 import io.github.overlordsiii.villagernames.api.VillagerNameManager;
 import io.github.overlordsiii.villagernames.api.ZombieVillagerNameManager;
 import io.github.overlordsiii.villagernames.config.NamesConfig;
 
+import net.minecraft.entity.mob.PiglinEntity;
 import net.minecraft.entity.mob.ZombieVillagerEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
@@ -83,6 +86,17 @@ public class VillagerUtil {
         }
     }
 
+    public static void createPiglinNames(PiglinEntity entity) {
+        if (!entity.hasCustomName()) {
+            PiglinNameManager.setFirstName(pickRandomName(CONFIG.piglinNamesConfig), entity);
+            if (CONFIG.villagerGeneralConfig.piglinSurnames) {
+                PiglinNameManager.setLastName(pickRandomName(CONFIG.piglinSurnamesConfig), entity);
+            }
+            entity.setCustomName(PiglinNameManager.getFullNameAsText(entity, true));
+        }
+        entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
+    }
+
     public static void createVillagerNames(VillagerEntity entity){
         if (!entity.hasCustomName()){
             VillagerNameManager.setFirstName(entity, pickRandomName(CONFIG.villagerNamesConfig));
@@ -115,7 +129,7 @@ public class VillagerUtil {
     public static void updateVillagerNames(VillagerEntity entity){
         //should never be called, but let's do it anyway!
         if (entity.getVillagerData().getProfession() == VillagerProfession.NONE) {
-            VillagerNameManager.setLastName(entity, pickRandomName(CONFIG.villagerNamesConfig));
+            VillagerNameManager.setFirstName(entity, pickRandomName(CONFIG.villagerNamesConfig));
             if (CONFIG.villagerGeneralConfig.surNames) {
                 VillagerNameManager.setLastName(entity, generateRandomSurname());
             }
@@ -200,6 +214,20 @@ public class VillagerUtil {
         }
     }
 
+    public static void updatePiglinNames(PiglinEntity entity) {
+        if (CONFIG.villagerGeneralConfig.piglinSurnames) { // check if last name config rule was changed, and if so give them a last name
+            if (PiglinNameManager.getLastName(entity) == null) {
+                PiglinNameManager.setLastName(generateRandomSurname(), entity);
+            }
+        } else {
+            if (PiglinNameManager.getLastName(entity) != null) {
+                PiglinNameManager.setLastName(null, entity);
+            }
+        }
+
+        entity.setCustomName(PiglinNameManager.getFullNameAsText(entity, true));
+    }
+
     public static void generalVillagerUpdate(VillagerEntity entity){
         if (entity.hasCustomName()){
             /*String namer = Objects.requireNonNull(entity.getCustomName()).asString();
@@ -217,11 +245,36 @@ public class VillagerUtil {
 
             if (VillagerNameManager.getFirstName(entity) == null) {
                 // this indicates that the mod has found a villager that has been named according to the older version of mod
-                // so to update, we'll have to parse the name and put it in our predefined versions
+                // so to update, we'll have to parse the name and put it in our version of the villager names
                 //TODO this ^
 
                 String[] nameComponents = entity.getCustomName().asString().split("\\s+");
+                if (nameComponents.length == 0) {
+                    return; // should never happen
+                }
                 String firstName = nameComponents[0]; // guaranteed to be first one there
+                String lastName = null;
+                String professionName = null;
+                if (CONFIG.villagerGeneralConfig.surNames && nameComponents.length >= 2) {
+                    if (CONFIG.villagerGeneralConfig.reverseLastNames) {
+                        firstName = nameComponents[1];
+                        lastName = nameComponents[0];
+                    } else {
+                        lastName = nameComponents[1];
+                    }
+                }
+                // indicates the name has "the" plus another name, possibly the profession name or nitwit text.
+                if (nameComponents.length >= 4) {
+                    //ensures that profession name is not set to child
+                    if (!nameComponents[3].toLowerCase(Locale.ROOT).trim().equals("child")) {
+                        professionName = nameComponents[3];
+                    }
+                }
+
+                VillagerNameManager.setFirstName(entity, firstName);
+                VillagerNameManager.setLastName(entity, firstName);
+                VillagerNameManager.setProfessionName(professionName, entity);
+
             }
 
             if (CONFIG.villagerGeneralConfig.surNames) { // check if last name config rule was changed, and if so give them a last name
@@ -253,10 +306,10 @@ public class VillagerUtil {
 
     public static void updateWanderingTraderNames(WanderingTraderEntity entity){
         if (entity.hasCustomName()) {
-            if (entity.getCustomName().asString().contains(" the ")) {
+            if (entity.getCustomName().asString().contains(" the ")) {
                 String fullName = Objects.requireNonNull(entity.getCustomName()).asString();
-                String firstName = fullName.substring(0, fullName.indexOf(" the "));
-                entity.setCustomName(new LiteralText(firstName + " the " + CONFIG.villagerGeneralConfig.wanderingTraderText).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+                String firstName = fullName.substring(0, fullName.indexOf(" the "));
+                entity.setCustomName(new LiteralText(firstName + " the " + CONFIG.villagerGeneralConfig.wanderingTraderText).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
                 entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
             }
         }

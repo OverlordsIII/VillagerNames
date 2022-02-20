@@ -197,20 +197,20 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Inte
         Objects.requireNonNull(this.firstName);
         if (CONFIG.villagerGeneralConfig.reverseLastNames && CONFIG.villagerGeneralConfig.surNames && this.lastName != null) {
             builder.append(this.lastName)
-                .append(" ")
+                .append(" ")
                 .append(this.firstName);
         } else if (CONFIG.villagerGeneralConfig.surNames && this.lastName != null) {
             builder.append(this.firstName)
-                .append(" ")
+                .append(" ")
                 .append(this.lastName);
         } else {
             builder.append(this.firstName);
         }
 
         if (((VillagerEntity)(Object)this).isBaby() && CONFIG.villagerGeneralConfig.childNames) {
-            builder.append(" the Child");
+            builder.append(" the Child");
         } else if (CONFIG.villagerGeneralConfig.professionNames && this.profession != null) {
-            builder.append(" the ")
+            builder.append(" the ")
                 .append(this.profession);
         }
 

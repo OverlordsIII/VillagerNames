@@ -33,4 +33,8 @@ public class VillagerGeneralConfig implements ConfigData {
     public boolean reverseLastNames = false;
     @ConfigEntry.Gui.Tooltip
     public boolean nameTagNames = true;
+    @ConfigEntry.Gui.Tooltip
+    public boolean piglinNames = true;
+    @ConfigEntry.Gui.Tooltip
+    public boolean piglinSurnames = true;
 }

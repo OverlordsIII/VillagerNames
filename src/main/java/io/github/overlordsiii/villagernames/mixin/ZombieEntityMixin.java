@@ -22,11 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(value = ZombieEntity.class, priority = 9999)
-public abstract class ZombieEntityMixin extends HostileEntity implements ZombieVillagerNameManager {
-
-    private String firstName;
-    private String lastName;
-    private String fullName;
+public abstract class ZombieEntityMixin extends HostileEntity {
 
     protected ZombieEntityMixin(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
@@ -37,76 +33,5 @@ public abstract class ZombieEntityMixin extends HostileEntity implements ZombieV
         VillagerUtil.addZombieVillagerName(villagerEntity, zombieVillagerEntity);
     }
 
-    @Override
-    public void setFirstName(String name) {
-       this.firstName = name;
-       updateFullName();
-    }
-
-    @Override
-    public void setLastName(String name) {
-        this.lastName = name;
-        updateFullName();
-    }
-
-    @Override
-    public String getFirstName() {
-        return this.firstName;
-    }
-
-    @Override
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    @Override
-    public void updateFullName() {
-        StringBuilder builder = new StringBuilder();
-        Objects.requireNonNull(this.firstName);
-        if (CONFIG.villagerGeneralConfig.reverseLastNames && CONFIG.villagerGeneralConfig.surNames && this.lastName != null) {
-            builder.append(this.lastName)
-                .append(" ")
-                .append(this.firstName);
-        } else if (CONFIG.villagerGeneralConfig.surNames && this.lastName != null) {
-            builder.append(this.firstName)
-                .append(" ")
-                .append(this.lastName);
-        } else {
-            builder.append(this.firstName);
-        }
-
-        this.fullName = builder.toString();
-    }
-
-    @Override
-    public String getFullName() {
-        return this.fullName;
-    }
-
-    @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
-    private void serializeData(NbtCompound tag, CallbackInfo ci) {
-        if (firstName != null) {
-            tag.putString("firstName", firstName);
-        }
-        if (fullName != null) {
-            tag.putString("fullName", fullName);
-        }
-        if (lastName != null) {
-            tag.putString("lastName", lastName);
-        }
-    }
-
-    @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
-    private void deserializeData(NbtCompound tag, CallbackInfo ci) {
-        if (tag.contains("firstName")) {
-            this.firstName = tag.getString("firstName");
-        }
-        if (tag.contains("fullName")) {
-            this.fullName = tag.getString("fullName");
-        }
-        if (tag.contains("lastName")) {
-            this.lastName = tag.getString("lastName");
-        }
-    }
 
 }
