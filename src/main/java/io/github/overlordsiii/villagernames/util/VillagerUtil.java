@@ -62,9 +62,9 @@ public class VillagerUtil {
     private static String generateWanderingTraderName(){
         if (CONFIG.villagerGeneralConfig.surNames) {
             if (CONFIG.villagerGeneralConfig.reverseLastNames) {
-                return generateRandomSurname() + " " + pickRandomName(CONFIG.villagerNamesConfig);
+                return generateRandomSurname() + "" + pickRandomName(CONFIG.villagerNamesConfig);
             }
-            return pickRandomName(CONFIG.villagerNamesConfig) + " " + generateRandomSurname();
+            return pickRandomName(CONFIG.villagerNamesConfig) + "" + generateRandomSurname();
         }
         return pickRandomName(CONFIG.villagerNamesConfig);
     }
@@ -75,15 +75,6 @@ public class VillagerUtil {
 
     private static String generateRandomSurname() {
         return pickRandomName(CONFIG.sureNamesConfig);
-    }
-
-    private static void setGenericVillagerName(VillagerEntity entity, String name) {
-        if (CONFIG.villagerGeneralConfig.childNames) {
-            entity.setCustomName(entity.isBaby() ? new LiteralText(name + " the Child").formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()) : new LiteralText(name).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
-        }
-        else {
-            entity.setCustomName(new LiteralText(name).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
-        }
     }
 
     public static void createPiglinNames(PiglinEntity entity) {
@@ -127,39 +118,16 @@ public class VillagerUtil {
     }
 
     public static void updateVillagerNames(VillagerEntity entity){
-        //should never be called, but let's do it anyway!
-        if (entity.getVillagerData().getProfession() == VillagerProfession.NONE) {
-            VillagerNameManager.setFirstName(entity, pickRandomName(CONFIG.villagerNamesConfig));
-            if (CONFIG.villagerGeneralConfig.surNames) {
-                VillagerNameManager.setLastName(entity, generateRandomSurname());
-            }
-        }
-        else {
-            if (VillagerNameManager.getProfessionName(entity) == null && CONFIG.villagerGeneralConfig.professionNames) {
-                VillagerNameManager.setProfessionName(upperFirstLetter(entity.getVillagerData().getProfession().toString()), entity);
-                entity.setCustomName(VillagerNameManager.getFullNameAsText(entity, true));
-            }
-            /*
-            if (!Objects.requireNonNull(entity.getCustomName()).asString().contains(" the ") && CONFIG.villagerGeneralConfig.professionNames) {
-                //LOGGER.info(entity.getCustomName().asString());
-                entity.setCustomName(new LiteralText(Objects.requireNonNull(entity.getCustomName()).asString() + " the " + upperFirstLetter(entity.getVillagerData().getProfession().toString())).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
-                //  LOGGER.info(entity.getCustomName().asString());
-            }
-             */
+        // this is done bc this is called before villagers are loaded by server, so villagers with professions will just dissapear unless they are parsed correctly
+        generalVillagerUpdate(entity);
+        if (VillagerNameManager.getProfessionName(entity) == null && CONFIG.villagerGeneralConfig.professionNames) {
+            VillagerNameManager.setProfessionName(upperFirstLetter(entity.getVillagerData().getProfession().toString()), entity);
+            entity.setCustomName(VillagerNameManager.getFullNameAsText(entity, true));
         }
         entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
     }
 
     public static void updateLostVillagerProfessionName(VillagerEntity entity){
-        /*
-        if (entity.hasCustomName() && (CONFIG.villagerGeneralConfig.surNames ? secondIndexOf(entity.getCustomName().asString(), " ") != -1 : entity.getCustomName().asString().contains(" "))) {
-            String string = Objects.requireNonNull(entity.getCustomName()).asString();
-            //    LOGGER.info("Custom name inside lost Villager Name = " + string);
-            String realString = CONFIG.villagerGeneralConfig.professionNames ? string.substring(0, CONFIG.villagerGeneralConfig.surNames ? secondIndexOf(string, " ") : string.indexOf(" ")) : string;
-            //     LOGGER.info("Next string = " + realString);
-            entity.setCustomName(new LiteralText(realString).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
-        }
-         */
 
         if (entity.hasCustomName() && VillagerNameManager.getProfessionName(entity) != null) {
             VillagerNameManager.setProfessionName(null, entity);
@@ -169,6 +137,7 @@ public class VillagerUtil {
 
     public static void updateGrownUpVillagerName(VillagerEntity entity){
         if (entity.hasCustomName()) {
+            generalVillagerUpdate(entity); // parse name if not already done
             VillagerNameManager.updateFullName(entity);
             entity.setCustomName(VillagerNameManager.getFullNameAsText(entity, true));
         }
@@ -177,19 +146,6 @@ public class VillagerUtil {
     public static void addZombieVillagerName(VillagerEntity villagerEntity, ZombieVillagerEntity zombieVillagerEntity){
    //     LOGGER.info(villagerEntity.hasCustomName());
         if (villagerEntity.hasCustomName()){
-            /*
-        //    LOGGER.info("before name = " + villagerEntity.getCustomName().asString());
-            if (Objects.requireNonNull(villagerEntity.getCustomName()).asString().contains(" the ")) {
-                String string = villagerEntity.getCustomName().asString().substring(0, CONFIG.villagerGeneralConfig.surNames ? secondIndexOf(villagerEntity.getCustomName().asString(), " ") : villagerEntity.getCustomName().asString().indexOf(" "));
-           //     LOGGER.info("string = " + string);
-                zombieVillagerEntity.setCustomName(new LiteralText(string + " the Zombie").formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
-        //        LOGGER.info("zombie name = " + zombieVillagerEntity.getCustomName().asString());
-            }
-            else {
-                String string = " the Zombie";
-                zombieVillagerEntity.setCustomName(new LiteralText(villagerEntity.getCustomName().asString() + string).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
-            }
-             */
 
             String firstName = VillagerNameManager.getFirstName(villagerEntity);
             ZombieVillagerNameManager.setFirstName(firstName, zombieVillagerEntity);
@@ -202,22 +158,31 @@ public class VillagerUtil {
 
     public static void removeZombieVillagerName(VillagerEntity villagerEntity, ZombieVillagerEntity zombieVillagerEntity){
         if (zombieVillagerEntity.hasCustomName()){
-            if (ZombieVillagerNameManager.getFirstName(zombieVillagerEntity) != null) {
-                String firstName = ZombieVillagerNameManager.getFirstName(zombieVillagerEntity);
+            if (ZombieVillagerNameManager.getFirstName(zombieVillagerEntity) == null) {
+                String[] components = zombieVillagerEntity.getCustomName().asString().split("\\s+");
+                String firstNameParsed = components[0];
+                String lastNameParsed = null;
                 if (CONFIG.villagerGeneralConfig.surNames) {
-                    VillagerNameManager.setLastName(villagerEntity, ZombieVillagerNameManager.getLastName(zombieVillagerEntity));
+                    lastNameParsed = components[1];
                 }
-
-                VillagerNameManager.setFirstName(villagerEntity, firstName);
-                villagerEntity.setCustomName(VillagerNameManager.getFullNameAsText(villagerEntity, true));
+                ZombieVillagerNameManager.setFirstName(firstNameParsed, zombieVillagerEntity);
+                ZombieVillagerNameManager.setLastName(lastNameParsed, zombieVillagerEntity);
             }
+
+            String firstName = ZombieVillagerNameManager.getFirstName(zombieVillagerEntity);
+            if (CONFIG.villagerGeneralConfig.surNames) {
+                VillagerNameManager.setLastName(villagerEntity, ZombieVillagerNameManager.getLastName(zombieVillagerEntity));
+            }
+
+            VillagerNameManager.setFirstName(villagerEntity, firstName);
+            villagerEntity.setCustomName(VillagerNameManager.getFullNameAsText(villagerEntity, true));
         }
     }
 
     public static void updatePiglinNames(PiglinEntity entity) {
         if (CONFIG.villagerGeneralConfig.piglinSurnames) { // check if last name config rule was changed, and if so give them a last name
             if (PiglinNameManager.getLastName(entity) == null) {
-                PiglinNameManager.setLastName(generateRandomSurname(), entity);
+                PiglinNameManager.setLastName(pickRandomName(CONFIG.piglinSurnamesConfig), entity);
             }
         } else {
             if (PiglinNameManager.getLastName(entity) != null) {
@@ -225,23 +190,15 @@ public class VillagerUtil {
             }
         }
 
+        if (PiglinNameManager.getFirstName(entity) == null && CONFIG.villagerGeneralConfig.piglinNames) {
+            PiglinNameManager.setFirstName(pickRandomName(CONFIG.piglinNamesConfig), entity);
+        }
+
         entity.setCustomName(PiglinNameManager.getFullNameAsText(entity, true));
     }
 
     public static void generalVillagerUpdate(VillagerEntity entity){
         if (entity.hasCustomName()){
-            /*String namer = Objects.requireNonNull(entity.getCustomName()).asString();
-            if (CONFIG.villagerGeneralConfig.surNames) {
-                if (entity.getVillagerData().getProfession() == VillagerProfession.NONE && !namer.contains(" ")) {//indicates that the villager does not have a profession and does not have last name
-                    namer = namer + " " + generateRandomSurname();
-                } else if (entity.getVillagerData().getProfession() != VillagerProfession.NONE && namer.charAt(namer.indexOf(" ") + 1) == 't') {//indicates they have a profession but no last name
-                    StringBuilder builder = new StringBuilder(namer);
-                    builder.insert(namer.indexOf(" "), " " + generateRandomSurname());
-                    namer = builder.toString();
-                }
-            }
-            entity.setCustomName(new LiteralText(namer).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
-             */
 
             if (VillagerNameManager.getFirstName(entity) == null) {
                 // this indicates that the mod has found a villager that has been named according to the older version of mod

@@ -5,11 +5,13 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -17,29 +19,30 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 import io.github.overlordsiii.villagernames.VillagerNames;
+import org.apache.commons.io.IOUtils;
 
 import net.fabricmc.loader.api.FabricLoader;
 
 
 public class NamesLoader {
-    public static void load()  {
-
+    public static void load() throws IOException {
         if (!VillagerNames.CONFIG.villagerGeneralConfig.hasRead) {
            VillagerNames.CONFIG.villagerNamesConfig.villagerNames = loadJson("villagerNames.json");
            VillagerNames.CONFIG.golemNamesConfig.golemNames = loadJson("golemNames.json");
            VillagerNames.CONFIG.sureNamesConfig.sureNames = loadJson("surnameNames.json");
-           VillagerNames.CONFIG.piglinNamesConfig.piglinNames = loadJson("Piglins_Names.json");
-           VillagerNames.CONFIG.piglinSurnamesConfig.piglinSurnames = loadJson("Piglins_Surnames.json");
+           VillagerNames.CONFIG.piglinNamesConfig.piglinNames = PiglinNameGenerator.getPiglinNameList();
+           VillagerNames.CONFIG.piglinSurnamesConfig.piglinSurnames = PiglinNameGenerator.getPiglinSurnamesList();
            VillagerNames.CONFIG.villagerGeneralConfig.hasRead = true;
             //noinspection UnstableApiUsage
             VillagerNames.CONFIG_MANAGER.save();
        } if (VillagerNames.CONFIG.sureNamesConfig.sureNames.isEmpty()) {
             VillagerNames.CONFIG.sureNamesConfig.sureNames = loadJson("surnameNames.json");
         } if (VillagerNames.CONFIG.piglinSurnamesConfig.piglinSurnames.isEmpty()) {
-            VillagerNames.CONFIG.piglinSurnamesConfig.piglinSurnames = loadJson("Piglins_Surnames.json");
+            VillagerNames.CONFIG.piglinSurnamesConfig.piglinSurnames = PiglinNameGenerator.getPiglinSurnamesList();
         } if (VillagerNames.CONFIG.piglinNamesConfig.piglinNames.isEmpty()) {
-            VillagerNames.CONFIG.piglinNamesConfig.piglinNames = loadJson("Piglins_Names.json");
+            VillagerNames.CONFIG.piglinNamesConfig.piglinNames = PiglinNameGenerator.getPiglinNameList();
         }
         // no longer needed as it was only used for legacy code
         /*
@@ -52,15 +55,15 @@ public class NamesLoader {
         }
          */
     }
-    private static List<String> loadJson(String string){
+    private static List<String> loadJson(String string) throws IOException {
         ArrayList<String> strings = new ArrayList<>();
-        BufferedReader reader =  new BufferedReader(new InputStreamReader(NamesLoader.class.getResourceAsStream("/assets/villagernames/names/" + string)));
-        JsonParser parser = new JsonParser();
-        JsonObject object = (JsonObject) parser.parse(reader);
+        String result = IOUtils.toString(NamesLoader.class.getResourceAsStream("/assets/villagernames/names/" + string), StandardCharsets.UTF_8);
+        JsonObject object = JsonParser.parseString(result).getAsJsonObject();
         JsonArray value = (JsonArray) object.get(string.substring(0, string.indexOf(".")));
         for (JsonElement jsonElement : value) {
             strings.add(jsonElement.getAsString());
         }
+
         return strings;
     }
     //the json file copy will be placed in the config dir

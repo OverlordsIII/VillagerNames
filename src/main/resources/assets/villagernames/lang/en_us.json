@@ -40,5 +40,9 @@
   "text.autoconfig.VillagerNames.option.piglinNamesConfig": "Piglin Names",
   "text.autoconfig.VillagerNames.option.piglinNamesConfig.piglinNames": "Piglin Names List",
   "text.autoconfig.VillagerNames.option.piglinSurnamesConfig": "Piglin Surnames",
-  "text.autoconfig.VillagerNames.option.piglinSurnamesConfig.piglinSurnames": "Piglin Surnames List"
+  "text.autoconfig.VillagerNames.option.piglinSurnamesConfig.piglinSurnames": "Piglin Surnames List",
+  "text.autoconfig.VillagerNames.option.villagerGeneralConfig.piglinNames": "Piglin Names",
+  "text.autoconfig.VillagerNames.option.villagerGeneralConfig.piglinSurnames": "Piglin Last Names",
+  "text.autoconfig.VillagerNames.option.villagerGeneralConfig.piglinNames.@Tooltip": "Toggles names for piglins, default in galactic alphabet",
+  "text.autoconfig.VillagerNames.option.villagerGeneralConfig.piglinSurnames.@Tooltip": "Toggles last names for piglins, also defaults to galactic alphabet"
 }
