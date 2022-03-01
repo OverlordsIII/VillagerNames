@@ -10,15 +10,19 @@ import java.util.Random;
 
 import io.github.overlordsiii.villagernames.VillagerNames;
 import io.github.overlordsiii.villagernames.api.PiglinNameManager;
+import io.github.overlordsiii.villagernames.api.RaiderNameManager;
 import io.github.overlordsiii.villagernames.api.VillagerNameManager;
 import io.github.overlordsiii.villagernames.api.ZombieVillagerNameManager;
 import io.github.overlordsiii.villagernames.config.NamesConfig;
 
 import net.minecraft.entity.mob.PiglinEntity;
+import net.minecraft.entity.mob.RavagerEntity;
 import net.minecraft.entity.mob.ZombieVillagerEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.passive.WanderingTraderEntity;
+import net.minecraft.entity.raid.RaiderEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.LiteralText;
 import net.minecraft.village.VillagerProfession;
 
@@ -88,6 +92,14 @@ public class VillagerUtil {
         entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
     }
 
+    public static void createRavagerNames(ServerWorld world, RavagerEntity entity) {
+        if (!entity.hasCustomName()) {
+            int counter = VillagerNames.INT_COMPONENT.get(world.getLevelProperties()).getValue() + 1;
+            entity.setCustomName(new LiteralText("Test Subject " + counter).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+            VillagerNames.INT_COMPONENT.get(world.getLevelProperties()).setValue(counter);
+        }
+    }
+
     public static void createVillagerNames(VillagerEntity entity){
         if (!entity.hasCustomName()){
             VillagerNameManager.setFirstName(entity, pickRandomName(CONFIG.villagerNamesConfig));
@@ -109,6 +121,19 @@ public class VillagerUtil {
         entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
     }
 
+    public static void createIllagerNames(RaiderEntity entity) {
+        if (!entity.hasCustomName()) {
+            RaiderNameManager.setFirstName(entity, pickRandomName(CONFIG.villagerNamesConfig));
+            if (CONFIG.villagerGeneralConfig.surNames) {
+                RaiderNameManager.setLastName(entity, generateRandomSurname());
+            }
+
+            entity.setCustomName(RaiderNameManager.getFullNameAsText(entity, true));
+        }
+
+        entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
+    }
+
     public static void loadGolemNames(IronGolemEntity entity){
         if (!entity.hasCustomName() && CONFIG.villagerGeneralConfig.golemNames) {
             String name = generateRandomGolemName();
@@ -117,13 +142,13 @@ public class VillagerUtil {
         }
     }
 
-    public static void updateVillagerNames(VillagerEntity entity){
+    public static void addProfessionName(VillagerEntity entity){
         // this is done bc this is called before villagers are loaded by server, so villagers with professions will just dissapear unless they are parsed correctly
         generalVillagerUpdate(entity);
         if (VillagerNameManager.getProfessionName(entity) == null && CONFIG.villagerGeneralConfig.professionNames) {
             VillagerNameManager.setProfessionName(upperFirstLetter(entity.getVillagerData().getProfession().toString()), entity);
-            entity.setCustomName(VillagerNameManager.getFullNameAsText(entity, true));
         }
+        entity.setCustomName(VillagerNameManager.getFullNameAsText(entity, true));
         entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
     }
 
@@ -180,6 +205,11 @@ public class VillagerUtil {
     }
 
     public static void updatePiglinNames(PiglinEntity entity) {
+
+        if (PiglinNameManager.getFirstName(entity) == null && CONFIG.villagerGeneralConfig.piglinNames) {
+            PiglinNameManager.setFirstName(pickRandomName(CONFIG.piglinNamesConfig), entity);
+        }
+
         if (CONFIG.villagerGeneralConfig.piglinSurnames) { // check if last name config rule was changed, and if so give them a last name
             if (PiglinNameManager.getLastName(entity) == null) {
                 PiglinNameManager.setLastName(pickRandomName(CONFIG.piglinSurnamesConfig), entity);
@@ -190,11 +220,36 @@ public class VillagerUtil {
             }
         }
 
-        if (PiglinNameManager.getFirstName(entity) == null && CONFIG.villagerGeneralConfig.piglinNames) {
-            PiglinNameManager.setFirstName(pickRandomName(CONFIG.piglinNamesConfig), entity);
+        entity.setCustomName(PiglinNameManager.getFullNameAsText(entity, true));
+    }
+
+    public static void updateIllagerNames(RaiderEntity entity) {
+        if (CONFIG.villagerGeneralConfig.surNames) { // check if last name config rule was changed, and if so give them a last name
+            if (RaiderNameManager.getLastName(entity) == null) {
+                RaiderNameManager.setLastName(entity, generateRandomSurname());
+            }
+        } else {
+            if (RaiderNameManager.getLastName(entity) != null) {
+                RaiderNameManager.setLastName(entity, null);
+            }
         }
 
-        entity.setCustomName(PiglinNameManager.getFullNameAsText(entity, true));
+        if (!CONFIG.villagerGeneralConfig.professionNames) {
+            if (RaiderNameManager.getTitle(entity) != null) {
+                RaiderNameManager.setTitle(entity, null);
+            }
+        } else {
+            if (entity.hasActiveRaid() && entity.isPatrolLeader()) {
+                RaiderNameManager.setTitle(entity, "Raid Captain");
+            } else if (RaiderNameManager.getTitle(entity) == null) {
+                RaiderNameManager.setTitle(entity, RaiderNameManager.getDefaultTitle(entity));
+            }
+        }
+
+        entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
+        entity.setCustomName(RaiderNameManager.getFullNameAsText(entity, true));
+
+
     }
 
     public static void generalVillagerUpdate(VillagerEntity entity){
@@ -250,6 +305,16 @@ public class VillagerUtil {
                 VillagerNameManager.setProfessionName(CONFIG.villagerGeneralConfig.nitwitText, entity);
                 entity.setCustomName(VillagerNameManager.getFullNameAsText(entity, true));
             }
+            if (!CONFIG.villagerGeneralConfig.professionNames) {
+                if (VillagerNameManager.getProfessionName(entity) != null) {
+                    VillagerNameManager.setProfessionName(null, entity);
+                }
+            } else {
+                if (entity.getVillagerData().getProfession() != VillagerProfession.NONE && !entity.isBaby()) {
+                    VillagerNameManager.setProfessionName(upperFirstLetter(entity.getVillagerData().getProfession().toString()), entity);
+                }
+            }
+
             entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
         }
     }

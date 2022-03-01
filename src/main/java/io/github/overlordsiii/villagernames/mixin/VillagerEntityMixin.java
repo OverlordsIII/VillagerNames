@@ -14,7 +14,6 @@ import net.minecraft.village.VillagerProfession;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -41,8 +40,11 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Inte
     }
     @Inject(method = "setVillagerData", at = @At("TAIL"))
     private void changeText(VillagerData villagerData, CallbackInfo ci){
+        if (!this.hasCustomName()) {
+            VillagerUtil.createVillagerNames((VillagerEntity) (Object) this);
+        }
         if (villagerData.getProfession() != VillagerProfession.NONE && this.hasCustomName()) {
-            VillagerUtil.updateVillagerNames((VillagerEntity) (Object) this);
+            VillagerUtil.addProfessionName((VillagerEntity) (Object) this);
         }
         if (this.hasCustomName() && villagerData.getProfession() == VillagerProfession.NONE){
             VillagerUtil.updateLostVillagerProfessionName((VillagerEntity)(Object)this);
@@ -209,7 +211,7 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Inte
 
         if (((VillagerEntity)(Object)this).isBaby() && CONFIG.villagerGeneralConfig.childNames) {
             builder.append(" the Child");
-        } else if (CONFIG.villagerGeneralConfig.professionNames && this.profession != null) {
+        } else if (CONFIG.villagerGeneralConfig.professionNames && this.profession != null && !this.profession.equals("None")) {
             builder.append(" the ")
                 .append(this.profession);
         }

@@ -15,6 +15,9 @@
     ],
     "modmenu": [
       "io.github.overlordsiii.villagernames.integration.ModMenuIntegration"
+    ],
+    "cardinal-components-level": [
+      "io.github.overlordsiii.villagernames.VillagerNames"
     ]
   },
   "license": "MIT",
@@ -27,5 +30,10 @@
     "fabricloader": ">=0.10.3+build.211",
     "fabric": "*",
     "minecraft": "1.18.x"
+  },
+  "custom": {
+    "cardinal-components": [
+      "villagernames:intcomponent"
+    ]
   }
 }

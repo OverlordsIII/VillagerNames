@@ -1,5 +1,7 @@
 package io.github.overlordsiii.villagernames.config;
 
+import java.util.Random;
+
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
@@ -37,4 +39,6 @@ public class VillagerGeneralConfig implements ConfigData {
     public boolean piglinNames = true;
     @ConfigEntry.Gui.Tooltip
     public boolean piglinSurnames = true;
+    @ConfigEntry.Gui.Tooltip
+    public boolean illagerEntityNames = true;
 }

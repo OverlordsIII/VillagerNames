@@ -50,6 +50,7 @@ public interface PiglinNameManager {
 
 	default void debug() {
 		//updateFullName();
+		System.out.println("Piglin debug info");
 		System.out.println("First name: " + getFirstName());
 		System.out.println("Last Name: " + getLastName());
 		System.out.println("Full Name: " + getFullName());

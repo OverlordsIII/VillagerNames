@@ -24,6 +24,11 @@ repositories {
 		url "https://maven.terraformersmc.com/releases/"
 	}
 
+	maven {
+		name = "Ladysnake Mods"
+		url = 'https://ladysnake.jfrog.io/artifactory/mods'
+	}
+
 
 }
 
@@ -43,6 +48,12 @@ dependencies {
 	modImplementation('com.terraformersmc:modmenu:2.0.0-beta.7') {
 		exclude module: 'fabric-api' // includes bad Fabric API
 	}
+
+	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:4.0.1"
+	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:4.0.1"
+
+	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-level:4.0.1"
+	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-level:4.0.1"
 }
 
 processResources {
