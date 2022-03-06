@@ -24,6 +24,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.mob.AbstractPiglinEntity;
 import net.minecraft.entity.mob.PiglinEntity;
 import net.minecraft.entity.mob.RavagerEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
@@ -80,7 +81,7 @@ public class VillagerNames implements ModInitializer, LevelComponentInitializer 
             } else if (entity instanceof WanderingTraderEntity wanderingTraderEntity){
                 VillagerUtil.createWanderingTraderNames(wanderingTraderEntity);
                 VillagerUtil.updateWanderingTraderNames(wanderingTraderEntity);
-            } else if (entity instanceof PiglinEntity piglinEntity && CONFIG.villagerGeneralConfig.piglinNames) {
+            } else if (entity instanceof AbstractPiglinEntity piglinEntity && CONFIG.villagerGeneralConfig.piglinNames) {
                 VillagerUtil.createPiglinNames(piglinEntity);
                 VillagerUtil.updatePiglinNames(piglinEntity);
                 // ravager names are seperate due to how they are different than normal raider entities

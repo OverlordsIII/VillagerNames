@@ -15,7 +15,7 @@ import io.github.overlordsiii.villagernames.api.VillagerNameManager;
 import io.github.overlordsiii.villagernames.api.ZombieVillagerNameManager;
 import io.github.overlordsiii.villagernames.config.NamesConfig;
 
-import net.minecraft.entity.mob.PiglinEntity;
+import net.minecraft.entity.mob.AbstractPiglinEntity;
 import net.minecraft.entity.mob.RavagerEntity;
 import net.minecraft.entity.mob.ZombieVillagerEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
@@ -81,7 +81,7 @@ public class VillagerUtil {
         return pickRandomName(CONFIG.sureNamesConfig);
     }
 
-    public static void createPiglinNames(PiglinEntity entity) {
+    public static void createPiglinNames(AbstractPiglinEntity entity) {
         if (!entity.hasCustomName()) {
             PiglinNameManager.setFirstName(pickRandomName(CONFIG.piglinNamesConfig), entity);
             if (CONFIG.villagerGeneralConfig.piglinSurnames) {
@@ -204,13 +204,14 @@ public class VillagerUtil {
         }
     }
 
-    public static void updatePiglinNames(PiglinEntity entity) {
+    public static void updatePiglinNames(AbstractPiglinEntity entity) {
 
         if (PiglinNameManager.getFirstName(entity) == null && CONFIG.villagerGeneralConfig.piglinNames) {
             PiglinNameManager.setFirstName(pickRandomName(CONFIG.piglinNamesConfig), entity);
         }
 
         if (CONFIG.villagerGeneralConfig.piglinSurnames) { // check if last name config rule was changed, and if so give them a last name
+
             if (PiglinNameManager.getLastName(entity) == null) {
                 PiglinNameManager.setLastName(pickRandomName(CONFIG.piglinSurnamesConfig), entity);
             }
@@ -224,6 +225,11 @@ public class VillagerUtil {
     }
 
     public static void updateIllagerNames(RaiderEntity entity) {
+
+        if (RaiderNameManager.getFirstName(entity) == null && CONFIG.villagerGeneralConfig.illagerEntityNames) {
+            RaiderNameManager.setFirstName(entity, pickRandomName(CONFIG.villagerNamesConfig));
+        }
+
         if (CONFIG.villagerGeneralConfig.surNames) { // check if last name config rule was changed, and if so give them a last name
             if (RaiderNameManager.getLastName(entity) == null) {
                 RaiderNameManager.setLastName(entity, generateRandomSurname());
