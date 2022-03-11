@@ -2,7 +2,7 @@ package io.github.overlordsiii.villagernames.api;
 
 import io.github.overlordsiii.villagernames.VillagerNames;
 
-import net.minecraft.entity.mob.PiglinEntity;
+import net.minecraft.entity.mob.AbstractPiglinEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 
@@ -20,31 +20,31 @@ public interface PiglinNameManager {
 
 	String getFullName();
 
-	static void setFirstName(String name, PiglinEntity entity) {
+	static void setFirstName(String name, AbstractPiglinEntity entity) {
 		((PiglinNameManager)entity).setFirstName(name);
 	}
 
-	static void setLastName(String name, PiglinEntity entity) {
+	static void setLastName(String name, AbstractPiglinEntity entity) {
 		((PiglinNameManager)entity).setLastName(name);
 	}
 
-	static String getFirstName(PiglinEntity entity) {
+	static String getFirstName(AbstractPiglinEntity entity) {
 		return ((PiglinNameManager)entity).getFirstName();
 	}
 
-	static String getLastName(PiglinEntity entity) {
+	static String getLastName(AbstractPiglinEntity entity) {
 		return ((PiglinNameManager)entity).getLastName();
 	}
 
-	static void updateLastName(PiglinEntity entity) {
+	static void updateLastName(AbstractPiglinEntity entity) {
 		((PiglinNameManager)entity).updateFullName();
 	}
 
-	static String getFullName(PiglinEntity entity) {
+	static String getFullName(AbstractPiglinEntity entity) {
 		return ((PiglinNameManager)entity).getFullName();
 	}
 
-	static Text getFullNameAsText(PiglinEntity entity, boolean configFormatting) {
+	static Text getFullNameAsText(AbstractPiglinEntity entity, boolean configFormatting) {
 		return configFormatting ? new LiteralText(getFullName(entity)).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()) : new LiteralText(getFullName(entity));
 	}
 
