@@ -19,6 +19,7 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigManager;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
+import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -94,7 +95,7 @@ public class VillagerNames implements ModInitializer, LevelComponentInitializer 
         });
 
         UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
-            if (!world.isClient()) {
+            if (!world.isClient() && FabricLoader.getInstance().isDevelopmentEnvironment()) {
                 if (entity instanceof VillagerNameManager manager) {
                     System.out.println("villager debug info");
                     System.out.println("villager first name: " + manager.getFirstName());
