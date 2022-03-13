@@ -1,10 +1,5 @@
 package io.github.overlordsiii.villagernames.mixin;
 
-import static io.github.overlordsiii.villagernames.VillagerNames.CONFIG;
-
-import java.util.Objects;
-
-import io.github.overlordsiii.villagernames.api.ZombieVillagerNameManager;
 import io.github.overlordsiii.villagernames.util.VillagerUtil;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -12,7 +7,6 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.mob.ZombieVillagerEntity;
 import net.minecraft.entity.passive.VillagerEntity;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;

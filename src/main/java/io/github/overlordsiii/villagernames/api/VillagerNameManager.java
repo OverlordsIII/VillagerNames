@@ -1,9 +1,6 @@
 package io.github.overlordsiii.villagernames.api;
 
-import java.util.List;
-
 import io.github.overlordsiii.villagernames.VillagerNames;
-import io.github.overlordsiii.villagernames.config.VillagerNamesConfig;
 
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.text.LiteralText;

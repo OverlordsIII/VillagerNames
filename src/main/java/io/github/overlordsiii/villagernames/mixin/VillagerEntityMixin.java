@@ -68,17 +68,18 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Inte
         }
     }
 
-    @SuppressWarnings("ALL")
-    @Redirect(method = "onDeath", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;info(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V"))
-    private void redirectLogCallOnDeath(Logger logger, String message, Object p0, Object p1){
+    @Redirect(method = "onDeath", at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;info(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V"))
+    private void redirectLogCallOnDeath(org.slf4j.Logger logger, String s, Object o, Object o1){
         if (VillagerNames.CONFIG.villagerGeneralConfig.turnOffVillagerConsoleSpam) {
             String lol = "ha lol";
             // fall through
         }
         else{
-            logger.info(message, p0, p1);
+            logger.info(s, o, o1);
         }
     }
+
+
     @SuppressWarnings("ALL")
     @Inject(method = "onGrowUp", at = @At("TAIL"))
     private void updateBabyText(CallbackInfo ci){

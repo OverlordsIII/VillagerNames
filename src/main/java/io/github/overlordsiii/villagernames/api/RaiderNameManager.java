@@ -2,7 +2,6 @@ package io.github.overlordsiii.villagernames.api;
 
 import io.github.overlordsiii.villagernames.VillagerNames;
 
-import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
