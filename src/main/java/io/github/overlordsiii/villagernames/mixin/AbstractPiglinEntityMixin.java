@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.AbstractPiglinEntity;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 
@@ -26,6 +27,11 @@ public abstract class AbstractPiglinEntityMixin extends HostileEntity implements
 
 	public AbstractPiglinEntityMixin(EntityType<? extends AbstractPiglinEntity> entityType, World world) {
 		super(entityType, world);
+	}
+
+	@Override
+	public String getPlayerName() {
+		return playerName;
 	}
 
 	@Override
@@ -68,15 +74,14 @@ public abstract class AbstractPiglinEntityMixin extends HostileEntity implements
 		}
 
 		this.fullName = builder.toString();
-
-		if (this.playerName != null) {
-			this.fullName = playerName;
-		}
 	}
 
 	@Override
 	public String getFullName() {
-		return this.fullName;
+		if (playerName != null) {
+			return playerName;
+		}
+		return fullName;
 	}
 
 	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))

@@ -52,6 +52,11 @@ public abstract class ZombieVillagerEntityMixin extends ZombieEntity implements 
     }
 
     @Override
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    @Override
     public void setPlayerName(String name) {
         this.playerName = name;
     }
@@ -83,15 +88,14 @@ public abstract class ZombieVillagerEntityMixin extends ZombieEntity implements 
         }
 
         this.fullName = builder.toString();
-
-        if (this.playerName != null) {
-            this.fullName = this.playerName;
-        }
     }
 
     @Override
     public String getFullName() {
-        return this.fullName;
+        if (playerName != null) {
+            return playerName;
+        }
+        return fullName;
     }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))

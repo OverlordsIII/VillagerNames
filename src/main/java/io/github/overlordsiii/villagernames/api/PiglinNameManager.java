@@ -22,6 +22,12 @@ public interface PiglinNameManager {
 
 	void setPlayerName(String name);
 
+	String getPlayerName();
+
+	static String getPlayerName(AbstractPiglinEntity entity) {
+		return ((PiglinNameManager)entity).getPlayerName();
+	}
+
 	static void setFirstName(String name, AbstractPiglinEntity entity) {
 		((PiglinNameManager)entity).setFirstName(name);
 	}
@@ -60,5 +66,6 @@ public interface PiglinNameManager {
 		System.out.println("First name: " + getFirstName());
 		System.out.println("Last Name: " + getLastName());
 		System.out.println("Full Name: " + getFullName());
+		System.out.println("Player Name: " + getPlayerName());
 	}
 }

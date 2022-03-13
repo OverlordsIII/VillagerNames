@@ -2,6 +2,7 @@ package io.github.overlordsiii.villagernames.api;
 
 import io.github.overlordsiii.villagernames.VillagerNames;
 
+import net.minecraft.entity.mob.AbstractPiglinEntity;
 import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
@@ -71,6 +72,12 @@ public interface RaiderNameManager {
 	 */
 
 	void setPlayerName(String name);
+
+	String getPlayerName();
+
+	static String getPlayerName(RaiderEntity entity) {
+		return ((RaiderNameManager)entity).getPlayerName();
+	}
 
 	static void setFirstName(RaiderEntity entity, String firstName) {
 		((RaiderNameManager)entity).setFirstName(firstName);

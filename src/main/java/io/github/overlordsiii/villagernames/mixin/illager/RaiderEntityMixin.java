@@ -43,6 +43,11 @@ public abstract class RaiderEntityMixin implements RaiderNameManager {
 	}
 
 	@Override
+	public String getPlayerName() {
+		return playerName;
+	}
+
+	@Override
 	public String getDefaultTitle() {
 		// easier than having to use mixins on all non-abstract subclasses of RaiderEntity
 		RaiderEntity entity = (RaiderEntity) (Object) this;
@@ -141,6 +146,9 @@ public abstract class RaiderEntityMixin implements RaiderNameManager {
 	 */
 	@Override
 	public String getFullName() {
+		if (playerName != null) {
+			return playerName;
+		}
 		return fullName;
 	}
 
@@ -171,10 +179,6 @@ public abstract class RaiderEntityMixin implements RaiderNameManager {
 		}
 
 		this.fullName = builder.toString();
-
-		if (this.playerName != null) {
-			this.fullName = this.playerName;
-		}
 	}
 
 	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))

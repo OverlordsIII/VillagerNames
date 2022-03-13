@@ -1,7 +1,9 @@
 package io.github.overlordsiii.villagernames.api;
 
 import io.github.overlordsiii.villagernames.VillagerNames;
+import io.github.overlordsiii.villagernames.mixin.VillagerEntityMixin;
 
+import net.minecraft.entity.mob.AbstractPiglinEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
@@ -76,6 +78,12 @@ public interface VillagerNameManager {
 	 */
 
 	void setPlayerName(String name);
+
+	String getPlayerName();
+
+	static String getPlayerName(VillagerEntity entity) {
+		return ((VillagerNameManager)entity).getPlayerName();
+	}
 
 	static String getFirstName(VillagerEntity entity) {
 		return ((VillagerNameManager)entity).getFirstName();

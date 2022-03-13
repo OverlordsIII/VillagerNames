@@ -97,12 +97,14 @@ public class VillagerNames implements ModInitializer, LevelComponentInitializer 
                     System.out.println("Villager profession: " + manager.getProfessionName());
                     System.out.println("Villager is child: " + ((VillagerEntity) entity).isBaby());
                     System.out.println("Villager full name: " + manager.getFullName());
+                    System.out.println("Villager player name: " + manager.getPlayerName());
                 } else if (entity instanceof RaiderNameManager manager) {
                     System.out.println("illager debug info");
                     System.out.println("illager first name: " + manager.getFirstName());
                     System.out.println("illager last name: " + manager.getLastName());
                     System.out.println("illager title: " + manager.getTitle());
                     System.out.println("illager full name: " + manager.getFullName());
+                    System.out.println("illager player name: " + manager.getPlayerName());
                 } else if (entity instanceof PiglinNameManager manager) {
                     manager.debug();
                 }

@@ -136,6 +136,11 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Inte
         this.playerName = name;
     }
 
+    @Override
+    public String getPlayerName() {
+        return playerName;
+    }
+
     /**
      * Set villager's first name
      *
@@ -216,7 +221,10 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Inte
      */
     @Override
     public String getFullName() {
-        return this.fullName;
+        if (playerName != null) {
+            return playerName;
+        }
+        return fullName;
     }
 
     /**
@@ -252,10 +260,6 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Inte
         }
 
         this.fullName = builder.toString();
-
-        if (this.playerName != null) {
-            this.fullName = this.playerName;
-        }
     }
 
     /*

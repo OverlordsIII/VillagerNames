@@ -1,5 +1,6 @@
 package io.github.overlordsiii.villagernames.api;
 
+import net.minecraft.entity.mob.AbstractPiglinEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.mob.ZombieVillagerEntity;
 
@@ -22,6 +23,12 @@ public interface ZombieVillagerNameManager {
 	String getFullName();
 
 	void setPlayerName(String name);
+
+	String getPlayerName();
+
+	static String getPlayerName(ZombieVillagerEntity entity) {
+		return ((ZombieVillagerNameManager)entity).getPlayerName();
+	}
 
 
 	static void setFirstName(String name, ZombieVillagerEntity entity) {
