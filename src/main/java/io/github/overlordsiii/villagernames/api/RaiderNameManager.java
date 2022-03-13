@@ -64,6 +64,15 @@ public interface RaiderNameManager {
 	 */
 	void updateFullName();
 
+	/**
+	 * Allows for the player to set a manual override for the full name.
+	 *
+	 * Whatever the player name is set to, it will supercede any other name
+	 * @param name
+	 */
+
+	void setPlayerName(String name);
+
 	static void setFirstName(RaiderEntity entity, String firstName) {
 		((RaiderNameManager)entity).setFirstName(firstName);
 	}
@@ -86,6 +95,10 @@ public interface RaiderNameManager {
 
 	static void removeTitle(RaiderEntity entity) {
 		((RaiderNameManager)entity).removeTitle();
+	}
+
+	static void setPlayerName(RaiderEntity entity, String name) {
+		((RaiderNameManager)entity).setPlayerName(name);
 	}
 
 	static void setTitle(RaiderEntity entity, String title) {

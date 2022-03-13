@@ -23,6 +23,7 @@ public abstract class AbstractPiglinEntityMixin extends HostileEntity implements
 	private String firstName;
 	private String lastName;
 	private String fullName;
+	private String playerName;
 
 	public AbstractPiglinEntityMixin(EntityType<? extends AbstractPiglinEntity> entityType, World world) {
 		super(entityType, world);
@@ -38,6 +39,11 @@ public abstract class AbstractPiglinEntityMixin extends HostileEntity implements
 	public void setLastName(String name) {
 		this.lastName = name;
 		updateFullName();
+	}
+
+	@Override
+	public void setPlayerName(String name) {
+		this.playerName = name;
 	}
 
 	@Override
@@ -63,6 +69,10 @@ public abstract class AbstractPiglinEntityMixin extends HostileEntity implements
 		}
 
 		this.fullName = builder.toString();
+
+		if (this.playerName != null) {
+			this.fullName = playerName;
+		}
 	}
 
 	@Override
@@ -81,6 +91,9 @@ public abstract class AbstractPiglinEntityMixin extends HostileEntity implements
 		if (lastName != null) {
 			tag.putString("lastName", lastName);
 		}
+		if (playerName != null) {
+			tag.putString("playerName", playerName);
+		}
 	}
 
 	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
@@ -93,6 +106,9 @@ public abstract class AbstractPiglinEntityMixin extends HostileEntity implements
 		}
 		if (tag.contains("lastName")) {
 			this.lastName = tag.getString("lastName");
+		}
+		if (tag.contains("playerName")) {
+			this.playerName = tag.getString("playerName");
 		}
 	}
 }

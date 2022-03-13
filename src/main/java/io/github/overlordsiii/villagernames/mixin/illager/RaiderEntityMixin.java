@@ -29,6 +29,8 @@ public abstract class RaiderEntityMixin implements RaiderNameManager {
 
 	private String lastName = null;
 
+	private String playerName = null;
+
 	private String title = getDefaultTitle();
 
 	/**
@@ -59,6 +61,18 @@ public abstract class RaiderEntityMixin implements RaiderNameManager {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Allows for the player to set a manual override for the full name.
+	 * <p>
+	 * Whatever the player name is set to, it will supercede any other name
+	 *
+	 * @param name
+	 */
+	@Override
+	public void setPlayerName(String name) {
+		this.playerName = name;
 	}
 
 	/**
@@ -159,6 +173,10 @@ public abstract class RaiderEntityMixin implements RaiderNameManager {
 		}
 
 		this.fullName = builder.toString();
+
+		if (this.playerName != null) {
+			this.fullName = this.playerName;
+		}
 	}
 
 	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
@@ -175,6 +193,9 @@ public abstract class RaiderEntityMixin implements RaiderNameManager {
 		if (title != null) {
 			tag.putString("title", title);
 		}
+		if (playerName != null) {
+			tag.putString("playerName", playerName);
+		}
 	}
 
 	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
@@ -190,6 +211,9 @@ public abstract class RaiderEntityMixin implements RaiderNameManager {
 		}
 		if (tag.contains("title")) {
 			this.title = tag.getString("title");
+		}
+		if (tag.contains("playerName")) {
+			this.playerName = tag.getString("playerName");
 		}
 	}
 }

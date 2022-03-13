@@ -1,13 +1,16 @@
 package io.github.overlordsiii.villagernames.mixin;
 
 import io.github.overlordsiii.villagernames.VillagerNames;
+import io.github.overlordsiii.villagernames.api.RaiderNameManager;
 import io.github.overlordsiii.villagernames.api.VillagerNameManager;
 import io.github.overlordsiii.villagernames.util.VillagerUtil;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.InteractionObserver;
+import net.minecraft.entity.mob.WitchEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.text.Text;
 import net.minecraft.village.VillagerData;
 import net.minecraft.village.VillagerDataContainer;
 import net.minecraft.village.VillagerProfession;
@@ -34,6 +37,7 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Inte
 
     private String profession = null;
 
+    private String playerName = null;
 
     public VillagerEntityMixin(EntityType<? extends MerchantEntity> entityType, World world) {
         super(entityType, world);
@@ -50,9 +54,23 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Inte
             VillagerUtil.updateLostVillagerProfessionName((VillagerEntity)(Object)this);
         }
     }
+
+    @Redirect(method = "onStruckByLightning", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/WitchEntity;setCustomName(Lnet/minecraft/text/Text;)V"))
+    private void redirectWitchConversion(WitchEntity witchEntity, Text name) {
+        RaiderNameManager.setFirstName(witchEntity, getFirstName());
+
+        if (CONFIG.villagerGeneralConfig.surNames) {
+            RaiderNameManager.setLastName(witchEntity, getLastName());
+        }
+
+        if (this.playerName != null) {
+            RaiderNameManager.setPlayerName(witchEntity, this.playerName);
+        }
+    }
+
     @SuppressWarnings("ALL")
     @Redirect(method = "onDeath", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;info(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V"))
-    private void redirect(Logger logger, String message, Object p0, Object p1){
+    private void redirectLogCallOnDeath(Logger logger, String message, Object p0, Object p1){
         if (VillagerNames.CONFIG.villagerGeneralConfig.turnOffVillagerConsoleSpam) {
             String lol = "ha lol";
             // fall through
@@ -81,6 +99,9 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Inte
         if (profession != null) {
             tag.putString("profession", profession);
         }
+        if (playerName != null) {
+            tag.putString("playerName", playerName);
+        }
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
@@ -97,9 +118,22 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Inte
         if (tag.contains("profession")) {
             this.profession = tag.getString("profession");
         }
+        if (tag.contains("playerName")) {
+            this.playerName = tag.getString("playerName");
+        }
     }
 
-
+    /**
+     * Allows for the player to set a manual override for the full name.
+     * <p>
+     * Whatever the player name is set to, it will supercede any other name
+     *
+     * @param name
+     */
+    @Override
+    public void setPlayerName(String name) {
+        this.playerName = name;
+    }
 
     /**
      * Set villager's first name
@@ -217,6 +251,10 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Inte
         }
 
         this.fullName = builder.toString();
+
+        if (this.playerName != null) {
+            this.fullName = this.playerName;
+        }
     }
 
     /*

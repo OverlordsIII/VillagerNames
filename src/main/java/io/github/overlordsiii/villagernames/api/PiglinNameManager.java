@@ -20,6 +20,8 @@ public interface PiglinNameManager {
 
 	String getFullName();
 
+	void setPlayerName(String name);
+
 	static void setFirstName(String name, AbstractPiglinEntity entity) {
 		((PiglinNameManager)entity).setFirstName(name);
 	}
@@ -42,6 +44,10 @@ public interface PiglinNameManager {
 
 	static String getFullName(AbstractPiglinEntity entity) {
 		return ((PiglinNameManager)entity).getFullName();
+	}
+
+	static void setPlayerName(AbstractPiglinEntity entity, String name) {
+		((PiglinNameManager)entity).setPlayerName(name);
 	}
 
 	static Text getFullNameAsText(AbstractPiglinEntity entity, boolean configFormatting) {

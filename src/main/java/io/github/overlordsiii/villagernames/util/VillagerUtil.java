@@ -350,10 +350,6 @@ public class VillagerUtil {
         }
     }
 
-    private static int secondIndexOf(String source, String index) {
-        return source.indexOf(index, source.indexOf(index) + 1);
-    }
-
     public static void addLastNameFromBreeding(VillagerEntity childEntity, VillagerEntity parentEntity) {
         if (parentEntity.hasCustomName() && CONFIG.villagerGeneralConfig.surNames) {
             VillagerNameManager.setFirstName(childEntity, pickRandomName(CONFIG.villagerNamesConfig));

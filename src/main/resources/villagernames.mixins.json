@@ -10,7 +10,9 @@
     "ZombieVillagerEntityMixin",
     "illager.PatrolEntityMixin",
     "illager.RaiderEntityMixin",
-    "illager.RaidMixin"
+    "illager.RaidMixin",
+    "item.NameTagItemMixin",
+    "item.SpawnEggItemMixin"
   ],
   "client": [
     "ConfigBuilderImplAccessor",

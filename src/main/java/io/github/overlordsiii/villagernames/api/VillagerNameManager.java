@@ -71,6 +71,15 @@ public interface VillagerNameManager {
 	 */
 	void updateFullName();
 
+	/**
+	 * Allows for the player to set a manual override for the full name.
+	 *
+	 * Whatever the player name is set to, it will supercede any other name
+	 * @param name
+	 */
+
+	void setPlayerName(String name);
+
 	static String getFirstName(VillagerEntity entity) {
 		return ((VillagerNameManager)entity).getFirstName();
 	}
@@ -109,5 +118,9 @@ public interface VillagerNameManager {
 
 	static Text getFullNameAsText(VillagerEntity entity, boolean configFormatting) {
 		return configFormatting ? new LiteralText(getFullName(entity)).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()) : new LiteralText(getFullName(entity));
+	}
+
+	static void setPlayerName(VillagerEntity entity, String name) {
+		((VillagerNameManager)entity).setPlayerName(name);
 	}
 }

@@ -21,6 +21,8 @@ public interface ZombieVillagerNameManager {
 
 	String getFullName();
 
+	void setPlayerName(String name);
+
 
 	static void setFirstName(String name, ZombieVillagerEntity entity) {
 		((ZombieVillagerNameManager)entity).setFirstName(name);
@@ -48,6 +50,10 @@ public interface ZombieVillagerNameManager {
 
 	static String getFullNameWithZombie(ZombieVillagerEntity entity) {
 		return ((ZombieVillagerNameManager)entity).getFullName() + " the Zombie";
+	}
+
+	static void setPlayerName(ZombieVillagerEntity entity, String name) {
+		((ZombieVillagerNameManager)entity).setPlayerName(name);
 	}
 
 }
