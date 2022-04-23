@@ -187,11 +187,11 @@ public class VillagerUtil {
                 String[] components = zombieVillagerEntity.getCustomName().asString().split("\\s+");
                 String firstNameParsed = components[0];
                 String lastNameParsed = null;
-                if (CONFIG.villagerGeneralConfig.surNames) {
+                if (CONFIG.villagerGeneralConfig.surNames && components.length > 1) {
                     lastNameParsed = components[1];
                 }
                 ZombieVillagerNameManager.setFirstName(firstNameParsed, zombieVillagerEntity);
-                ZombieVillagerNameManager.setLastName(lastNameParsed, zombieVillagerEntity);
+                ZombieVillagerNameManager.setLastName(lastNameParsed == null ? generateRandomSurname() : lastNameParsed, zombieVillagerEntity);
             }
 
             String firstName = ZombieVillagerNameManager.getFirstName(zombieVillagerEntity);
