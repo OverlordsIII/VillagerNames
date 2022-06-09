@@ -29,7 +29,7 @@ public abstract class SpawnEggItemMixin extends Item {
 
 	@Inject(method = "spawnBaby", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/MobEntity;setCustomName(Lnet/minecraft/text/Text;)V"), locals = LocalCapture.CAPTURE_FAILHARD)
 	private void spawnBabyInject(PlayerEntity user, MobEntity entity, EntityType entityType, ServerWorld world, Vec3d pos, ItemStack stack, CallbackInfoReturnable<Optional> cir, MobEntity mobEntity) {
-		String stackName = stack.getName().asString();
+		String stackName = stack.getName().getString();
 
 		if (mobEntity instanceof PiglinNameManager manager) {
 			manager.setPlayerName(stackName);

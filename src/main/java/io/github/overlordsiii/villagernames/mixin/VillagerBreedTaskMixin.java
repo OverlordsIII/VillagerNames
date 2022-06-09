@@ -28,7 +28,7 @@ public abstract class VillagerBreedTaskMixin {
     }
 
     private String valueOf(Text object) {
-        return object == null ? "null" : object.asString();
+        return object == null ? "null" : object.getString();
     }
 
 

@@ -17,6 +17,7 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigManager;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -33,7 +34,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 
@@ -59,9 +59,9 @@ public class VillagerNames implements ModInitializer, LevelComponentInitializer 
             e.printStackTrace();
         }
 
-        CommandRegistrationCallback.EVENT.register((commandDispatcher, dedicated) -> {
+        CommandRegistrationCallback.EVENT.register((commandDispatcher, dedicated, environment) -> {
             VillagerNameCommand.register(commandDispatcher);
-            if (!dedicated){
+            if (environment.integrated){
                 StopCommand.register(commandDispatcher);
             }
         });

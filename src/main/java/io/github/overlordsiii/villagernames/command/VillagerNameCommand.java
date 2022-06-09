@@ -21,13 +21,13 @@ import io.github.overlordsiii.villagernames.config.PiglinSurnamesConfig;
 import io.github.overlordsiii.villagernames.config.SureNamesConfig;
 import io.github.overlordsiii.villagernames.config.VillagerGeneralConfig;
 import io.github.overlordsiii.villagernames.config.VillagerNamesConfig;
+import net.minecraft.text.MutableText;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
@@ -122,18 +122,18 @@ public class VillagerNameCommand {
         try {
             newFormatting = Formatting.valueOf(format);
         } catch (Exception e) {
-            ctx.getSource().getPlayer().sendMessage(new LiteralText("ha nice one, but you can't set the formatting to some random formatting. Stick with what the command suggests to you").formatted(Formatting.LIGHT_PURPLE), false);
+            ctx.getSource().getPlayer().sendMessage(Text.literal("ha nice one, but you can't set the formatting to some random formatting. Stick with what the command suggests to you absolute lingesh").formatted(Formatting.LIGHT_PURPLE), false);
             return -1;
         }
         VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting = FormattingDummy.fromFormatting(newFormatting);
-        ctx.getSource().sendFeedback(new LiteralText(String.format(displayText
+        ctx.getSource().sendFeedback(Text.literal(String.format(displayText
                 , FormattingDummy.fromFormatting(newFormatting)))
                 .formatted(newFormatting == Formatting.OBFUSCATED ? Formatting.WHITE : newFormatting).styled(style ->
                         style.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND
                                 , "/villagername set villagerTextFormat " +
                                 FormattingDummy.fromFormatting(newFormatting).toString()))
                                 .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                        new LiteralText(FormattingDummy.fromFormatting(newFormatting)
+                                        Text.literal(FormattingDummy.fromFormatting(newFormatting)
                                                 .toString()).formatted(newFormatting))))
                 , true);
         VillagerNames.CONFIG_MANAGER.save();
@@ -151,9 +151,9 @@ public class VillagerNameCommand {
             case "wanderingTraderText": VillagerNames.CONFIG.villagerGeneralConfig.wanderingTraderText = newvalue;
         }
         String text = String.format(displayedText, newvalue);
-        ctx.getSource().sendFeedback(new LiteralText(text).formatted(Formatting.LIGHT_PURPLE)
+        ctx.getSource().sendFeedback(Text.literal(text).formatted(Formatting.LIGHT_PURPLE)
                 .styled(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT
-                        , new LiteralText(
+                        , Text.literal(
                                 "/villagername set " + literal + " " + newvalue)))
                         .withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND
                                 , "/villagername set " + literal))), true);
@@ -180,12 +180,12 @@ public class VillagerNameCommand {
         //      System.out.println("onOrOff = " + onOrOff);
           String text = String.format(displayText, onOrOff);
           ctx.getSource().sendFeedback(
-                  new LiteralText(text).formatted(Formatting.YELLOW)
+                  Text.literal(text).formatted(Formatting.YELLOW)
                           .styled(style -> style.withClickEvent(
                                   new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND
                                           , "/villagername toggle " + literal))
                                   .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT
-                                          , new LiteralText("Toggle the " + literal + " rule")))), true);
+                                          , Text.literal("Toggle the " + literal + " rule")))), true);
         VillagerNames.CONFIG_MANAGER.save();
         try {
             broadCastConfigChangeToOps(ctx, ConfigChange.TOGGLE, VillagerGeneralConfig.class.getDeclaredField(literal), ctx.getSource().getPlayer(), null);
@@ -200,16 +200,16 @@ public class VillagerNameCommand {
             listToAddTo.add(toAdd);
             String text = String.format(displayText, toAdd);
             ctx.getSource().sendFeedback(
-                    new LiteralText(text).formatted(Formatting.AQUA)
+                    Text.literal(text).formatted(Formatting.AQUA)
                             .styled(style -> style.withHoverEvent(new HoverEvent(
                                     HoverEvent.Action.SHOW_TEXT
-                                    , new LiteralText("Add an item to the villager or golem list")))
+                                    , Text.literal("Add an item to the villager or golem list")))
                                     .withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND
                                             , "/villagername add " + literal + " " + toAdd))), true);
         }
         else{
             ctx.getSource().getPlayer().sendMessage(
-                    new LiteralText("The villager or golem list you tried to add too already had that name in it")
+                    Text.literal("The villager or golem list you tried to add too already had that name in it")
                             .formatted(Formatting.RED), false);
         }
         try {
@@ -235,15 +235,15 @@ public class VillagerNameCommand {
         if (listToRemoveFrom.contains(toRemove)){
             listToRemoveFrom.remove(toRemove);
             String text = String.format(displayText, toRemove);
-            ctx.getSource().sendFeedback(new LiteralText(text)
+            ctx.getSource().sendFeedback(Text.literal(text)
                     .formatted(Formatting.GOLD)
                     .styled(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT
-                            , new LiteralText("Remove a name from the villager or golem name list")))
+                            , Text.literal("Remove a name from the villager or golem name list")))
                             .withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/villagername remove " + name + " " + toRemove)))
                     , true);
         }
         else{
-            ctx.getSource().getPlayer().sendMessage(new LiteralText("The villager or golem list you tried to remove from does not have that name").formatted(Formatting.RED), false);
+            ctx.getSource().getPlayer().sendMessage(Text.literal("The villager or golem list you tried to remove from does not have that name").formatted(Formatting.RED), false);
         }
 
         try {
@@ -269,7 +269,7 @@ public class VillagerNameCommand {
         try {
             for (Field field : VillagerGeneralConfig.class.getDeclaredFields()) {
                 ctx.getSource().getPlayer().sendMessage(
-                        new LiteralText(field.getName() + " = " + field.get(VillagerNames.CONFIG.villagerGeneralConfig).toString())
+                        Text.literal(field.getName() + " = " + field.get(VillagerNames.CONFIG.villagerGeneralConfig).toString())
                                 .styled(style -> style.withClickEvent(
                                         FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT ?
                                                 new ClickEvent(ClickEvent.Action.OPEN_FILE, FabricLoader.getInstance().getConfigDir() + "\\VillagerNames\\" + "villagerRules.json")
@@ -277,33 +277,33 @@ public class VillagerNameCommand {
 
 
             }
-        } catch (IllegalAccessException | CommandSyntaxException ex){
+        } catch (IllegalAccessException ex){
             logError(ctx, ex);
         }
         return 1;
     }
 
     private static void broadCastConfigChangeToOps(CommandContext<ServerCommandSource> ctx, ConfigChange change, Field field, ServerPlayerEntity executor, @Nullable String addedItem) throws IllegalAccessException {
-        LiteralText text;
+        MutableText text;
         switch (change){
             case SET:{
-                text = (LiteralText) new LiteralText("The " + field.getName() + " has been set to \""
+                text = (MutableText) Text.literal("The " + field.getName() + " has been set to \""
                         + field.get(VillagerNames.CONFIG.villagerGeneralConfig).toString() + "\" by "
-                        + executor.getName().asString() + ".").formatted(field.getName().equals("villagerTextFormatting")
+                        + executor.getName().getString() + ".").formatted(field.getName().equals("villagerTextFormatting")
                         ? FormattingDummy.valueOf(field.get(VillagerNames.CONFIG.villagerGeneralConfig).toString()).getFormatting()
                         : Formatting.LIGHT_PURPLE);
                 break;
             }
             case ADD: {
-                text = (LiteralText) new LiteralText("The " + field.getName() + " has had the name \"" + addedItem + "\" added to the " + field.getName() + " by " + executor.getName().asString() + ".").formatted(Formatting.AQUA);
+                text = (MutableText) Text.literal("The " + field.getName() + " has had the name \"" + addedItem + "\" added to the " + field.getName() + " by " + executor.getName().getString() + ".").formatted(Formatting.AQUA);
                 break;
             }
             case TOGGLE: {
-                text = (LiteralText) new LiteralText("The " + field.getName() + " has been toggled to " + field.get(VillagerNames.CONFIG.villagerGeneralConfig).toString() + " by " + executor.getName().asString() + ".").formatted(Formatting.GRAY);
+                text = (MutableText) Text.literal("The " + field.getName() + " has been toggled to " + field.get(VillagerNames.CONFIG.villagerGeneralConfig).toString() + " by " + executor.getName().getString() + ".").formatted(Formatting.GRAY);
                 break;
             }
             case REMOVE: {
-                text = (LiteralText) new LiteralText("The " + field.getName() + " has had the name \"" + addedItem + "\" removed from it by " + executor.getName().asString() + ".").formatted(Formatting.YELLOW);
+                text = (MutableText) Text.literal("The " + field.getName() + " has had the name \"" + addedItem + "\" removed from it by " + executor.getName().getString() + ".").formatted(Formatting.YELLOW);
                 break;
             }
             default:
@@ -313,14 +313,14 @@ public class VillagerNameCommand {
         sendToOps(ctx, text);
     }
 
-    private static void addConfigText(LiteralText text){
-        text.append(new LiteralText(" Any changes to the config require a server restart.")
+    private static void addConfigText(MutableText text){
+        text.append(Text.literal(" Any changes to the config require a server restart.")
                 .formatted(Formatting.ITALIC, Formatting.GRAY))
-                .append(new LiteralText(" Would you like to restart the server?")
+                .append(Text.literal(" Would you like to restart the server?")
                         .formatted(Formatting.BOLD, Formatting.GOLD).styled(style ->
                                 style.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/stop"))
                                         .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                                new LiteralText("⚠ WARNING! YOU HAVE TO RESTART THE SERVER BY YOURSELF! ⚠").formatted(Formatting.RED)))));
+                                                Text.literal("⚠ WARNING! YOU HAVE TO RESTART THE SERVER BY YOURSELF! ⚠").formatted(Formatting.RED)))));
     }
 
     private static void sendToOps(CommandContext<ServerCommandSource> ctx, Text text){
@@ -339,7 +339,7 @@ public class VillagerNameCommand {
     }
 
     private static void logError(CommandContext<ServerCommandSource> ctx, Exception e) throws CommandSyntaxException {
-        ctx.getSource().getPlayer().sendMessage(new LiteralText("Exception Thrown! Exception: " + Throwables.getRootCause(e)), false);
+        ctx.getSource().getPlayer().sendMessage(Text.literal("Exception Thrown! Exception: " + Throwables.getRootCause(e)), false);
         e.printStackTrace();
     }
 

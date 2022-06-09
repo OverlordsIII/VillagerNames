@@ -5,7 +5,6 @@ import io.github.overlordsiii.villagernames.mixin.VillagerEntityMixin;
 
 import net.minecraft.entity.mob.AbstractPiglinEntity;
 import net.minecraft.entity.passive.VillagerEntity;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 
 /**
@@ -122,7 +121,7 @@ public interface VillagerNameManager {
 	}
 
 	static Text getFullNameAsText(VillagerEntity entity, boolean configFormatting) {
-		return configFormatting ? new LiteralText(getFullName(entity)).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()) : new LiteralText(getFullName(entity));
+		return configFormatting ? Text.literal(getFullName(entity)).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()) : Text.literal(getFullName(entity));
 	}
 
 	static void setPlayerName(VillagerEntity entity, String name) {

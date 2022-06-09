@@ -3,7 +3,6 @@ package io.github.overlordsiii.villagernames.api;
 import io.github.overlordsiii.villagernames.VillagerNames;
 
 import net.minecraft.entity.mob.AbstractPiglinEntity;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 
 public interface PiglinNameManager {
@@ -57,7 +56,7 @@ public interface PiglinNameManager {
 	}
 
 	static Text getFullNameAsText(AbstractPiglinEntity entity, boolean configFormatting) {
-		return configFormatting ? new LiteralText(getFullName(entity)).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()) : new LiteralText(getFullName(entity));
+		return configFormatting ? Text.literal(getFullName(entity)).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()) : Text.literal(getFullName(entity));
 	}
 
 	default void debug() {

@@ -4,7 +4,6 @@ import io.github.overlordsiii.villagernames.VillagerNames;
 
 import net.minecraft.entity.mob.AbstractPiglinEntity;
 import net.minecraft.entity.raid.RaiderEntity;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 
 public interface RaiderNameManager {
@@ -122,7 +121,7 @@ public interface RaiderNameManager {
 	}
 
 	static Text getFullNameAsText(RaiderEntity entity, boolean configFormatting) {
-		return configFormatting ? new LiteralText(getFullName(entity)).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()) : new LiteralText(getFullName(entity));
+		return configFormatting ? Text.literal(getFullName(entity)).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()) : Text.literal(getFullName(entity));
 	}
 
 	static String getDefaultTitle(RaiderEntity entity) {
