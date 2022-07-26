@@ -339,7 +339,9 @@ public class VillagerNameCommand {
     }
 
     private static void logError(CommandContext<ServerCommandSource> ctx, Exception e) throws CommandSyntaxException {
-        ctx.getSource().getPlayer().sendMessage(Text.literal("Exception Thrown! Exception: " + Throwables.getRootCause(e)), false);
+        if (ctx.getSource().getPlayer() != null) {
+            ctx.getSource().getPlayer().sendMessage(Text.literal("Exception Thrown! Exception: " + Throwables.getRootCause(e)), false);
+        }
         e.printStackTrace();
     }
 

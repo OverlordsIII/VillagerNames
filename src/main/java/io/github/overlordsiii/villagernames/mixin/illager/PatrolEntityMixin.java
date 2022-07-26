@@ -27,17 +27,15 @@ public abstract class PatrolEntityMixin {
 				if (raiderEntity.hasActiveRaid()) {
 					return;
 				}
+
+				if (patrolLeader) {
+					manager.setTitle("Patrol Leader");
+				} else {
+					manager.setTitle(manager.getDefaultTitle());
+				}
+
+				entity.setCustomName(Text.literal(manager.getFullName()).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
 			}
-
-
-
-			if (patrolLeader) {
-				manager.setTitle("Patrol Leader");
-			} else {
-				manager.setTitle(manager.getDefaultTitle());
-			}
-
-			entity.setCustomName(Text.literal(manager.getFullName()).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
 		}
 	}
 }

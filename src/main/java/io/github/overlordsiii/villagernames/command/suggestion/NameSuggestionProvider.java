@@ -14,32 +14,36 @@ import java.util.concurrent.CompletableFuture;
 public abstract class NameSuggestionProvider implements SuggestionProvider<ServerCommandSource> {
     public static class Villager extends NameSuggestionProvider {
         public Villager() {
-            this.namesConfig = VillagerNames.CONFIG.villagerNamesConfig;
+            super(VillagerNames.CONFIG.villagerNamesConfig);
         }
     }
 
     public static class Golem extends NameSuggestionProvider {
         public Golem() {
-            this.namesConfig = VillagerNames.CONFIG.golemNamesConfig;
+            super(VillagerNames.CONFIG.golemNamesConfig);
         }
     }
 
     public static class Surename extends NameSuggestionProvider {
         public Surename() {
-            this.namesConfig = VillagerNames.CONFIG.sureNamesConfig;
+            super(VillagerNames.CONFIG.sureNamesConfig);
         }
     }
 
     public static class Piglin extends NameSuggestionProvider {
         public Piglin() {
-            this.namesConfig = VillagerNames.CONFIG.piglinNamesConfig;
+            super(VillagerNames.CONFIG.piglinNamesConfig);
         }
     }
 
     public static class PiglinSurname extends NameSuggestionProvider {
         public PiglinSurname() {
-            this.namesConfig = VillagerNames.CONFIG.piglinSurnamesConfig;
+            super(VillagerNames.CONFIG.piglinSurnamesConfig);
         }
+    }
+
+    protected NameSuggestionProvider(NamesConfig config) {
+        this.namesConfig = config;
     }
 
     protected NamesConfig namesConfig;
