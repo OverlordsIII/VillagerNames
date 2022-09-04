@@ -3,7 +3,7 @@ package io.github.overlordsiii.villagernames.integration.cca;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.WorldProperties;
 
-public class RavagerCounterComponent implements IntComponent{
+public class RavagerCounterComponent implements IntComponent {
 
 	//random starting point
 	private int value = (int) (Math.random() * 100);

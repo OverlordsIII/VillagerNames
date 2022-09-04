@@ -6,30 +6,7 @@ import net.minecraft.entity.mob.AbstractPiglinEntity;
 import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.text.Text;
 
-public interface RaiderNameManager {
-	/**
-	 * Set pillager's first name
-	 * @param firstName first name of illager entity
-	 */
-	void setFirstName(String firstName);
-
-	/**
-	 * Get first name of illager entity
-	 * @return first name
-	 */
-	String getFirstName();
-
-	/**
-	 * Set illager entity's last name
-	 * @param lastNames illager entity last name
-	 */
-	void setLastName(String lastNames);
-
-	/**
-	 * Get last name currently used
-	 * @return illager entity's last name
-	 */
-	String getLastName();
+public interface RaiderNameManager extends DefaultNameManager {
 	/**
 	 * Gets the illager entity's title
 	 * @return the title, or null if the title is toggled off
@@ -50,29 +27,6 @@ public interface RaiderNameManager {
 
 	String getDefaultTitle();
 
-	/**
-	 * Returns the full name of the illager entity
-	 * @return the fullName
-	 */
-	String getFullName();
-
-	/**
-	 * Updates the full name. This should be called when any other method in this interface is referenced
-	 *
-	 * It is by default called internally by the method implementation*
-	 */
-	void updateFullName();
-
-	/**
-	 * Allows for the player to set a manual override for the full name.
-	 *
-	 * Whatever the player name is set to, it will supercede any other name
-	 * @param name
-	 */
-
-	void setPlayerName(String name);
-
-	String getPlayerName();
 
 	static String getPlayerName(RaiderEntity entity) {
 		return ((RaiderNameManager)entity).getPlayerName();
@@ -107,9 +61,7 @@ public interface RaiderNameManager {
 	}
 
 	static void setTitle(RaiderEntity entity, String title) {
-		System.out.println("changing raider entity title: " + entity + " to " + title);
 		((RaiderNameManager)entity).setTitle(title);
-		System.out.println("new raider: " + entity);
 	}
 
 	static String getFullName(RaiderEntity entity) {

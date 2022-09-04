@@ -5,23 +5,7 @@ import io.github.overlordsiii.villagernames.VillagerNames;
 import net.minecraft.entity.mob.AbstractPiglinEntity;
 import net.minecraft.text.Text;
 
-public interface PiglinNameManager {
-
-	void setFirstName(String name);
-
-	void setLastName(String name);
-
-	String getFirstName();
-
-	String getLastName();
-
-	void updateFullName();
-
-	String getFullName();
-
-	void setPlayerName(String name);
-
-	String getPlayerName();
+public interface PiglinNameManager extends DefaultNameManager {
 
 	static String getPlayerName(AbstractPiglinEntity entity) {
 		return ((PiglinNameManager)entity).getPlayerName();

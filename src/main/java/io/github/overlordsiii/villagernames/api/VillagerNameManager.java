@@ -11,30 +11,7 @@ import net.minecraft.text.Text;
  * Used to manage names on a single {@link net.minecraft.entity.passive.VillagerEntity}
  * Use via duck mixin on {@link net.minecraft.entity.passive.VillagerEntity}
  */
-public interface VillagerNameManager {
-	/**
-	 * Set villager's first name
-	 * @param firstName first name of villager
-	 */
-	void setFirstName(String firstName);
-
-	/**
-	 * Get first name of villager
-	 * @return first name
-	 */
-	String getFirstName();
-
-	/**
-	 * Set Villager's last name
-	 * @param lastNames villager last name
-	 */
-	void setLastName(String lastNames);
-
-	/**
-	 * Get last name currently used
-	 * @return villager's last name
-	 */
-	String getLastName();
+public interface VillagerNameManager extends DefaultNameManager {
 	/**
 	 * Gets the villager's profession name
 	 * @return the profession name, or null if the profession name is toggled off
@@ -52,33 +29,6 @@ public interface VillagerNameManager {
 	 */
 
 	void setProfessionName(String appendedProfession);
-
-	/**
-	 * Returns the full name of the villager
-	 * @return the fullName
-	 */
-	String getFullName();
-
-	/**
-	 * Updates the full name. This should be called when any other method in this interface is referenced
-	 *
-	 * It is by default called internally by the method implementation
-	 *
-	 * @see VillagerEntityMixin for more information
-	 *
-	 */
-	void updateFullName();
-
-	/**
-	 * Allows for the player to set a manual override for the full name.
-	 *
-	 * Whatever the player name is set to, it will supercede any other name
-	 * @param name
-	 */
-
-	void setPlayerName(String name);
-
-	String getPlayerName();
 
 	static String getPlayerName(VillagerEntity entity) {
 		return ((VillagerNameManager)entity).getPlayerName();

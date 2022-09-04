@@ -160,7 +160,9 @@ public abstract class RaiderEntityMixin implements RaiderNameManager {
 	@Override
 	public void updateFullName() {
 		StringBuilder builder = new StringBuilder();
-		Objects.requireNonNull(this.firstName);
+		if (this.firstName == null) { //have to do null check here instead of throwing NPE bc sometimes updateFullName is called before firstName is initialized by NBT, causing error when there isn't one
+			return;
+		}
 		if (CONFIG.villagerGeneralConfig.reverseLastNames && CONFIG.villagerGeneralConfig.surNames && this.lastName != null) {
 			builder.append(this.lastName)
 				.append(" ")

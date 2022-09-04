@@ -8,24 +8,9 @@ import net.minecraft.entity.mob.ZombieVillagerEntity;
  * Same as {@link VillagerNameManager but for Zombie Villagers}
  * Has more limited functionality
  */
-public interface ZombieVillagerNameManager {
+public interface ZombieVillagerNameManager extends DefaultNameManager {
 
-	void setFirstName(String name);
-
-	void setLastName(String name);
-
-	String getFirstName();
-
-	String getLastName();
-
-	void updateFullName();
-
-	String getFullName();
-
-	void setPlayerName(String name);
-
-	String getPlayerName();
-
+	// static methods to limit casting
 	static String getPlayerName(ZombieVillagerEntity entity) {
 		return ((ZombieVillagerNameManager)entity).getPlayerName();
 	}
