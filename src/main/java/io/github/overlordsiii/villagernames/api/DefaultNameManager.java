@@ -1,7 +1,5 @@
 package io.github.overlordsiii.villagernames.api;
 
-import io.github.overlordsiii.villagernames.mixin.VillagerEntityMixin;
-
 public interface DefaultNameManager {
 	/**
 	 * Set entity's first name
