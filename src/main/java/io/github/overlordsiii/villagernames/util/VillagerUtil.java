@@ -52,7 +52,7 @@ public class VillagerUtil {
 
     private static String pickRandomName(NamesConfig namesConfig) {
         List<String> names = namesConfig.getNameList();
-        int index = random.nextInt(names.size());
+        int index = random.nextInt(names.size() - 1);
         if (usedUpNames.size() > names.size()/2) {
             usedUpNames.clear();
         }
