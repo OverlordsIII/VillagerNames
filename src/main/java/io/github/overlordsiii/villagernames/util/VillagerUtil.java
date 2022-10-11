@@ -57,7 +57,7 @@ public class VillagerUtil {
             usedUpNames.clear();
         }
         if (usedUpNames.contains(names.get(index))) {
-            index = random.nextInt(names.size() - 1);/ /Partial random, but you could possibly choose a name in the list again
+            index = random.nextInt(names.size() - 1); // Partial random, but you could possibly choose a name in the list again
         }
         usedUpNames.add(names.get(index));
         return names.get(index);
