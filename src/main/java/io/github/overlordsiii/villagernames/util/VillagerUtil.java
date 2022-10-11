@@ -56,8 +56,8 @@ public class VillagerUtil {
         if (usedUpNames.size() > names.size()/2) {
             usedUpNames.clear();
         }
-        if (usedUpNames.contains(names.get(index)) - 1) {
-            index = random.nextInt(names.size());//Partial random, but you could possibly choose a name in the list again
+        if (usedUpNames.contains(names.get(index))) {
+            index = random.nextInt(names.size() - 1);/ /Partial random, but you could possibly choose a name in the list again
         }
         usedUpNames.add(names.get(index));
         return names.get(index);
