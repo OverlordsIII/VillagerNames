@@ -5,6 +5,8 @@ import me.shedaniel.autoconfig.gui.ConfigScreenProvider;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
+
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
 import net.fabricmc.api.EnvType;
@@ -30,7 +33,7 @@ public abstract class ConfigScreenProviderMixin {
        for (String t : ((ConfigBuilderImplAccessor)builder).getCategoryMap().keySet()) {
                for (int i = 0; i < category.length; i++){
                    if (t.contains(category[i])){
-                       text[i] = Text.translatable(t);
+                       text[i] = new TranslatableText(t);
                        bl = true;
                    }
                }
@@ -44,7 +47,7 @@ public abstract class ConfigScreenProviderMixin {
                        new RestartStringVisitable()
                    });
                    ConfigEntryBuilder builder1 = builder.entryBuilder();
-                   configCategory.addEntry(builder1.startTextDescription(Text.literal("⚠ ANY CHANGES TO THIS CONFIG REQUIRE A SERVER RESTART ⚠").formatted(Formatting.RED)).setColor(16733525).build());
+                   configCategory.addEntry(builder1.startTextDescription(new LiteralText("⚠ ANY CHANGES TO THIS CONFIG REQUIRE A SERVER RESTART ⚠").formatted(Formatting.RED)).setColor(16733525).build());
                }
            }
        }

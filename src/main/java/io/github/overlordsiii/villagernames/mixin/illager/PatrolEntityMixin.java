@@ -3,6 +3,8 @@ package io.github.overlordsiii.villagernames.mixin.illager;
 import io.github.overlordsiii.villagernames.VillagerNames;
 import io.github.overlordsiii.villagernames.api.RaiderNameManager;
 import io.github.overlordsiii.villagernames.util.VillagerUtil;
+
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -34,7 +36,7 @@ public abstract class PatrolEntityMixin {
 					manager.setTitle(manager.getDefaultTitle());
 				}
 
-				entity.setCustomName(Text.literal(manager.getFullName()).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+				entity.setCustomName(new LiteralText(manager.getFullName()).formatted(VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
 			}
 		}
 	}

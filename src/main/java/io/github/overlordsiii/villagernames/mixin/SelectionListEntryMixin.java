@@ -6,6 +6,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
+
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -33,7 +35,7 @@ public abstract class SelectionListEntryMixin<T> {
            this.nameProvider = (t -> {
                MutableText text;
                if (t instanceof SelectionListEntry.Translatable){
-                   text = Text.translatable(((SelectionListEntry.Translatable) t).getKey());
+                   text = new TranslatableText(((SelectionListEntry.Translatable) t).getKey());
                    ArrayList<String> formattingDummyAsStrings = new ArrayList<>();
                    for (FormattingDummy dummy : FormattingDummy.values()){
                        formattingDummyAsStrings.add(dummy.toString());
@@ -42,7 +44,7 @@ public abstract class SelectionListEntryMixin<T> {
                        text = text.formatted(FormattingDummy.valueOf(((SelectionListEntry.Translatable)t).getKey()).getFormatting());
                    }
                } else {
-                   text = Text.translatable(t.toString());
+                   text = new TranslatableText(t.toString());
                    ArrayList<String> formattingDummyAsStrings = new ArrayList<>();
                    for (FormattingDummy dummy : FormattingDummy.values()){
                        formattingDummyAsStrings.add(dummy.toString());
