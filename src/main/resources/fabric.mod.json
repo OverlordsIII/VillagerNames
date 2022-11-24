@@ -13,6 +13,9 @@
     "main": [
       "io.github.overlordsiii.villagernames.VillagerNames"
     ],
+    "client": [
+      "io.github.overlordsiii.villagernames.client.VillagerNamesClient"
+    ],
     "modmenu": [
       "io.github.overlordsiii.villagernames.integration.ModMenuIntegration"
     ],

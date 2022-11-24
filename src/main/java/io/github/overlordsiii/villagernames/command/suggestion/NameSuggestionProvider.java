@@ -5,7 +5,7 @@ import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import io.github.overlordsiii.villagernames.VillagerNames;
-import io.github.overlordsiii.villagernames.config.NamesConfig;
+import io.github.overlordsiii.villagernames.config.names.NamesConfig;
 import net.minecraft.server.command.ServerCommandSource;
 
 import java.util.ArrayList;

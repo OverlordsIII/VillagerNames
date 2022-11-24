@@ -1,5 +1,10 @@
 package io.github.overlordsiii.villagernames.config;
 
+import io.github.overlordsiii.villagernames.config.names.GolemNamesConfig;
+import io.github.overlordsiii.villagernames.config.names.PiglinNamesConfig;
+import io.github.overlordsiii.villagernames.config.names.PiglinSurnamesConfig;
+import io.github.overlordsiii.villagernames.config.names.SureNamesConfig;
+import io.github.overlordsiii.villagernames.config.names.VillagerNamesConfig;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;

@@ -15,12 +15,12 @@ import io.github.overlordsiii.villagernames.VillagerNames;
 import io.github.overlordsiii.villagernames.command.suggestion.FormattingSuggestionProvider;
 import io.github.overlordsiii.villagernames.command.suggestion.NameSuggestionProvider;
 import io.github.overlordsiii.villagernames.config.FormattingDummy;
-import io.github.overlordsiii.villagernames.config.GolemNamesConfig;
-import io.github.overlordsiii.villagernames.config.PiglinNamesConfig;
-import io.github.overlordsiii.villagernames.config.PiglinSurnamesConfig;
-import io.github.overlordsiii.villagernames.config.SureNamesConfig;
+import io.github.overlordsiii.villagernames.config.names.GolemNamesConfig;
+import io.github.overlordsiii.villagernames.config.names.PiglinNamesConfig;
+import io.github.overlordsiii.villagernames.config.names.PiglinSurnamesConfig;
+import io.github.overlordsiii.villagernames.config.names.SureNamesConfig;
 import io.github.overlordsiii.villagernames.config.VillagerGeneralConfig;
-import io.github.overlordsiii.villagernames.config.VillagerNamesConfig;
+import io.github.overlordsiii.villagernames.config.names.VillagerNamesConfig;
 
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;

@@ -13,7 +13,7 @@ import io.github.overlordsiii.villagernames.api.PiglinNameManager;
 import io.github.overlordsiii.villagernames.api.RaiderNameManager;
 import io.github.overlordsiii.villagernames.api.VillagerNameManager;
 import io.github.overlordsiii.villagernames.api.ZombieVillagerNameManager;
-import io.github.overlordsiii.villagernames.config.NamesConfig;
+import io.github.overlordsiii.villagernames.config.names.NamesConfig;
 
 import net.minecraft.entity.mob.AbstractPiglinEntity;
 import net.minecraft.entity.mob.RavagerEntity;
@@ -24,7 +24,6 @@ import net.minecraft.entity.passive.WanderingTraderEntity;
 import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.LiteralText;
-import net.minecraft.text.Text;
 import net.minecraft.village.VillagerProfession;
 
 

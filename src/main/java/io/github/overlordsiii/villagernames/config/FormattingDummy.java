@@ -2,6 +2,8 @@ package io.github.overlordsiii.villagernames.config;
 
 import net.minecraft.util.Formatting;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public enum FormattingDummy {
