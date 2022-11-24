@@ -16,8 +16,6 @@
     "item.SpawnEggItemMixin"
   ],
   "client": [
-    "ConfigBuilderImplAccessor",
-    "ConfigScreenProviderMixin",
     "SelectionListEntryMixin"
   ],
   "injectors": {

@@ -1,4 +1,4 @@
-package io.github.overlordsiii.villagernames.config;
+package io.github.overlordsiii.villagernames.config.names;
 
 import java.util.List;
 
