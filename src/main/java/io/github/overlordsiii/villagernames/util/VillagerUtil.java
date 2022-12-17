@@ -50,7 +50,7 @@ public class VillagerUtil {
         return builder.toString();
     }
 
-    private static String pickRandomName(NamesConfig namesConfig) {
+    public static String pickRandomName(NamesConfig namesConfig) {
         List<String> names = namesConfig.getNameList();
         int index = random.nextInt(names.size() - 1);
         if (usedUpNames.size() > names.size()/2) {
@@ -66,9 +66,9 @@ public class VillagerUtil {
     private static String generateWanderingTraderName(){
         if (CONFIG.villagerGeneralConfig.surNames) {
             if (CONFIG.villagerGeneralConfig.reverseLastNames) {
-                return generateRandomSurname() + "" + pickRandomName(CONFIG.villagerNamesConfig);
+                return generateRandomSurname() + " " + pickRandomName(CONFIG.villagerNamesConfig);
             }
-            return pickRandomName(CONFIG.villagerNamesConfig) + "" + generateRandomSurname();
+            return pickRandomName(CONFIG.villagerNamesConfig) + " " + generateRandomSurname();
         }
         return pickRandomName(CONFIG.villagerNamesConfig);
     }
@@ -77,7 +77,7 @@ public class VillagerUtil {
         return pickRandomName(CONFIG.golemNamesConfig);
     }
 
-    private static String generateRandomSurname() {
+    public static String generateRandomSurname() {
         return pickRandomName(CONFIG.sureNamesConfig);
     }
 

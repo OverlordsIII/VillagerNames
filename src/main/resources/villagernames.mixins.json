@@ -9,6 +9,7 @@
     "VillagerEntityMixin",
     "ZombieEntityMixin",
     "ZombieVillagerEntityMixin",
+    "guard.GuardEntityMixin",
     "illager.PatrolEntityMixin",
     "illager.RaiderEntityMixin",
     "illager.RaidMixin",
@@ -18,6 +19,7 @@
   "client": [
     "SelectionListEntryMixin"
   ],
+  "plugin": "io.github.overlordsiii.villagernames.mixin.plugin.VillagerNamesPlugin",
   "injectors": {
     "defaultRequire": 1
   }

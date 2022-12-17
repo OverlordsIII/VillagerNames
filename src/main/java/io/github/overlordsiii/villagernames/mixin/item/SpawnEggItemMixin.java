@@ -2,6 +2,7 @@ package io.github.overlordsiii.villagernames.mixin.item;
 
 import java.util.Optional;
 
+import io.github.overlordsiii.villagernames.api.DefaultNameManager;
 import io.github.overlordsiii.villagernames.api.PiglinNameManager;
 import io.github.overlordsiii.villagernames.api.RaiderNameManager;
 import io.github.overlordsiii.villagernames.api.VillagerNameManager;
@@ -31,13 +32,7 @@ public abstract class SpawnEggItemMixin extends Item {
 	private void spawnBabyInject(PlayerEntity user, MobEntity entity, EntityType entityType, ServerWorld world, Vec3d pos, ItemStack stack, CallbackInfoReturnable<Optional> cir, MobEntity mobEntity) {
 		String stackName = stack.getName().getString();
 
-		if (mobEntity instanceof PiglinNameManager manager) {
-			manager.setPlayerName(stackName);
-		} else if (mobEntity instanceof RaiderNameManager manager) {
-			manager.setPlayerName(stackName);
-		} else if (mobEntity instanceof VillagerNameManager manager) {
-			manager.setPlayerName(stackName);
-		} else if (mobEntity instanceof ZombieVillagerNameManager manager) {
+		if (mobEntity instanceof DefaultNameManager manager) {
 			manager.setPlayerName(stackName);
 		}
 	}
