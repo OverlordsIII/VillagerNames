@@ -30,6 +30,7 @@ public class NamesLoader {
            VillagerNames.CONFIG.villagerNamesConfig.villagerNames = loadJson("villagerNames.json");
            VillagerNames.CONFIG.golemNamesConfig.golemNames = loadJson("golemNames.json");
            VillagerNames.CONFIG.sureNamesConfig.sureNames = loadJson("surnameNames.json");
+           VillagerNames.CONFIG.catNamesConfig.catNames = loadJson("catNames.json");
            VillagerNames.CONFIG.piglinNamesConfig.piglinNames = PiglinNameGenerator.getPiglinNameList();
            VillagerNames.CONFIG.piglinSurnamesConfig.piglinSurnames = PiglinNameGenerator.getPiglinSurnamesList();
            VillagerNames.CONFIG.villagerGeneralConfig.hasRead = true;
@@ -41,6 +42,8 @@ public class NamesLoader {
             VillagerNames.CONFIG.piglinSurnamesConfig.piglinSurnames = PiglinNameGenerator.getPiglinSurnamesList();
         } if (VillagerNames.CONFIG.piglinNamesConfig.piglinNames.isEmpty()) {
             VillagerNames.CONFIG.piglinNamesConfig.piglinNames = PiglinNameGenerator.getPiglinNameList();
+        } if (VillagerNames.CONFIG.catNamesConfig.catNames.isEmpty()) {
+            VillagerNames.CONFIG.catNamesConfig.catNames = loadJson("catNames.json");
         }
         // no longer needed as it was only used for legacy code
         /*

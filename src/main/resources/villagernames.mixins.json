@@ -13,7 +13,7 @@
     "illager.RaiderEntityMixin",
     "illager.RaidMixin",
     "item.NameTagItemMixin",
-    "item.SpawnEggItemMixin"
+    "item.SpawnEggItemMixin",
   ],
   "client": [
     "SelectionListEntryMixin"

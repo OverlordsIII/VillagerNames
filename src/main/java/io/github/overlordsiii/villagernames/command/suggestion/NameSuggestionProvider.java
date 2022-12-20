@@ -42,6 +42,13 @@ public abstract class NameSuggestionProvider implements SuggestionProvider<Serve
         }
     }
 
+    public static class CatName extends NameSuggestionProvider {
+
+        public CatName() {
+            super(VillagerNames.CONFIG.catNamesConfig);
+        }
+    }
+
     protected NameSuggestionProvider(NamesConfig config) {
         this.namesConfig = config;
     }

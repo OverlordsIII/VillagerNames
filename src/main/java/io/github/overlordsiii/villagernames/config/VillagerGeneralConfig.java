@@ -41,4 +41,7 @@ public class VillagerGeneralConfig implements ConfigData {
     public boolean piglinSurnames = true;
     @ConfigEntry.Gui.Tooltip
     public boolean illagerEntityNames = true;
+
+    @ConfigEntry.Gui.Tooltip
+    public boolean catNames = true;
 }

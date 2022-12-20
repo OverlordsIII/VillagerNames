@@ -18,6 +18,7 @@ import io.github.overlordsiii.villagernames.config.names.NamesConfig;
 import net.minecraft.entity.mob.AbstractPiglinEntity;
 import net.minecraft.entity.mob.RavagerEntity;
 import net.minecraft.entity.mob.ZombieVillagerEntity;
+import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.passive.WanderingTraderEntity;
@@ -141,6 +142,16 @@ public class VillagerUtil {
             entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
         }
     }
+
+    public static void createCatNames(CatEntity catEntity) {
+        if (!catEntity.hasCustomName()  && CONFIG.villagerGeneralConfig.catNames) {
+            String name = pickRandomName(CONFIG.catNamesConfig);
+            catEntity.setCustomName(Text.literal(name).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+            catEntity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
+        }
+    }
+
+
 
     public static void addProfessionName(VillagerEntity entity){
         // this is done bc this is called before villagers are loaded by server, so villagers with professions will just dissapear unless they are parsed correctly
@@ -344,6 +355,13 @@ public class VillagerUtil {
     }
 
     public static void updateGolemNames(IronGolemEntity entity){
+        if (entity.hasCustomName()){
+            entity.setCustomName(Text.literal(Objects.requireNonNull(entity.getCustomName()).getString()).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
+            entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
+        }
+    }
+
+    public static void updateCatNames(CatEntity entity) {
         if (entity.hasCustomName()){
             entity.setCustomName(Text.literal(Objects.requireNonNull(entity.getCustomName()).getString()).formatted(CONFIG.villagerGeneralConfig.villagerTextFormatting.getFormatting()));
             entity.setCustomNameVisible(!CONFIG.villagerGeneralConfig.nameTagNames);
