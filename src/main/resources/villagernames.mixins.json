@@ -18,6 +18,7 @@
   "client": [
     "SelectionListEntryMixin"
   ],
+  "plugin": "io.github.overlordsiii.villagernames.mixin.plugin.VillagerNamesMixinPlugin",
   "injectors": {
     "defaultRequire": 1
   }
