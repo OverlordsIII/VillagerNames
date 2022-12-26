@@ -21,6 +21,7 @@ This eventually will be part of a bigger groups of Mods, designed to work both t
  * Adds the villager's profession to the villager's names when they get a profession (config enabled)
  * Adds a " the Child" tag to children (config enabled)
  * Adds robot names to iron golems (config enabled)
+ * Adds cat names to cats (config enabled)
  * Allows you to format the villager names into different text styles (config enabled)
  * Allows you to customize the added villager text for a nitwit (we know they are useless. Config enabled)
  * Provides a command system for dedicated servers and a modmenu screen for integrated (singleplayer) ones
