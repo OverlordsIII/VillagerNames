@@ -47,5 +47,8 @@
   "text.autoconfig.VillagerNames.option.villagerGeneralConfig.piglinSurnames.@Tooltip": "Toggles last names for piglins, also defaults to galactic alphabet",
   "text.autoconfig.VillagerNames.option.villagerGeneralConfig.illagerEntityNames": "Names for illagers",
   "text.autoconfig.VillagerNames.option.villagerGeneralConfig.illagerEntityNames.@Tooltip": "Gives names to illager entities and ravagers",
-  "text.autoconfig.VillagerNames.warning": "⚠ ANY CHANGES TO THIS CONFIG REQUIRE A SERVER RESTART ⚠"
+  "text.autoconfig.VillagerNames.warning": "⚠ ANY CHANGES TO THIS CONFIG REQUIRE A SERVER RESTART ⚠",
+  "text.autoconfig.VillagerNames.category.catName": "Cat Names",
+  "text.autoconfig.VillagerNames.option.catNamesConfig": "Cat Names",
+  "text.autoconfig.VillagerNames.option.catNamesConfig.catNames": "Cat Names List"
 }
