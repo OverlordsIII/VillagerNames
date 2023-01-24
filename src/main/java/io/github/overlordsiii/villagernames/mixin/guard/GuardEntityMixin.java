@@ -80,6 +80,10 @@ public abstract class GuardEntityMixin extends PathAwareEntity implements Defaul
 			builder.append(this.firstName);
 		}
 
+		if (CONFIG.villagerGeneralConfig.professionNames) {
+			builder.append(" the Guard");
+		}
+
 		this.fullName = builder.toString();
 	}
 
