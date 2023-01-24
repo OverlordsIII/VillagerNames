@@ -46,7 +46,11 @@ public class VillagerNamesMixinPlugin implements IMixinConfigPlugin {
 	 */
 	@Override
 	public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-		return !mixinClassName.contains("villagernames.mixin.LivingEntityMixin") || !FabricLoader.getInstance().isModLoaded("carpet");
+		if (mixinClassName.contains("mixin.guard.GuardEntityMixin") && !FabricLoader.getInstance().isModLoaded("guardvillagers")) {
+			return false;
+		}
+
+		return !mixinClassName.contains("villagernames.mixin.LivingEntityMixin") || FabricLoader.getInstance().isModLoaded("carpet");
 	}
 
 	/**

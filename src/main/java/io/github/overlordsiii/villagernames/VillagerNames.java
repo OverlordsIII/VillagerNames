@@ -36,6 +36,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
+import net.fabricmc.loader.api.FabricLoader;
 
 @SuppressWarnings({"UnstableApiUsage", "unused"})
 public class VillagerNames implements ModInitializer, LevelComponentInitializer {
