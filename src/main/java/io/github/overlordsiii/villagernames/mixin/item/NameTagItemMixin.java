@@ -1,5 +1,6 @@
 package io.github.overlordsiii.villagernames.mixin.item;
 
+import io.github.overlordsiii.villagernames.api.DefaultNameManager;
 import io.github.overlordsiii.villagernames.api.PiglinNameManager;
 import io.github.overlordsiii.villagernames.api.RaiderNameManager;
 import io.github.overlordsiii.villagernames.api.VillagerNameManager;
@@ -29,13 +30,7 @@ public abstract class NameTagItemMixin extends Item {
 			if (!user.world.isClient && entity.isAlive()) {
 				String stackName = stack.getName().getString();
 
-				if (entity instanceof PiglinNameManager manager) {
-					manager.setPlayerName(stackName);
-				} else if (entity instanceof RaiderNameManager manager) {
-					manager.setPlayerName(stackName);
-				} else if (entity instanceof VillagerNameManager manager) {
-					manager.setPlayerName(stackName);
-				} else if (entity instanceof ZombieVillagerNameManager manager) {
+				if (entity instanceof DefaultNameManager manager) {
 					manager.setPlayerName(stackName);
 				}
 			}
