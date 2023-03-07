@@ -50,7 +50,11 @@ public class VillagerNamesMixinPlugin implements IMixinConfigPlugin {
 			return false;
 		}
 
-		return !mixinClassName.contains("villagernames.mixin.LivingEntityMixin") || FabricLoader.getInstance().isModLoaded("carpet");
+		if (mixinClassName.contains("LivingEntityMixin") && FabricLoader.getInstance().isModLoaded("carpet")) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
