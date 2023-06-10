@@ -2,6 +2,7 @@ package io.github.overlordsiii.villagernames.config;
 
 import java.util.Random;
 
+import io.github.overlordsiii.villagernames.region.api.RegionGroup;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
@@ -21,6 +22,11 @@ public class VillagerGeneralConfig implements ConfigData {
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
     @ConfigEntry.Gui.Tooltip
     public FormattingDummy villagerTextFormatting = FormattingDummy.WHITE;
+
+    @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+    @ConfigEntry.Gui.Tooltip
+    public RegionNames regionNames = RegionNames.DEFAULT;
+
     @ConfigEntry.Gui.Tooltip
     public boolean childNames = false;
     @ConfigEntry.Gui.Tooltip

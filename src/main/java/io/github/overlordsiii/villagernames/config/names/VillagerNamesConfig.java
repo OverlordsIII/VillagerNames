@@ -10,12 +10,7 @@ import me.shedaniel.autoconfig.annotation.Config;
 public class VillagerNamesConfig implements ConfigData, NamesConfig {
     public List<String> villagerNames = new ArrayList<>();
 
-    @Override
-    public String getConfigName() {
-        return "villagerNames";
-    }
-
-    @Override
+	@Override
     public List<String> getNameList() {
         return villagerNames;
     }

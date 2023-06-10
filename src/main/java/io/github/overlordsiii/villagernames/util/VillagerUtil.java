@@ -14,6 +14,7 @@ import io.github.overlordsiii.villagernames.api.RaiderNameManager;
 import io.github.overlordsiii.villagernames.api.VillagerNameManager;
 import io.github.overlordsiii.villagernames.api.ZombieVillagerNameManager;
 import io.github.overlordsiii.villagernames.config.names.NamesConfig;
+import io.github.overlordsiii.villagernames.region.api.NameType;
 
 import net.minecraft.entity.mob.AbstractPiglinEntity;
 import net.minecraft.entity.mob.RavagerEntity;
@@ -67,11 +68,11 @@ public class VillagerUtil {
     private static String generateWanderingTraderName(){
         if (CONFIG.villagerGeneralConfig.surNames) {
             if (CONFIG.villagerGeneralConfig.reverseLastNames) {
-                return generateRandomSurname() + " " + pickRandomName(CONFIG.villagerNamesConfig);
+                return generateRandomSurname() + " " + pickRandomName(CONFIG.villagerGeneralConfig.regionNames.toNamesConfig(NameType.FIRST_NAME));
             }
-            return pickRandomName(CONFIG.villagerNamesConfig) + " " + generateRandomSurname();
+            return pickRandomName(CONFIG.villagerGeneralConfig.regionNames.toNamesConfig(NameType.FIRST_NAME)) + " " + generateRandomSurname();
         }
-        return pickRandomName(CONFIG.villagerNamesConfig);
+        return pickRandomName(CONFIG.villagerGeneralConfig.regionNames.toNamesConfig(NameType.FIRST_NAME));
     }
 
     private static String generateRandomGolemName(){
@@ -79,7 +80,7 @@ public class VillagerUtil {
     }
 
     public static String generateRandomSurname() {
-        return pickRandomName(CONFIG.sureNamesConfig);
+        return pickRandomName(CONFIG.villagerGeneralConfig.regionNames.toNamesConfig(NameType.SURNAME));
     }
 
     public static void createPiglinNames(AbstractPiglinEntity entity) {
@@ -103,7 +104,7 @@ public class VillagerUtil {
 
     public static void createVillagerNames(VillagerEntity entity){
         if (!entity.hasCustomName()){
-            VillagerNameManager.setFirstName(entity, pickRandomName(CONFIG.villagerNamesConfig));
+            VillagerNameManager.setFirstName(entity, pickRandomName(CONFIG.villagerGeneralConfig.regionNames.toNamesConfig(NameType.FIRST_NAME)));
             if (CONFIG.villagerGeneralConfig.surNames) {
                 VillagerNameManager.setLastName(entity, generateRandomSurname());
             }
@@ -124,7 +125,7 @@ public class VillagerUtil {
 
     public static void createIllagerNames(RaiderEntity entity) {
         if (!entity.hasCustomName()) {
-            RaiderNameManager.setFirstName(entity, pickRandomName(CONFIG.villagerNamesConfig));
+            RaiderNameManager.setFirstName(entity, pickRandomName(CONFIG.villagerGeneralConfig.regionNames.toNamesConfig(NameType.FIRST_NAME)));
             if (CONFIG.villagerGeneralConfig.surNames) {
                 RaiderNameManager.setLastName(entity, generateRandomSurname());
             }
@@ -238,7 +239,7 @@ public class VillagerUtil {
     public static void updateIllagerNames(RaiderEntity entity) {
 
         if (RaiderNameManager.getFirstName(entity) == null && CONFIG.villagerGeneralConfig.illagerEntityNames) {
-            RaiderNameManager.setFirstName(entity, pickRandomName(CONFIG.villagerNamesConfig));
+            RaiderNameManager.setFirstName(entity, pickRandomName(CONFIG.villagerGeneralConfig.regionNames.toNamesConfig(NameType.FIRST_NAME)));
         }
 
         if (CONFIG.villagerGeneralConfig.surNames) { // check if last name config rule was changed, and if so give them a last name
@@ -370,7 +371,7 @@ public class VillagerUtil {
 
     public static void addLastNameFromBreeding(VillagerEntity childEntity, VillagerEntity parentEntity) {
         if (parentEntity.hasCustomName() && CONFIG.villagerGeneralConfig.surNames) {
-            VillagerNameManager.setFirstName(childEntity, pickRandomName(CONFIG.villagerNamesConfig));
+            VillagerNameManager.setFirstName(childEntity, pickRandomName(CONFIG.villagerGeneralConfig.regionNames.toNamesConfig(NameType.FIRST_NAME)));
             VillagerNameManager.setLastName(childEntity, VillagerNameManager.getLastName(parentEntity));
             childEntity.setCustomName(VillagerNameManager.getFullNameAsText(childEntity, true));
         }

@@ -11,12 +11,7 @@ import java.util.List;
 public class GolemNamesConfig implements ConfigData, NamesConfig {
     public List<String> golemNames = new ArrayList<>();
 
-    @Override
-    public String getConfigName() {
-        return "golemNames";
-    }
-
-    @Override
+	@Override
     public List<String> getNameList() {
         return golemNames;
     }

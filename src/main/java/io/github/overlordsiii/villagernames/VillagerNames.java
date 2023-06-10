@@ -1,5 +1,7 @@
 package io.github.overlordsiii.villagernames;
 
+import java.io.IOException;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
@@ -51,18 +53,16 @@ public class VillagerNames implements ModInitializer, LevelComponentInitializer 
         .serializeNulls()
         .create();
 
-    static {
-      CONFIG_MANAGER = (ConfigManager<VillagerConfig>) AutoConfig.register(VillagerConfig.class, PartitioningSerializer.wrap(GsonConfigSerializer::new));
-      CONFIG = AutoConfig.getConfigHolder(VillagerConfig.class).getConfig();
 
-    }
     @Override
     public void onInitialize() {
+        CONFIG_MANAGER = (ConfigManager<VillagerConfig>) AutoConfig.register(VillagerConfig.class, PartitioningSerializer.wrap(GsonConfigSerializer::new));
+        CONFIG = AutoConfig.getConfigHolder(VillagerConfig.class).getConfig();
+        LOGGER.info("Initializing Villager Names!");
         try {
             NamesLoader.load();
-        } catch (Exception e) {
-            LOGGER.log(Level.ERROR, "Error while loading default names");
-            e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         CommandRegistrationCallback.EVENT.register((commandDispatcher, dedicated, environment) -> {

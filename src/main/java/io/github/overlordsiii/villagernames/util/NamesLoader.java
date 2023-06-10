@@ -3,6 +3,7 @@ package io.github.overlordsiii.villagernames.util;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -19,6 +20,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.github.overlordsiii.villagernames.VillagerNames;
+import io.github.overlordsiii.villagernames.region.api.Regions;
 import org.apache.commons.io.IOUtils;
 
 import net.fabricmc.loader.api.FabricLoader;
@@ -26,7 +28,9 @@ import net.fabricmc.loader.api.FabricLoader;
 
 public class NamesLoader {
     public static void load() throws IOException {
+
         if (!VillagerNames.CONFIG.villagerGeneralConfig.hasRead) {
+           Regions.loadRegions();
            VillagerNames.CONFIG.villagerNamesConfig.villagerNames = loadJson("villagerNames.json");
            VillagerNames.CONFIG.golemNamesConfig.golemNames = loadJson("golemNames.json");
            VillagerNames.CONFIG.sureNamesConfig.sureNames = loadJson("surnameNames.json");

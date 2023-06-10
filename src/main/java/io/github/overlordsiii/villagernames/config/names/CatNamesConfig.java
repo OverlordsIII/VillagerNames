@@ -15,14 +15,6 @@ public class CatNamesConfig implements NamesConfig, ConfigData {
 	 * @return
 	 */
 	@Override
-	public String getConfigName() {
-		return "catNames";
-	}
-
-	/**
-	 * @return
-	 */
-	@Override
 	public List<String> getNameList() {
 		return catNames;
 	}

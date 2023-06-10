@@ -11,12 +11,7 @@ public class SureNamesConfig implements ConfigData, NamesConfig {
 
     public List<String> sureNames = new ArrayList<>();
 
-    @Override
-    public String getConfigName() {
-        return "surnames";
-    }
-
-    @Override
+	@Override
     public List<String> getNameList() {
         return sureNames;
     }

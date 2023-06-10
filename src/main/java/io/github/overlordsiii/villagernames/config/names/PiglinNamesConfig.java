@@ -11,11 +11,6 @@ public class PiglinNamesConfig implements NamesConfig, ConfigData {
 	public List<String> piglinNames = new ArrayList<>();
 
 	@Override
-	public String getConfigName() {
-		return "piglinNames";
-	}
-
-	@Override
 	public List<String> getNameList() {
 		return piglinNames;
 	}

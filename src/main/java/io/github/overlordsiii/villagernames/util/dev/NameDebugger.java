@@ -15,6 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Pair;
@@ -42,6 +43,7 @@ public class NameDebugger {
 					.forEach(method -> object.addProperty(method.getLeft(), String.valueOf(method.getRight())));
 
 				LOGGER.info(GSON.toJson(object));
+				player.sendMessage(Text.literal(GSON.toJson(object)));
 
 
 			}
