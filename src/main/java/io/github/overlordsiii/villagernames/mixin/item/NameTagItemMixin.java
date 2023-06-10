@@ -27,7 +27,7 @@ public abstract class NameTagItemMixin extends Item {
 	@Inject(method = "useOnEntity", at = @At("HEAD"))
 	private void checkPlayerName(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
 		if (stack.hasCustomName() && !(entity instanceof PlayerEntity)) {
-			if (!user.world.isClient && entity.isAlive()) {
+			if (!user.getWorld().isClient && entity.isAlive()) {
 				String stackName = stack.getName().getString();
 
 				if (entity instanceof DefaultNameManager manager) {
