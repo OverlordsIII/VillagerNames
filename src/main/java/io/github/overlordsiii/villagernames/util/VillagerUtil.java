@@ -45,6 +45,10 @@ public class VillagerUtil {
            // System.out.println("string modified twice: " + string);
         }
       //  System.out.println("final string: " + string);
+
+        if (string.contains(".")) {
+            string = string.substring(string.indexOf(".") + 1);
+        }
         StringBuilder builder = new StringBuilder(string);
         builder.setCharAt(0, Character.toUpperCase(string.charAt(0)));
       //  System.out.println("builder to string: " + builder);

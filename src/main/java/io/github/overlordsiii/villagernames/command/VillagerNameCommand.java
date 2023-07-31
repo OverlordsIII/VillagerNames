@@ -135,7 +135,7 @@ public class VillagerNameCommand {
             return -1;
         }
         VillagerNames.CONFIG.villagerGeneralConfig.villagerTextFormatting = FormattingDummy.fromFormatting(newFormatting);
-        ctx.getSource().sendFeedback(() -> Text.literal(String.format(displayText
+        ctx.getSource().sendFeedback(Text.literal(String.format(displayText
                 , FormattingDummy.fromFormatting(newFormatting)))
                 .formatted(newFormatting == Formatting.OBFUSCATED ? Formatting.WHITE : newFormatting).styled(style ->
                         style.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND
@@ -160,7 +160,7 @@ public class VillagerNameCommand {
             case "wanderingTraderText": VillagerNames.CONFIG.villagerGeneralConfig.wanderingTraderText = newvalue;
         }
         String text = String.format(displayedText, newvalue);
-        ctx.getSource().sendFeedback( () -> Text.literal(text).formatted(Formatting.LIGHT_PURPLE)
+        ctx.getSource().sendFeedback(Text.literal(text).formatted(Formatting.LIGHT_PURPLE)
                 .styled(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT
                         , Text.literal(
                                 "/villagername set " + literal + " " + newvalue)))
@@ -188,7 +188,7 @@ public class VillagerNameCommand {
         }
         //      System.out.println("onOrOff = " + onOrOff);
           String text = String.format(displayText, onOrOff);
-          ctx.getSource().sendFeedback(() ->
+          ctx.getSource().sendFeedback(
                   Text.literal(text).formatted(Formatting.YELLOW)
                           .styled(style -> style.withClickEvent(
                                   new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND
@@ -208,7 +208,7 @@ public class VillagerNameCommand {
         if (!listToAddTo.contains(toAdd)){
             listToAddTo.add(toAdd);
             String text = String.format(displayText, toAdd);
-            ctx.getSource().sendFeedback(() ->
+            ctx.getSource().sendFeedback(
                     Text.literal(text).formatted(Formatting.AQUA)
                             .styled(style -> style.withHoverEvent(new HoverEvent(
                                     HoverEvent.Action.SHOW_TEXT
@@ -244,7 +244,7 @@ public class VillagerNameCommand {
         if (listToRemoveFrom.contains(toRemove)){
             listToRemoveFrom.remove(toRemove);
             String text = String.format(displayText, toRemove);
-            ctx.getSource().sendFeedback(() -> Text.literal(text)
+            ctx.getSource().sendFeedback(Text.literal(text)
                     .formatted(Formatting.GOLD)
                     .styled(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT
                             , Text.literal("Remove a name from the villager or golem name list")))
