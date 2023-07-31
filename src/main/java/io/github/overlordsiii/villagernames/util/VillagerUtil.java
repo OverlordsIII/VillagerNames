@@ -44,6 +44,10 @@ public class VillagerUtil {
             string = string.substring(string.indexOf("_") + 1);
            // System.out.println("string modified twice: " + string);
         }
+
+        if (string.contains(".")) {
+            string = string.substring(string.indexOf(".") + 1);
+        }
       //  System.out.println("final string: " + string);
         StringBuilder builder = new StringBuilder(string);
         builder.setCharAt(0, Character.toUpperCase(string.charAt(0)));
