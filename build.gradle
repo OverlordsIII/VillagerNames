@@ -73,7 +73,7 @@ dependencies {
 
 	modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-level:${project.cca_version}")
 
-	modImplementation 'curse.maven:guardvillagers-571503:4483298'
+	modImplementation 'curse.maven:guardvillagers-571503:4143735'
 
 	modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}"
 }
