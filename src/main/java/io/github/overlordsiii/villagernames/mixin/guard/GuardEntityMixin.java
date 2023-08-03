@@ -4,7 +4,7 @@ import static io.github.overlordsiii.villagernames.VillagerNames.CONFIG;
 
 import java.util.Objects;
 
-import dev.mrsterner.guardvillagers.common.entity.GuardEntity;
+import dev.sterner.common.entity.GuardEntity;
 import io.github.overlordsiii.villagernames.api.DefaultNameManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
