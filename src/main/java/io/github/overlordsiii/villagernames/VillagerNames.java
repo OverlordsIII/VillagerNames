@@ -10,7 +10,7 @@ import io.github.overlordsiii.villagernames.command.VillagerNameCommand;
 import io.github.overlordsiii.villagernames.config.VillagerConfig;
 import io.github.overlordsiii.villagernames.integration.cca.IntComponent;
 import io.github.overlordsiii.villagernames.integration.cca.RavagerCounterComponent;
-import io.github.overlordsiii.villagernames.integration.villagerguards.VillagerGuardsIntegration;
+import io.github.overlordsiii.villagernames.integration.guardvillagers.GuardVillagersIntegration;
 import io.github.overlordsiii.villagernames.util.NamesLoader;
 import io.github.overlordsiii.villagernames.util.VillagerUtil;
 import io.github.overlordsiii.villagernames.util.dev.NameDebugger;
@@ -92,7 +92,7 @@ public class VillagerNames implements ModInitializer, LevelComponentInitializer 
             } else if (CONFIG.villagerGeneralConfig.illagerEntityNames && entity instanceof RavagerEntity ravagerEntity) {
                 VillagerUtil.createRavagerNames(serverWorld, ravagerEntity);
             } else if (FabricLoader.getInstance().isModLoaded("guardvillagers")) {
-                VillagerGuardsIntegration.createGuardVillagerNames(entity);
+                GuardVillagersIntegration.createGuardVillagerNames(entity);
             } else if (entity instanceof CatEntity catEntity) {
                 VillagerUtil.createCatNames(catEntity);
                 VillagerUtil.updateCatNames(catEntity);

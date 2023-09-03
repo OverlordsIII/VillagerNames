@@ -1,8 +1,8 @@
-package io.github.overlordsiii.villagernames.integration.villagerguards;
+package io.github.overlordsiii.villagernames.integration.guardvillagers;
 
 import static io.github.overlordsiii.villagernames.VillagerNames.CONFIG;
 
-import dev.mrsterner.guardvillagers.common.entity.GuardEntity;
+import dev.sterner.common.entity.GuardEntity;
 import io.github.overlordsiii.villagernames.VillagerNames;
 import io.github.overlordsiii.villagernames.api.DefaultNameManager;
 import io.github.overlordsiii.villagernames.util.VillagerUtil;
@@ -11,7 +11,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.text.Text;
 
-public class VillagerGuardsIntegration {
+public class GuardVillagersIntegration {
 
 	public static void createGuardVillagerNames(Entity entity) {
 		if (entity instanceof GuardEntity guardEntity) {
