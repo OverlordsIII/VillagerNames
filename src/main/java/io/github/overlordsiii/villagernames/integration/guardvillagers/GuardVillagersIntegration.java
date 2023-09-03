@@ -2,7 +2,7 @@ package io.github.overlordsiii.villagernames.integration.guardvillagers;
 
 import static io.github.overlordsiii.villagernames.VillagerNames.CONFIG;
 
-import dev.sterner.common.entity.GuardEntity;
+import dev.mrsterner.guardvillagers.common.entity.GuardEntity;
 import io.github.overlordsiii.villagernames.VillagerNames;
 import io.github.overlordsiii.villagernames.api.DefaultNameManager;
 import io.github.overlordsiii.villagernames.util.VillagerUtil;

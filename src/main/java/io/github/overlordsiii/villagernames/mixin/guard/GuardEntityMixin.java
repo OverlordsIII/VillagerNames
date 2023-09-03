@@ -4,7 +4,7 @@ import static io.github.overlordsiii.villagernames.VillagerNames.CONFIG;
 
 import java.util.Objects;
 
-import dev.sterner.common.entity.GuardEntity;
+import dev.mrsterner.guardvillagers.common.entity.GuardEntity;
 import io.github.overlordsiii.villagernames.api.DefaultNameManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,7 +15,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
-
 @Mixin(GuardEntity.class)
 public abstract class GuardEntityMixin extends PathAwareEntity implements DefaultNameManager {
 
