@@ -57,8 +57,8 @@ public class VillagerUtil {
 
     public static String pickRandomName(NamesConfig namesConfig) {
         List<String> names = namesConfig.getNameList();
-        int index = random.nextInt(names.size() - 1);
-        if (usedUpNames.size() > names.size()/2) {
+        int index = random.nextInt(names.size());
+        if (usedUpNames.size() > names.size() / 2) {
             usedUpNames.clear();
         }
         if (usedUpNames.contains(names.get(index))) {
