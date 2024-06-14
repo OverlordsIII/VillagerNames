@@ -33,8 +33,8 @@ public abstract class ZombieVillagerEntityMixin extends ZombieEntity implements 
         super(entityType, world);
     }
 
-    @Inject(method = "finishConversion", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/passive/VillagerEntity;initialize(Lnet/minecraft/world/ServerWorldAccess;Lnet/minecraft/world/LocalDifficulty;Lnet/minecraft/entity/SpawnReason;Lnet/minecraft/entity/EntityData;Lnet/minecraft/nbt/NbtCompound;)Lnet/minecraft/entity/EntityData;"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-    private void returnOriginalVillagerName(ServerWorld world, CallbackInfo ci, VillagerEntity villagerEntity, EquipmentSlot[] var3, int var4, int var5){
+    @Inject(method = "finishConversion", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/passive/VillagerEntity;initialize(Lnet/minecraft/world/ServerWorldAccess;Lnet/minecraft/world/LocalDifficulty;Lnet/minecraft/entity/SpawnReason;Lnet/minecraft/entity/EntityData;)Lnet/minecraft/entity/EntityData;"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+    private void returnOriginalVillagerName(ServerWorld world, CallbackInfo ci, VillagerEntity villagerEntity) {
         VillagerUtil.removeZombieVillagerName(villagerEntity, (ZombieVillagerEntity)(Object)this);
     }
 

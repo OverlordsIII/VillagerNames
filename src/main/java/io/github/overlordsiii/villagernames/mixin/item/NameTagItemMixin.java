@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -26,7 +27,7 @@ public abstract class NameTagItemMixin extends Item {
 
 	@Inject(method = "useOnEntity", at = @At("HEAD"))
 	private void checkPlayerName(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
-		if (stack.hasCustomName() && !(entity instanceof PlayerEntity)) {
+		if (stack.get(DataComponentTypes.CUSTOM_NAME) != null && !(entity instanceof PlayerEntity)) {
 			if (!user.getWorld().isClient && entity.isAlive()) {
 				String stackName = stack.getName().getString();
 

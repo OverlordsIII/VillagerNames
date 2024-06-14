@@ -2,10 +2,6 @@ package io.github.overlordsiii.villagernames;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dev.onyxstudios.cca.api.v3.component.ComponentKey;
-import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
-import dev.onyxstudios.cca.api.v3.level.LevelComponentFactoryRegistry;
-import dev.onyxstudios.cca.api.v3.level.LevelComponentInitializer;
 import io.github.overlordsiii.villagernames.command.VillagerNameCommand;
 import io.github.overlordsiii.villagernames.config.VillagerConfig;
 import io.github.overlordsiii.villagernames.integration.cca.IntComponent;
@@ -21,6 +17,10 @@ import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.ladysnake.cca.api.v3.component.ComponentKey;
+import org.ladysnake.cca.api.v3.component.ComponentRegistry;
+import org.ladysnake.cca.api.v3.level.LevelComponentFactoryRegistry;
+import org.ladysnake.cca.api.v3.level.LevelComponentInitializer;
 
 import net.minecraft.entity.mob.AbstractPiglinEntity;
 import net.minecraft.entity.mob.RavagerEntity;
@@ -44,7 +44,7 @@ public class VillagerNames implements ModInitializer, LevelComponentInitializer 
     public static  ConfigManager<VillagerConfig> CONFIG_MANAGER;
     public static  VillagerConfig CONFIG;
     public static final Logger LOGGER = LogManager.getLogger(VillagerNames.class);
-    public static final ComponentKey<IntComponent> INT_COMPONENT = ComponentRegistry.getOrCreate(new Identifier("villagernames", "intcomponent"), IntComponent.class);
+    public static final ComponentKey<IntComponent> INT_COMPONENT = ComponentRegistry.getOrCreate(Identifier.of("villagernames", "intcomponent"), IntComponent.class);
 
     public static final Gson GSON = new GsonBuilder()
         .setPrettyPrinting()
@@ -102,8 +102,6 @@ public class VillagerNames implements ModInitializer, LevelComponentInitializer 
         UseEntityCallback.EVENT.register(NameDebugger::printNames);
 
     }
-
-
 
     /**
      * Called to register component factories for statically declared component types.

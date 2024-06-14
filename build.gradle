@@ -1,10 +1,10 @@
 plugins {
-	id 'fabric-loom' version '1.4-SNAPSHOT'
+	id 'fabric-loom' version '1.6-SNAPSHOT'
 	id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_21
+targetCompatibility = JavaVersion.VERSION_21
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
@@ -67,11 +67,11 @@ dependencies {
 		exclude module: 'fabric-api' // includes bad Fabric API
 	}
 
-	modApi include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}")
+	modApi include("org.ladysnake.cardinal-components-api:cardinal-components-base:${project.cca_version}")
 
-	modApi include("dev.onyxstudios.cardinal-components-api:cardinal-components-level:${project.cca_version}")
+	modApi include("org.ladysnake.cardinal-components-api:cardinal-components-level:${project.cca_version}")
 
-	modImplementation 'curse.maven:guardvillagers-571503:4942428'
+	modImplementation 'curse.maven:guardvillagers-571503:5427036'
 
 	modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}"
 
@@ -92,7 +92,7 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
 	// Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
-	it.options.release = 17
+	it.options.release = 21
 }
 
 java {

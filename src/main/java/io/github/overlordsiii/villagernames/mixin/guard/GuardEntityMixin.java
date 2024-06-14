@@ -15,8 +15,10 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
+
 @Mixin(GuardEntity.class)
 public abstract class GuardEntityMixin extends PathAwareEntity implements DefaultNameManager {
+
 
 	private String firstName;
 
@@ -125,4 +127,6 @@ public abstract class GuardEntityMixin extends PathAwareEntity implements Defaul
 			this.playerName = tag.getString("playerName");
 		}
 	}
+
+
 }

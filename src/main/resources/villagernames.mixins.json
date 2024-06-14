@@ -9,12 +9,12 @@
     "VillagerEntityMixin",
     "ZombieEntityMixin",
     "ZombieVillagerEntityMixin",
-    "guard.GuardEntityMixin",
     "illager.PatrolEntityMixin",
     "illager.RaiderEntityMixin",
     "illager.RaidMixin",
     "item.NameTagItemMixin",
     "item.SpawnEggItemMixin",
+    "guard.GuardEntityMixin"
   ],
   "client": [
     "SelectionListEntryMixin"
